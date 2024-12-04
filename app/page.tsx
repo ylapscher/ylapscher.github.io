@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 
 export default function Home() {
   const [activeSection, setActiveSection] = useState('');
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -45,7 +46,39 @@ export default function Home() {
             >
               Joe Lapscher
             </a>
-            <div className="flex items-center">
+
+            {/* Mobile menu button */}
+            <button
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              className="md:hidden p-2"
+              aria-label="Toggle menu"
+            >
+              <svg
+                className="w-6 h-6 text-gray-600 dark:text-gray-400"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                {isMenuOpen ? (
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                ) : (
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M4 6h16M4 12h16M4 18h16"
+                  />
+                )}
+              </svg>
+            </button>
+
+            {/* Desktop menu */}
+            <div className="hidden md:flex items-center">
               {/* Navigation Links */}
               <div className="flex gap-8 mr-8 border-r border-gray-200 dark:border-gray-700 pr-8">
                 {navLinks.map(({ href, label }) => (
@@ -125,11 +158,88 @@ export default function Home() {
               </div>
             </div>
           </div>
+
+          {/* Mobile menu */}
+          {isMenuOpen && (
+            <div className="md:hidden pt-4 pb-3 border-t border-gray-200 dark:border-gray-700">
+              <div className="flex flex-col gap-4">
+                {navLinks.map(({ href, label }) => (
+                  <a
+                    key={href}
+                    href={href}
+                    onClick={() => setIsMenuOpen(false)}
+                    className={`text-sm transition-colors px-2 py-1
+                      ${activeSection === href.slice(1)
+                        ? 'text-gray-900 dark:text-white'
+                        : 'text-gray-600 dark:text-gray-400'
+                      }
+                    `}
+                  >
+                    {label}
+                  </a>
+                ))}
+                <div className="flex items-center gap-4 px-2 py-1">
+                  <a
+                    href="mailto:yoel@lapscher.com"
+                    className="w-8 h-8 flex items-center justify-center rounded-full bg-blue-600 hover:bg-blue-700 transition-colors"
+                  >
+                    <svg
+                      className="w-4 h-4 text-white"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                      aria-hidden="true"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                      />
+                    </svg>
+                  </a>
+                  <a
+                    href="https://www.linkedin.com/in/ylapscher/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-8 h-8 flex items-center justify-center rounded-full border border-gray-300 dark:border-gray-600"
+                  >
+                    <svg
+                      className="w-4 h-4 text-gray-700 dark:text-gray-300"
+                      fill="currentColor"
+                      viewBox="0 0 24 24"
+                      aria-hidden="true"
+                    >
+                      <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+                    </svg>
+                  </a>
+                </div>
+                <div className="flex flex-col gap-2 px-2">
+                  <a
+                    href="https://drive.google.com/file/d/1xGWebBdenzHo2Q7hjaM1R-Ep7yr8M8FU/view?usp=sharing"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-gray-600 dark:text-gray-400"
+                  >
+                    Resume
+                  </a>
+                  <a
+                    href="https://world.hey.com/yoel"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-gray-600 dark:text-gray-400"
+                  >
+                    Blog
+                  </a>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       </nav>
 
       {/* Hero Section */}
-      <header className="container mx-auto px-6 py-16 max-w-4xl">
+      <header className="container mx-auto px-4 sm:px-6 py-12 sm:py-16 max-w-4xl">
         <div className="flex justify-center mb-8">
           <div className="w-32 h-32 relative">
             <Image
@@ -155,11 +265,11 @@ export default function Home() {
         </div>
       </header>
 
-      <main className="container mx-auto px-6 max-w-4xl">
+      <main className="container mx-auto px-4 sm:px-6 max-w-4xl">
         {/* Work Experience Section */}
-        <section id="experience" className="mb-20 scroll-mt-20">
-          <h2 className="text-2xl font-bold mb-8">Experience</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <section id="experience" className="mb-16 sm:mb-20 scroll-mt-20">
+          <h2 className="text-2xl font-bold mb-6 sm:mb-8">Experience</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
             {[
               {
                 role: "Senior Product Manager",
@@ -268,9 +378,9 @@ export default function Home() {
         </section>
 
         {/* Skills Section */}
-        <section id="skills" className="mb-20 scroll-mt-20">
-          <h2 className="text-2xl font-bold mb-8">Skills</h2>
-          <div className="grid gap-4 md:grid-cols-2">
+        <section id="skills" className="mb-16 sm:mb-20 scroll-mt-20">
+          <h2 className="text-2xl font-bold mb-6 sm:mb-8">Skills</h2>
+          <div className="grid gap-3 sm:gap-4 grid-cols-1 sm:grid-cols-2">
             {[
               "Product Strategy & Roadmapping",
               "User Research & Analytics",
