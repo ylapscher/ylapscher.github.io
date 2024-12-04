@@ -4,6 +4,65 @@ import Image from 'next/image';
 import Footer from './components/Footer';
 import { useEffect, useState } from 'react';
 
+function ExperienceTimeline({ experiences }: { experiences: any[] }) {
+  return (
+    <div className="relative">
+      {/* Vertical Timeline Line */}
+      <div className="absolute left-1/2 transform -translate-x-1/2 h-full w-1 bg-blue-600" />
+      
+      <div className="space-y-2">
+        {experiences.map((experience, index) => (
+          <div 
+            key={index}
+            className={`relative flex items-center ${
+              index % 2 === 1 ? 'justify-end' : 'justify-start'
+            }`}
+          >
+            {/* Year Marker */}
+            <div className="absolute left-1/2 transform -translate-x-1/2 w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center">
+              <div className="w-4 h-4 bg-white rounded-full" />
+            </div>
+            
+            {/* Content Box */}
+            <div className={`w-5/12 ${
+              index % 2 === 1 ? 'pr-8' : 'pl-8'
+            }`}>
+              <div className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700">
+                <div className={`text-xl font-bold mb-2 ${
+                  index % 2 === 1 ? 'text-right' : 'text-left'
+                }`}>
+                  {experience.duration.split(' - ')[0]}
+                </div>
+                <div className="flex items-start gap-4">
+                  {experience.image && (
+                    <div className="flex-shrink-0 w-12 h-12">
+                      <Image
+                        src={experience.image.src}
+                        alt={experience.image.alt}
+                        width={48}
+                        height={48}
+                        className="rounded object-cover"
+                      />
+                    </div>
+                  )}
+                  <div className="flex-grow">
+                    <h3 className="font-bold text-lg mb-1">{experience.role}</h3>
+                    <p className="text-gray-600 dark:text-gray-400">{experience.company}</p>
+                    <p className="text-sm text-gray-500 dark:text-gray-400 mb-1">{experience.location}</p>
+                    <div className="text-sm text-gray-600 dark:text-gray-400">
+                      {experience.achievements[0]}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 export default function Home() {
   const [activeSection, setActiveSection] = useState('');
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -99,6 +158,24 @@ export default function Home() {
               </div>
               {/* Contact Links */}
               <div className="flex items-center gap-6">
+                <div className="flex items-center gap-6 text-sm mr-6">
+                  <a
+                    href="https://drive.google.com/file/d/1xGWebBdenzHo2Q7hjaM1R-Ep7yr8M8FU/view?usp=sharing"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors"
+                  >
+                    Resume
+                  </a>
+                  <a
+                    href="https://world.hey.com/yoel"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors"
+                  >
+                    Blog
+                  </a>
+                </div>
                 <div className="flex items-center gap-4">
                   <a
                     href="mailto:yoel@lapscher.com"
@@ -135,24 +212,6 @@ export default function Home() {
                     >
                       <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
                     </svg>
-                  </a>
-                </div>
-                <div className="flex items-center gap-6 text-sm">
-                  <a
-                    href="https://drive.google.com/file/d/1xGWebBdenzHo2Q7hjaM1R-Ep7yr8M8FU/view?usp=sharing"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors"
-                  >
-                    Resume
-                  </a>
-                  <a
-                    href="https://world.hey.com/yoel"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors"
-                  >
-                    Blog
                   </a>
                 </div>
               </div>
@@ -260,7 +319,7 @@ export default function Home() {
             </span>
           </h1>
           <p className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-          Dynamic Senior Product Manager with a knack for driving innovation and launching successful products. I excel at managing the entire product life cycle, optimizing processes, and collaborating with teams to turn customer insights into solutions that really make a difference.
+          I have a knack for driving innovation and launching successful products. I excel at managing the entire product life cycle, optimizing processes, and collaborating with teams to turn customer insights into solutions that really make a difference.
           </p>
         </div>
       </header>
@@ -268,113 +327,89 @@ export default function Home() {
       <main className="container mx-auto px-4 sm:px-6 max-w-4xl">
         {/* Work Experience Section */}
         <section id="experience" className="mb-16 sm:mb-20 scroll-mt-20">
-          <h2 className="text-2xl font-bold mb-6 sm:mb-8">Experience</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
-            {[
+          <h2 className="text-2xl font-bold mb-12 text-left">Experience</h2>
+          <ExperienceTimeline
+            experiences={[
               {
                 role: "Senior Product Manager",
-                company: "Veeam Software",
-                duration: "2023 - Present",
-                location: "Prague, Czech Republic",
+                company: "Transcard",
+                duration: "2024 - Present",
+                location: "Remote",
                 achievements: [
-                  "Leading product strategy for enterprise backup solutions",
-                  "Managing cross-functional teams across multiple time zones",
-                  "Driving innovation in cloud data protection solutions"
+                  "Leading product strategy for payment solutions platform"
                 ],
                 image: {
-                  src: "/images/transcard.png",
-                  alt: "Transcard Project"
+                  src: "/images/companies/transcard.png",
+                  alt: "Transcard Logo"
+                }
+              },
+              {
+                role: "Senior Product Manager",
+                company: "RaiStone",
+                duration: "2023 - 2024",
+                location: "Remote",
+                achievements: [
+                  "Leading product strategy for fintech solutions"
+                ],
+                image: {
+                  src: "/images/companies/raistone.png",
+                  alt: "RaiStone Logo"
                 }
               },
               {
                 role: "Product Manager",
-                company: "Avast",
+                company: "Citrix",
                 duration: "2021 - 2023",
-                location: "Prague, Czech Republic",
+                location: "Remote",
                 achievements: [
-                  "Led development of consumer security products",
-                  "Increased user engagement by 35% through feature optimization",
-                  "Managed product lifecycle for mobile security solutions"
-                ]
+                  "Led development of enterprise workspace solutions"
+                ],
+                image: {
+                  src: "/images/companies/citrix.png",
+                  alt: "Citrix Logo"
+                }
               },
               {
-                role: "Associate Product Manager",
-                company: "Cisco",
+                role: "Product Manager",
+                company: "General Electric",
                 duration: "2020 - 2021",
-                location: "Prague, Czech Republic",
+                location: "Remote",
                 achievements: [
-                  "Collaborated on network security product development",
-                  "Implemented agile methodologies improving delivery time by 25%",
-                  "Conducted market research and competitive analysis"
-                ]
+                  "Managed digital transformation initiatives"
+                ],
+                image: {
+                  src: "/images/companies/ge.png",
+                  alt: "GE Logo"
+                }
               },
               {
-                role: "Product Marketing Specialist",
-                company: "Red Hat",
+                role: "Product Manager",
+                company: "University of Florida",
                 duration: "2019 - 2020",
-                location: "Brno, Czech Republic",
+                location: "Gainesville, FL",
                 achievements: [
-                  "Developed go-to-market strategies for enterprise solutions",
-                  "Created product messaging and positioning frameworks",
-                  "Coordinated with global teams on product launches"
-                ]
+                  "Led development of educational technology solutions"
+                ],
+                image: {
+                  src: "/images/companies/uf.png",
+                  alt: "UF Logo"
+                }
               },
               {
-                role: "Technical Project Manager",
-                company: "Oracle",
+                role: "Product Manager",
+                company: "Procter & Gamble",
                 duration: "2018 - 2019",
-                location: "Prague, Czech Republic",
+                location: "Cincinnati, OH",
                 achievements: [
-                  "Managed cloud infrastructure projects",
-                  "Led team of 8 developers across multiple projects",
-                  "Improved project delivery efficiency by 30%"
-                ]
-              },
-              {
-                role: "Business Analyst",
-                company: "SAP",
-                duration: "2017 - 2018",
-                location: "Prague, Czech Republic",
-                achievements: [
-                  "Analyzed business requirements for enterprise solutions",
-                  "Developed detailed functional specifications",
-                  "Facilitated communication between stakeholders and development teams"
-                ]
+                  "Developed consumer product innovations"
+                ],
+                image: {
+                  src: "/images/companies/pg.png",
+                  alt: "P&G Logo"
+                }
               }
-            ].map((job, index) => (
-              <div 
-                key={index}
-                className="p-6 rounded-lg border border-gray-200 dark:border-gray-700"
-              >
-                <div className="flex flex-col sm:flex-row sm:items-start gap-4 mb-4">
-                  {job.image && (
-                    <div className="flex-shrink-0">
-                      <Image
-                        src={job.image.src}
-                        alt={job.image.alt}
-                        width={48}
-                        height={48}
-                        className="rounded-lg bg-gray-100 dark:bg-gray-800"
-                      />
-                    </div>
-                  )}
-                  <div className="flex-grow">
-                    <h3 className="font-bold text-xl">{job.role}</h3>
-                    <p className="text-gray-600 dark:text-gray-400">{job.company}</p>
-                    <div className="text-sm text-gray-500 dark:text-gray-400 mt-1">
-                      <p>{job.duration}</p>
-                      <p>{job.location}</p>
-                    </div>
-                  </div>
-                </div>
-                <ul className="list-disc list-inside space-y-2 text-gray-600 dark:text-gray-400">
-                  {job.achievements.map((achievement, i) => (
-                    <li key={i}>{achievement}</li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
+            ]}
+          />
         </section>
 
         {/* Skills Section */}
