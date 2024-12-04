@@ -4,13 +4,24 @@ import Image from 'next/image';
 import Footer from './components/Footer';
 import { useEffect, useState } from 'react';
 
-function ExperienceTimeline({ experiences }: { experiences: any[] }) {
+type Experience = {
+  role: string;
+  company: string;
+  duration: string;
+  achievements: string[];
+  image?: {
+    src: string;
+    alt: string;
+  };
+};
+
+function ExperienceTimeline({ experiences }: { experiences: Experience[] }) {
   return (
     <div className="relative">
       {/* Vertical Timeline Line */}
       <div className="absolute left-1/2 transform -translate-x-1/2 h-full w-1 bg-blue-600" />
       
-      <div className="space-y-2">
+      <div className="space-y-4">
         {experiences.map((experience, index) => (
           <div 
             key={index}
@@ -18,21 +29,18 @@ function ExperienceTimeline({ experiences }: { experiences: any[] }) {
               index % 2 === 1 ? 'justify-end' : 'justify-start'
             }`}
           >
-            {/* Year Marker */}
-            <div className="absolute left-1/2 transform -translate-x-1/2 w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center">
-              <div className="w-4 h-4 bg-white rounded-full" />
+            {/* Year as Marker */}
+            <div className="absolute left-1/2 transform -translate-x-1/2 h-8 bg-blue-600 rounded-full flex items-center justify-center z-10">
+              <span className="text-sm font-bold text-blue-600 bg-white mx-0.5 px-3 rounded-full">
+                {experience.duration.split(' - ')[0]}
+              </span>
             </div>
             
             {/* Content Box */}
             <div className={`w-5/12 ${
               index % 2 === 1 ? 'pr-8' : 'pl-8'
             }`}>
-              <div className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700">
-                <div className={`text-xl font-bold mb-2 ${
-                  index % 2 === 1 ? 'text-right' : 'text-left'
-                }`}>
-                  {experience.duration.split(' - ')[0]}
-                </div>
+              <div className="bg-white dark:bg-gray-800 p-5 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700">
                 <div className="flex items-start gap-4">
                   {experience.image && (
                     <div className="flex-shrink-0 w-12 h-12">
@@ -47,8 +55,7 @@ function ExperienceTimeline({ experiences }: { experiences: any[] }) {
                   )}
                   <div className="flex-grow">
                     <h3 className="font-bold text-lg mb-1">{experience.role}</h3>
-                    <p className="text-gray-600 dark:text-gray-400">{experience.company}</p>
-                    <p className="text-sm text-gray-500 dark:text-gray-400 mb-1">{experience.location}</p>
+                    <p className="text-gray-600 dark:text-gray-400 mb-2">{experience.company}</p>
                     <div className="text-sm text-gray-600 dark:text-gray-400">
                       {experience.achievements[0]}
                     </div>
@@ -334,7 +341,6 @@ export default function Home() {
                 role: "Senior Product Manager",
                 company: "Transcard",
                 duration: "2024 - Present",
-                location: "Remote",
                 achievements: [
                   "Leading product strategy for payment solutions platform"
                 ],
@@ -346,8 +352,7 @@ export default function Home() {
               {
                 role: "Senior Product Manager",
                 company: "RaiStone",
-                duration: "2023 - 2024",
-                location: "Remote",
+                duration: "2022 - 2024",
                 achievements: [
                   "Leading product strategy for fintech solutions"
                 ],
@@ -359,8 +364,7 @@ export default function Home() {
               {
                 role: "Product Manager",
                 company: "Citrix",
-                duration: "2021 - 2023",
-                location: "Remote",
+                duration: "2020 - 2022",
                 achievements: [
                   "Led development of enterprise workspace solutions"
                 ],
@@ -372,8 +376,7 @@ export default function Home() {
               {
                 role: "Product Manager",
                 company: "General Electric",
-                duration: "2020 - 2021",
-                location: "Remote",
+                duration: "2018 - 2020",
                 achievements: [
                   "Managed digital transformation initiatives"
                 ],
@@ -385,8 +388,7 @@ export default function Home() {
               {
                 role: "Product Manager",
                 company: "University of Florida",
-                duration: "2019 - 2020",
-                location: "Gainesville, FL",
+                duration: "2017 - 2018",
                 achievements: [
                   "Led development of educational technology solutions"
                 ],
@@ -398,8 +400,7 @@ export default function Home() {
               {
                 role: "Product Manager",
                 company: "Procter & Gamble",
-                duration: "2018 - 2019",
-                location: "Cincinnati, OH",
+                duration: "2015 - 2017",
                 achievements: [
                   "Developed consumer product innovations"
                 ],
