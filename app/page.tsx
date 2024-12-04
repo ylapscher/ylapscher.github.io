@@ -15,6 +15,51 @@ type Experience = {
   };
 };
 
+type Skill = {
+  name: string;
+  level: number; // 1-5
+  category: 'Product Management' | 'Leadership & Collaboration' | 'Technical Skills' | 'Languages';
+};
+
+type Initiative = {
+  title: string;
+  description: string;
+  image?: {
+    src: string;
+    alt: string;
+  };
+  link?: string;
+};
+
+const skills: Skill[] = [
+  // Product Management
+  { name: "Product Strategy", level: 5, category: "Product Management" },
+  { name: "Market Analysis", level: 4, category: "Product Management" },
+  { name: "Product Roadmapping", level: 5, category: "Product Management" },
+  { name: "Customer Journey Mapping", level: 4, category: "Product Management" },
+  { name: "Product Launch & Planning", level: 5, category: "Product Management" },
+  { name: "Product Backlog Management", level: 5, category: "Product Management" },
+  { name: "Prioritization Techniques", level: 4, category: "Product Management" },
+  
+  // Leadership & Collaboration
+  { name: "Team Building & Leadership", level: 4, category: "Leadership & Collaboration" },
+  { name: "Stakeholder Engagement", level: 5, category: "Leadership & Collaboration" },
+  { name: "Cross-functional Collaboration", level: 5, category: "Leadership & Collaboration" },
+  { name: "Project & Vendor Management", level: 4, category: "Leadership & Collaboration" },
+  
+  // Technical Skills
+  { name: "API and Integration", level: 3, category: "Technical Skills" },
+  { name: "Product Analytics Tools", level: 4, category: "Technical Skills" },
+  { name: "Agile Methodologies", level: 5, category: "Technical Skills" },
+  { name: "Programming", level: 3, category: "Technical Skills" },
+  { name: "Databases", level: 3, category: "Technical Skills" },
+  { name: "Technology Stack", level: 4, category: "Technical Skills" },
+  
+  // Languages
+  { name: "Spanish", level: 5, category: "Languages" },
+  { name: "Hebrew", level: 3, category: "Languages" },
+];
+
 function ExperienceTimeline({ experiences }: { experiences: Experience[] }) {
   return (
     <div className="relative">
@@ -30,17 +75,19 @@ function ExperienceTimeline({ experiences }: { experiences: Experience[] }) {
             }`}
           >
             {/* Year as Marker */}
-            <div className="absolute left-1/2 transform -translate-x-1/2 h-8 bg-blue-600 rounded-full flex items-center justify-center z-10">
-              <span className="text-sm font-bold text-blue-600 bg-white mx-0.5 px-3 rounded-full">
-                {experience.duration.split(' - ')[0]}
-              </span>
+            <div className="absolute left-1/2 transform -translate-x-1/2 flex items-center justify-center z-10">
+              <div className="bg-blue-600 rounded-full flex items-center">
+                <span className="text-base font-extrabold text-blue-600 bg-gray-50 mx-[1px] my-[1px] px-3 py-0.5 rounded-full">
+                  {experience.duration.split(' - ')[0]}
+                </span>
+              </div>
             </div>
             
             {/* Content Box */}
-            <div className={`w-5/12 ${
+            <div className={`w-[45%] ${
               index % 2 === 1 ? 'pr-8' : 'pl-8'
             }`}>
-              <div className="bg-white dark:bg-gray-800 p-5 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700">
+              <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700">
                 <div className="flex items-start gap-4">
                   {experience.image && (
                     <div className="flex-shrink-0 w-12 h-12">
@@ -55,8 +102,8 @@ function ExperienceTimeline({ experiences }: { experiences: Experience[] }) {
                   )}
                   <div className="flex-grow">
                     <h3 className="font-bold text-lg mb-1">{experience.role}</h3>
-                    <p className="text-gray-600 dark:text-gray-400 mb-2">{experience.company}</p>
-                    <div className="text-sm text-gray-600 dark:text-gray-400">
+                    <p className="text-gray-500 dark:text-gray-400 text-sm mb-3">{experience.company}</p>
+                    <div className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">
                       {experience.achievements[0]}
                     </div>
                   </div>
@@ -65,6 +112,38 @@ function ExperienceTimeline({ experiences }: { experiences: Experience[] }) {
             </div>
           </div>
         ))}
+      </div>
+    </div>
+  );
+}
+
+function SkillBadge({ skill }: { skill: Skill }) {
+  const getColor = (level: number) => {
+    switch (level) {
+      case 5:
+        return 'bg-blue-600 dark:bg-blue-500';
+      case 4:
+        return 'bg-blue-500 dark:bg-blue-400';
+      case 3:
+        return 'bg-blue-400 dark:bg-blue-300';
+      case 2:
+        return 'bg-blue-300 dark:bg-blue-200';
+      default:
+        return 'bg-blue-200 dark:bg-blue-100';
+    }
+  };
+
+  return (
+    <div className="relative group">
+      <span
+        className={`${getColor(skill.level)} text-white dark:text-gray-900 px-3 py-1 rounded-full text-sm font-medium inline-flex items-center gap-1`}
+      >
+        {skill.name}
+      </span>
+      
+      {/* Tooltip */}
+      <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 text-xs text-white bg-gray-900 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap">
+        Proficiency: {skill.level}/5
       </div>
     </div>
   );
@@ -97,6 +176,7 @@ export default function Home() {
 
   const navLinks = [
     { href: '#experience', label: 'Experience' },
+    { href: '#initiatives', label: 'Initiatives' },
     { href: '#skills', label: 'Skills' },
   ];
 
@@ -307,13 +387,13 @@ export default function Home() {
       {/* Hero Section */}
       <header className="container mx-auto px-4 sm:px-6 py-12 sm:py-16 max-w-4xl">
         <div className="flex justify-center mb-8">
-          <div className="w-32 h-32 relative">
+          <div className="w-48 h-48 relative rounded-full overflow-hidden">
             <Image
               src="/images/profile.jpg"
               alt="Joe Lapscher"
               fill
               priority
-              className="rounded-full object-cover"
+              className="object-cover scale-150 object-[50%_35%]"
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             />
           </div>
@@ -332,6 +412,9 @@ export default function Home() {
       </header>
 
       <main className="container mx-auto px-4 sm:px-6 max-w-4xl">
+        {/* Horizontal Divider */}
+        <hr className="my-8 border-gray-300 dark:border-gray-700" />
+
         {/* Work Experience Section */}
         <section id="experience" className="mb-16 sm:mb-20 scroll-mt-20">
           <h2 className="text-2xl font-bold mb-12 text-left">Experience</h2>
@@ -342,7 +425,7 @@ export default function Home() {
                 company: "Transcard",
                 duration: "2024 - Present",
                 achievements: [
-                  "Leading product strategy for payment solutions platform"
+                  "I'm doubling down in the fintech world, focusing on payments, and driving the launch of a new platform that streamlines how businesses transact without relying on checks"
                 ],
                 image: {
                   src: "/images/companies/transcard.png",
@@ -351,10 +434,10 @@ export default function Home() {
               },
               {
                 role: "Senior Product Manager",
-                company: "RaiStone",
+                company: "Raistone",
                 duration: "2022 - 2024",
                 achievements: [
-                  "Leading product strategy for fintech solutions"
+                  "As the 2nd product hire at Raistone, I jumped into the fintech scene with enthusiasm, leveraging my Fortune 500 experience to thrive in this dynamic environment and drive impactful changes in working capital solutions"
                 ],
                 image: {
                   src: "/images/companies/raistone.png",
@@ -366,7 +449,7 @@ export default function Home() {
                 company: "Citrix",
                 duration: "2020 - 2022",
                 achievements: [
-                  "Led development of enterprise workspace solutions"
+                  "After hanging up my software engineering 'cleats,' I dove headfirst into product management at Citrix, where I learned about prioritization & roadmapping, stakeholder management, and remote desktops"
                 ],
                 image: {
                   src: "/images/companies/citrix.png",
@@ -374,11 +457,11 @@ export default function Home() {
                 }
               },
               {
-                role: "Product Manager",
+                role: "Software Engineer",
                 company: "General Electric",
                 duration: "2018 - 2020",
                 achievements: [
-                  "Managed digital transformation initiatives"
+                  "I kicked off my career with GE's IT Leadership Program, where I embraced diverse roles across NY, Maine, NOLA, and Atlanta, gaining hands-on experience in software engineering and product management in a global industrial powerhouse"
                 ],
                 image: {
                   src: "/images/companies/ge.png",
@@ -386,11 +469,11 @@ export default function Home() {
                 }
               },
               {
-                role: "Product Manager",
+                role: "Engineering & Information Management Student",
                 company: "University of Florida",
                 duration: "2017 - 2018",
                 achievements: [
-                  "Led development of educational technology solutions"
+                  "I earned my MS in Information Systems & Operations Management at UF, where I served as a Teaching Assistant for courses in Managerial Quantitative Analysis and Retail Consulting. I also hold a BS in Industrial & Systems Engineering, where I played water polo"
                 ],
                 image: {
                   src: "/images/companies/uf.png",
@@ -398,11 +481,11 @@ export default function Home() {
                 }
               },
               {
-                role: "Product Manager",
+                role: "Intern",
                 company: "Procter & Gamble",
                 duration: "2015 - 2017",
                 achievements: [
-                  "Developed consumer product innovations"
+                  "During my 4 internships at P&G, I worked on process improvement by finding ways to cut costs in market research and created some handy Excel VBA tools to automate reporting"
                 ],
                 image: {
                   src: "/images/companies/pg.png",
@@ -413,23 +496,96 @@ export default function Home() {
           />
         </section>
 
+        {/* Initiatives Section */}
+        <section id="initiatives" className="mb-16 sm:mb-20 scroll-mt-20">
+          <h2 className="text-2xl font-bold mb-12 text-left">Initiatives</h2>
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+            {[
+              {
+                title: "Adaptive Climbing",
+                description: "Started a new chapter with the Adaptive Climbing Group focusing on making rock climbing accessible to people with disabilities",
+                image: {
+                  src: "/images/initiatives/climbing.png",
+                  alt: "Adaptive Climbing"
+                },
+                link: "https://www.adaptiveclimbinggroup.org/northern-new-jersey"
+              },
+              {
+                title: "Young Jewish Professionals",
+                description: "Founding board member of the Atlanta chapter of Young Jewish Professionals, creating programs for young professionals in the Jewish community",
+                image: {
+                  src: "/images/initiatives/yjp.png",
+                  alt: "Young Jewish Professionals"
+                },
+                link: "https://www.yjpintown.org/"
+              },
+              {
+                title: "Blockchain Clubs",
+                description: "Cofounder of the blockchain forums at UF and GE, leading discussions and workshops on blockchain technology, cryptocurrencies, and their impact on financial services",
+                image: {
+                  src: "/images/initiatives/blockchain.png",
+                  alt: "Blockchain Club"
+                },
+                link: "https://www.instagram.com/gatorblockchain/?hl=en"
+              },
+              {
+                title: "Macro Excellence",
+                description: "Founded, managed, and sold a technical consulting practice specializing in building custom software solutions that make business processes more efficient",
+                image: {
+                  src: "/images/initiatives/macro.png",
+                  alt: "Macro Excellence"
+                },
+                link: "https://youtu.be/wmdxsiGG1rM?si=_wUAidl0huhKyuye"
+              }
+            ].map((initiative, index) => (
+              <a
+                key={index}
+                href={initiative.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 overflow-hidden flex flex-col transform transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:border-blue-500 dark:hover:border-blue-400"
+              >
+                {initiative.image && (
+                  <div className="h-64 relative">
+                    <Image
+                      src={initiative.image.src}
+                      alt={initiative.image.alt}
+                      fill
+                      className="object-cover transition-transform duration-300 group-hover:scale-105"
+                    />
+                  </div>
+                )}
+                <div className="p-6 flex flex-col flex-grow">
+                  <h3 className="text-lg font-bold mb-2 group-hover:text-blue-600 transition-colors">
+                    {initiative.title}
+                  </h3>
+                  <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">
+                    {initiative.description}
+                  </p>
+                </div>
+              </a>
+            ))}
+          </div>
+        </section>
+
         {/* Skills Section */}
         <section id="skills" className="mb-16 sm:mb-20 scroll-mt-20">
-          <h2 className="text-2xl font-bold mb-6 sm:mb-8">Skills</h2>
-          <div className="grid gap-3 sm:gap-4 grid-cols-1 sm:grid-cols-2">
-            {[
-              "Product Strategy & Roadmapping",
-              "User Research & Analytics",
-              "Agile & Scrum Management",
-              "Stakeholder Communication",
-              "Data-Driven Decision Making",
-              "Cross-functional Team Leadership",
-            ].map((skill, index) => (
-              <div 
-                key={index}
-                className="p-4 bg-gray-50 dark:bg-gray-800 rounded-lg"
-              >
-                {skill}
+          <h2 className="text-2xl font-bold mb-6">Skills</h2>
+          <div className="space-y-8">
+            {(Object.keys(
+              skills.reduce((acc, skill) => ({ ...acc, [skill.category]: true }), {})
+            ) as Skill['category'][]).map((category) => (
+              <div key={category}>
+                <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">
+                  {category}
+                </h3>
+                <div className="flex flex-wrap gap-2">
+                  {skills
+                    .filter((skill) => skill.category === category)
+                    .map((skill) => (
+                      <SkillBadge key={skill.name} skill={skill} />
+                    ))}
+                </div>
               </div>
             ))}
           </div>
