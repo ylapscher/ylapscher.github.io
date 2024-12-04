@@ -1,4 +1,4 @@
-import Image from "next/image";
+import Footer from './components/Footer';
 
 export default function Home() {
   return (
@@ -134,7 +134,7 @@ export default function Home() {
 
         {/* Contact Section */}
         <section className="mb-20">
-          <h2 className="text-2xl font-bold mb-8">Let's Connect</h2>
+          <h2 className="text-2xl font-bold mb-8">Let&apos;s Connect</h2>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a
               href="mailto:jane.smith@example.com"
@@ -154,12 +154,7 @@ export default function Home() {
         </section>
       </main>
 
-      {/* Footer */}
-      <footer className="container mx-auto px-6 py-8 border-t border-gray-200 dark:border-gray-700">
-        <p className="text-center text-gray-600 dark:text-gray-400">
-          © {new Date().getFullYear()} Jane Smith. All rights reserved.
-        </p>
-      </footer>
+      <Footer />
     </div>
   );
 }
