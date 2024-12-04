@@ -64,7 +64,7 @@ function ExperienceTimeline({ experiences }: { experiences: Experience[] }) {
   return (
     <div className="relative">
       {/* Vertical Timeline Line */}
-      <div className="absolute left-1/2 transform -translate-x-1/2 h-full w-1 bg-blue-600" />
+      <div className="absolute left-1/2 transform -translate-x-1/2 h-full w-0.5 bg-blue-600" />
       
       <div className="space-y-4">
         {experiences.map((experience, index) => (
@@ -84,8 +84,8 @@ function ExperienceTimeline({ experiences }: { experiences: Experience[] }) {
             </div>
             
             {/* Content Box */}
-            <div className={`w-[45%] ${
-              index % 2 === 1 ? 'pr-8' : 'pl-8'
+            <div className={`w-[48%] ${
+              index % 2 === 1 ? 'pr-12' : 'pl-12'
             }`}>
               <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700">
                 <div className="flex items-start gap-4">
@@ -498,8 +498,8 @@ export default function Home() {
 
         {/* Initiatives Section */}
         <section id="initiatives" className="mb-16 sm:mb-20 scroll-mt-20">
-          <h2 className="text-2xl font-bold mb-12 text-left">Initiatives</h2>
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+          <h2 className="text-2xl font-bold mb-8 sm:mb-12 text-left">Initiatives</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {[
               {
                 title: "Adaptive Climbing",
@@ -546,7 +546,7 @@ export default function Home() {
                 className="group bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 overflow-hidden flex flex-col transform transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:border-blue-500 dark:hover:border-blue-400"
               >
                 {initiative.image && (
-                  <div className="h-64 relative">
+                  <div className="h-48 sm:h-64 relative">
                     <Image
                       src={initiative.image.src}
                       alt={initiative.image.alt}
@@ -555,7 +555,7 @@ export default function Home() {
                     />
                   </div>
                 )}
-                <div className="p-6 flex flex-col flex-grow">
+                <div className="p-4 sm:p-6 flex flex-col flex-grow">
                   <h3 className="text-lg font-bold mb-2 group-hover:text-blue-600 transition-colors">
                     {initiative.title}
                   </h3>
