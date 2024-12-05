@@ -59,7 +59,7 @@ export default function Calendar() {
       <div className="text-center mb-6">
         <h2 className="text-2xl font-bold mb-4">Schedule a Session</h2>
         <p className="text-gray-600 dark:text-gray-400 mb-4">
-          Select a time that works best for you, and I'll be happy to help.
+          Select a time that works best for you. Looking forward to connecting!
         </p>
       </div>
       <div className="relative h-[500px] sm:h-[600px] bg-white dark:bg-gray-700 rounded-lg">
