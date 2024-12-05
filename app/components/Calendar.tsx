@@ -2,7 +2,6 @@
 
 import { useEffect } from "react";
 
-// Add type definitions
 declare global {
   interface Window {
     Cal?: any;
@@ -18,31 +17,30 @@ export default function Calendar() {
   useEffect(() => {
     // Initialize Cal
     (function (C: Window, A: string, L: string) {
-      let p = function (a: CalApi, ar: unknown) { a.q.push(ar); };
-      let d = C.document;
-      C.Cal = C.Cal || function () {
-        let cal = C.Cal;
-        let ar = arguments;
+      const p = function (a: CalApi, ar: unknown) { a.q.push(ar); };
+      const d = C.document;
+      C.Cal = C.Cal || function (...args: any[]) {
+        const cal = C.Cal;
         if (!cal.loaded) {
           cal.ns = {};
           cal.q = cal.q || [];
           d.head.appendChild(d.createElement("script")).src = A;
           cal.loaded = true;
         }
-        if (ar[0] === L) {
-          const api = Object.assign(function () { p(api as CalApi, arguments); }, {
+        if (args[0] === L) {
+          const api = Object.assign(function (...fnArgs: any[]) { p(api as CalApi, fnArgs); }, {
             q: [] as any[],
             push: function(arg: any) { this.q.push(arg); }
           });
-          const namespace = ar[1];
+          const namespace = args[1];
           if (typeof namespace === "string") {
             cal.ns[namespace] = cal.ns[namespace] || api;
-            p(cal.ns[namespace], ar);
+            p(cal.ns[namespace], args);
             p(cal, ["initNamespace", namespace]);
-          } else p(cal, ar);
+          } else p(cal, args);
           return;
         }
-        p(cal, ar);
+        p(cal, args);
       };
     })(window, "https://app.cal.com/embed/embed.js", "init");
 

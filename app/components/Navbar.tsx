@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
+import Link from 'next/link';
 
 const textStyles = {
   h3: "text-lg sm:text-xl font-semibold font-geist-sans",
@@ -46,12 +47,12 @@ export default function Navbar() {
     <nav className="sticky top-0 z-10 bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm border-b border-gray-200 dark:border-gray-700">
       <div className="container mx-auto px-6 py-4">
         <div className="flex justify-between items-center">
-          <a 
+          <Link 
             href="/" 
             className={`${textStyles.h3} hover:text-gray-600 dark:hover:text-gray-300 transition-colors`}
           >
             Joe Lapscher
-          </a>
+          </Link>
 
           {/* Desktop menu */}
           <div className="hidden md:flex items-center">
