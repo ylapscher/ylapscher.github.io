@@ -17,7 +17,7 @@ type Experience = {
 
 type Skill = {
   name: string;
-  level: number; // 1-5
+  level: 1 | 2 | 3 | 4;
   category: 'Product Management' | 'Leadership & Collaboration' | 'Technical Skills' | 'Languages';
 };
 
@@ -33,30 +33,30 @@ type Initiative = {
 
 const skills: Skill[] = [
   // Product Management
-  { name: "Product Strategy", level: 5, category: "Product Management" },
-  { name: "Market Analysis", level: 4, category: "Product Management" },
-  { name: "Product Roadmapping", level: 5, category: "Product Management" },
+  { name: "Product Strategy", level: 4, category: "Product Management" },
+  { name: "Market Analysis", level: 3, category: "Product Management" },
+  { name: "Product Roadmapping", level: 3, category: "Product Management" },
   { name: "Customer Journey Mapping", level: 4, category: "Product Management" },
-  { name: "Product Launch & Planning", level: 5, category: "Product Management" },
-  { name: "Product Backlog Management", level: 5, category: "Product Management" },
+  { name: "Product Launch & Planning", level: 2, category: "Product Management" },
+  { name: "Product Backlog Management", level: 3, category: "Product Management" },
   { name: "Prioritization Techniques", level: 4, category: "Product Management" },
   
   // Leadership & Collaboration
   { name: "Team Building & Leadership", level: 4, category: "Leadership & Collaboration" },
-  { name: "Stakeholder Engagement", level: 5, category: "Leadership & Collaboration" },
-  { name: "Cross-functional Collaboration", level: 5, category: "Leadership & Collaboration" },
+  { name: "Stakeholder Engagement", level: 4, category: "Leadership & Collaboration" },
+  { name: "Cross-functional Collaboration", level: 1, category: "Leadership & Collaboration" },
   { name: "Project & Vendor Management", level: 4, category: "Leadership & Collaboration" },
   
   // Technical Skills
   { name: "API and Integration", level: 3, category: "Technical Skills" },
   { name: "Product Analytics Tools", level: 4, category: "Technical Skills" },
-  { name: "Agile Methodologies", level: 5, category: "Technical Skills" },
+  { name: "Agile Methodologies", level: 2, category: "Technical Skills" },
   { name: "Programming", level: 3, category: "Technical Skills" },
   { name: "Databases", level: 3, category: "Technical Skills" },
   { name: "Technology Stack", level: 4, category: "Technical Skills" },
   
   // Languages
-  { name: "Spanish", level: 5, category: "Languages" },
+  { name: "Spanish", level: 1, category: "Languages" },
   { name: "Hebrew", level: 3, category: "Languages" },
 ];
 
@@ -84,8 +84,8 @@ function ExperienceTimeline({ experiences }: { experiences: Experience[] }) {
             </div>
             
             {/* Content Box */}
-            <div className={`w-full md:w-[48%] pl-16 md:pl-12 ${
-              index % 2 === 1 ? 'md:pl-0 md:pr-12' : ''
+            <div className={`w-[48%] ${
+              index % 2 === 1 ? 'pr-10' : 'pl-10'
             }`}>
               <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700">
                 <div className="flex items-start gap-4">
@@ -118,32 +118,48 @@ function ExperienceTimeline({ experiences }: { experiences: Experience[] }) {
 }
 
 function SkillBadge({ skill }: { skill: Skill }) {
-  const getColor = (level: number) => {
+  const getHarveyBall = (level: number) => {
     switch (level) {
-      case 5:
-        return 'bg-blue-600 dark:bg-blue-500';
       case 4:
-        return 'bg-blue-500 dark:bg-blue-400';
+        return (
+          <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
+            <circle cx="12" cy="12" r="10" className="text-blue-600" />
+          </svg>
+        );
       case 3:
-        return 'bg-blue-400 dark:bg-blue-300';
+        return (
+          <svg className="w-4 h-4" viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="10" className="fill-none stroke-blue-600 stroke-2" />
+            <path d="M12 2a10 10 0 0 1 0 20" fill="currentColor" className="text-blue-600" />
+          </svg>
+        );
       case 2:
-        return 'bg-blue-300 dark:bg-blue-200';
-      default:
-        return 'bg-blue-200 dark:bg-blue-100';
+        return (
+          <svg className="w-4 h-4" viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="10" className="fill-none stroke-blue-600 stroke-2" />
+            <path d="M12 22a10 10 0 0 1 0-20" fill="currentColor" className="text-blue-600" />
+          </svg>
+        );
+      default: // level 1
+        return (
+          <svg className="w-4 h-4" viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="10" className="fill-none stroke-blue-600 stroke-2" />
+            <path d="M12 22a10 10 0 0 1 0-10" fill="currentColor" className="text-blue-600" />
+          </svg>
+        );
     }
   };
 
   return (
     <div className="relative group">
-      <span
-        className={`${getColor(skill.level)} text-white dark:text-gray-900 px-3 py-1 rounded-full text-sm font-medium inline-flex items-center gap-1`}
-      >
+      <span className="bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-100 px-3 py-1 rounded-full text-sm font-medium inline-flex items-center gap-2">
         {skill.name}
+        {getHarveyBall(skill.level)}
       </span>
       
       {/* Tooltip */}
       <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 text-xs text-white bg-gray-900 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap">
-        Proficiency: {skill.level}/5
+        Proficiency: {skill.level}/4
       </div>
     </div>
   );
@@ -180,6 +196,15 @@ export default function Home() {
     { href: '#skills', label: 'Skills' },
   ];
 
+  // Add these constants at the top of your component
+  const textStyles = {
+    h1: "text-4xl sm:text-5xl font-bold font-geist-sans",
+    h2: "text-2xl sm:text-3xl font-bold font-geist-sans",
+    h3: "text-lg sm:text-xl font-semibold font-geist-sans",
+    body: "text-base font-geist-sans text-gray-600 dark:text-gray-400",
+    small: "text-sm font-geist-sans",
+  };
+
   return (
     <div className="min-h-screen bg-white dark:bg-gray-900">
       {/* Navbar */}
@@ -188,7 +213,7 @@ export default function Home() {
           <div className="flex justify-between items-center">
             <a 
               href="#" 
-              className="text-lg font-medium tracking-tight hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
+              className={`${textStyles.h3} hover:text-gray-600 dark:hover:text-gray-300 transition-colors`}
             >
               Joe Lapscher
             </a>
@@ -231,7 +256,7 @@ export default function Home() {
                   <a
                     key={href}
                     href={href}
-                    className={`text-sm relative transition-colors
+                    className={`${textStyles.small} relative transition-colors
                       ${activeSection === href.slice(1)
                         ? 'text-gray-900 dark:text-white'
                         : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white'
@@ -399,9 +424,9 @@ export default function Home() {
           </div>
         </div>
         <div className="flex flex-col gap-6 text-center">
-          <h1 className="text-4xl sm:text-5xl font-bold">
+          <h1 className={textStyles.h1}>
             Joe Lapscher
-            <span className="block text-xl sm:text-2xl text-gray-600 dark:text-gray-400 mt-2">
+            <span className="block text-xl sm:text-2xl text-gray-600 dark:text-gray-400 mt-2 font-geist-sans">
               Senior Product Manager
             </span>
           </h1>
@@ -417,7 +442,7 @@ export default function Home() {
 
         {/* Work Experience Section */}
         <section id="experience" className="mb-16 sm:mb-20 scroll-mt-20">
-          <h2 className="text-2xl font-bold mb-12 text-left">Experience</h2>
+          <h2 className={`${textStyles.h2} mb-12`}>Experience</h2>
           <ExperienceTimeline
             experiences={[
               {
@@ -469,7 +494,7 @@ export default function Home() {
                 }
               },
               {
-                role: "Engineering & Information Management Student",
+                role: "Graduate Student",
                 company: "University of Florida",
                 duration: "2017 - 2018",
                 achievements: [
@@ -497,8 +522,9 @@ export default function Home() {
         </section>
 
         {/* Initiatives Section */}
+        <hr className="my-8 border-gray-300 dark:border-gray-700" />
         <section id="initiatives" className="mb-16 sm:mb-20 scroll-mt-20">
-          <h2 className="text-2xl font-bold mb-8 sm:mb-12 text-left">Initiatives</h2>
+          <h2 className="text-2xl font-bold mb-12 text-left">Initiatives</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {[
               {
@@ -556,10 +582,10 @@ export default function Home() {
                   </div>
                 )}
                 <div className="p-4 sm:p-6 flex flex-col flex-grow">
-                  <h3 className="text-lg font-bold mb-2 group-hover:text-blue-600 transition-colors">
+                  <h3 className={`${textStyles.h3} mb-2 group-hover:text-blue-600 transition-colors`}>
                     {initiative.title}
                   </h3>
-                  <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">
+                  <p className={`${textStyles.body} leading-relaxed`}>
                     {initiative.description}
                   </p>
                 </div>
@@ -570,13 +596,15 @@ export default function Home() {
 
         {/* Skills Section */}
         <section id="skills" className="mb-16 sm:mb-20 scroll-mt-20">
-          <h2 className="text-2xl font-bold mb-6">Skills</h2>
+          {/* Horizontal Divider */}
+          <hr className="my-8 border-gray-300 dark:border-gray-700" />
+          <h2 className={`${textStyles.h2} mb-6`}>Skills</h2>
           <div className="space-y-8">
             {(Object.keys(
               skills.reduce((acc, skill) => ({ ...acc, [skill.category]: true }), {})
             ) as Skill['category'][]).map((category) => (
               <div key={category}>
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">
+                <h3 className={`${textStyles.h3} mb-4 text-gray-900 dark:text-gray-100`}>
                   {category}
                 </h3>
                 <div className="flex flex-wrap gap-2">
@@ -592,7 +620,7 @@ export default function Home() {
         </section>
       </main>
 
-      <Footer />
+      <Footer textStyles={textStyles} />
     </div>
   );
 }
