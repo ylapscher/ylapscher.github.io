@@ -71,7 +71,7 @@ function ExperienceTimeline({ experiences }: { experiences: Experience[] }) {
           <div 
             key={index}
             className={`relative flex items-center ${
-              index % 2 === 1 ? 'md:justify-end' : 'justify-start md:justify-start'
+              index % 2 === 1 ? 'md:justify-end' : 'justify-start'
             }`}
           >
             {/* Year as Marker */}
@@ -84,8 +84,8 @@ function ExperienceTimeline({ experiences }: { experiences: Experience[] }) {
             </div>
             
             {/* Content Box */}
-            <div className={`w-[48%] ${
-              index % 2 === 1 ? 'pr-10' : 'pl-10'
+            <div className={`w-full md:w-[48%] pl-16 md:pl-10 pr-4 md:pr-10 ${
+              index % 2 === 1 ? 'md:pl-0' : ''
             }`}>
               <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700">
                 <div className="flex items-start gap-4">
@@ -279,14 +279,6 @@ export default function Home() {
                   >
                     Resume
                   </a>
-                  <a
-                    href="https://world.hey.com/yoel"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors"
-                  >
-                    Blog
-                  </a>
                 </div>
                 <div className="flex items-center gap-4">
                   <a
@@ -394,14 +386,6 @@ export default function Home() {
                   >
                     Resume
                   </a>
-                  <a
-                    href="https://world.hey.com/yoel"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-gray-600 dark:text-gray-400"
-                  >
-                    Blog
-                  </a>
                 </div>
               </div>
             </div>
@@ -431,8 +415,14 @@ export default function Home() {
             </span>
           </h1>
           <p className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-          I have a knack for driving innovation and launching successful products. I excel at managing the entire product life cycle, optimizing processes, and collaborating with teams to turn customer insights into solutions that really make a difference.
+            I have a knack for driving innovation and launching successful products. I excel at managing the entire product life cycle, optimizing processes, and collaborating with teams to turn customer insights into solutions that really make a difference.
           </p>
+          <a
+            href="mailto:yoel@lapscher.com"
+            className="mt-4 inline-block bg-blue-600 text-white font-semibold py-2 px-4 rounded hover:bg-blue-700 transition mx-auto"
+          >
+            Let's Connect
+          </a>
         </div>
       </header>
 
