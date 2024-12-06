@@ -13,6 +13,7 @@ const navLinks = [
   { href: '/', label: 'Experience' },
   { href: '/hobbies', label: 'Hobbies' },
   { href: '/guidance', label: 'Guidance' },
+  { href: '/travel', label: 'Travel' },
 ];
 
 export default function Navbar() {
