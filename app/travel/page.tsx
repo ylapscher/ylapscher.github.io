@@ -70,7 +70,19 @@ export default function Travel() {
   const [tooltip, setTooltip] = useState<string | null>(null);
   const [countriesList, setCountriesList] = useState<string[]>([]);
   const [geographyData, setGeographyData] = useState<any[]>([]);
+  const [mapScale, setMapScale] = useState(150);
   const visitedCount = Object.keys(visitedCountries).length;
+
+  // Handle window resize and initial scale
+  useEffect(() => {
+    const handleResize = () => {
+      setMapScale(window.innerWidth < 640 ? 100 : 150);
+    };
+
+    handleResize(); // Set initial scale
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   // Update countries list when geography data is available
   useEffect(() => {
@@ -99,7 +111,7 @@ export default function Travel() {
         <div className="h-[300px] sm:h-[400px] md:h-[500px] lg:h-[600px] relative">
           <ComposableMap
             projectionConfig={{
-              scale: window.innerWidth < 640 ? 100 : 150,
+              scale: mapScale,
               center: [0, 0],
               rotate: [-10, 0, 0]
             }}
