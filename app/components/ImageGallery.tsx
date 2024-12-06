@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/outline';
 
 const images = [
@@ -34,18 +34,32 @@ export default function ImageGallery() {
     );
   };
 
+  useEffect(() => {
+    const interval = setInterval(nextSlide, 5000); // Increased to 5 seconds
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <div className="relative max-w-3xl mx-auto">
-      {/* Main Image */}
+      {/* Main Image Container */}
       <div className="relative rounded-lg overflow-hidden bg-gray-100 dark:bg-gray-800">
-        <Image
-          src={images[currentIndex].src}
-          alt={images[currentIndex].alt}
-          width={800}
-          height={600}
-          className="w-full object-contain"
-          priority
-        />
+        <div 
+          className="flex transition-transform duration-700 ease-in-out" 
+          style={{ transform: `translateX(-${currentIndex * 100}%)` }}
+        >
+          {images.map((image, index) => (
+            <div key={index} className="min-w-full">
+              <Image
+                src={image.src}
+                alt={image.alt}
+                width={800}
+                height={600}
+                className="w-full object-contain"
+                priority={index === 0}
+              />
+            </div>
+          ))}
+        </div>
       </div>
 
       {/* Navigation Arrows */}

@@ -5,6 +5,7 @@ import {
   ArrowTrendingUpIcon // for rock climbing
 } from '@heroicons/react/24/outline';
 import ImageGallery from '../components/ImageGallery';
+import GoodreadsWidget from '../components/GoodreadsWidget';
 
 const hobbies = [
   {
@@ -75,6 +76,29 @@ export default function Hobbies() {
           !
         </p>
         <ImageGallery />
+      </div>
+
+      <hr className="my-16 border-gray-300 dark:border-gray-700" />
+
+      <div id="reading" className="mb-16 scroll-mt-20">
+        <h2 className="text-3xl font-bold mb-6">Reading List</h2>
+        <div className="flex items-center gap-4">
+          <p className="text-lg text-gray-600 dark:text-gray-400">
+            You can see some books I've been reading here:
+          </p>
+          <a 
+            href="https://www.goodreads.com/review/list/37296901?shelf=read" 
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:opacity-90 transition-opacity"
+          >
+            <img 
+              src="https://s.gr-assets.com/images/badge/badge1.jpg" 
+              alt="Yoel's book recommendations on Goodreads" 
+              className="rounded-lg shadow-md h-8"
+            />
+          </a>
+        </div>
       </div>
     </main>
   );
