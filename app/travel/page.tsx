@@ -84,27 +84,32 @@ export default function Travel() {
   }, [geographyData]);
 
   return (
-    <main className="container mx-auto px-4 sm:px-6 py-12 max-w-6xl">
-      <div className="text-center mb-12">
-        <h1 className="text-4xl font-bold mb-4">Travel Map</h1>
-        <p className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto mb-4">
+    <main className="container mx-auto px-4 sm:px-6 py-8 max-w-6xl">
+      <div className="text-center mb-8 sm:mb-12">
+        <h1 className="text-3xl sm:text-4xl font-bold mb-3 sm:mb-4">Travel Map</h1>
+        <p className="text-base sm:text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto mb-3 sm:mb-4">
           Places I've visited and lived around the world
         </p>
-        <p className="text-2xl font-semibold text-blue-600">
+        <p className="text-xl sm:text-2xl font-semibold text-blue-600">
           {visitedCount} Countries Visited
         </p>
       </div>
 
-      <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 p-4">
-        <div className="h-[600px] relative">
+      <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 p-3 sm:p-4">
+        <div className="h-[300px] sm:h-[400px] md:h-[500px] lg:h-[600px] relative">
           <ComposableMap
             projectionConfig={{
-              scale: 150,
+              scale: window.innerWidth < 640 ? 100 : 150,
               center: [0, 0],
-              rotate: [-10, 0, 0] // Adjust to center the map better
+              rotate: [-10, 0, 0]
             }}
           >
-            <ZoomableGroup>
+            <ZoomableGroup
+              translateExtent={[
+                [-window.innerWidth, -window.innerHeight],
+                [window.innerWidth, window.innerHeight]
+              ]}
+            >
               <Geographies geography={geoUrl}>
                 {({ geographies }) => {
                   // Store geography data for later use
@@ -149,29 +154,32 @@ export default function Travel() {
           </ComposableMap>
 
           {tooltip && (
-            <div className="absolute top-4 left-1/2 transform -translate-x-1/2 bg-white dark:bg-gray-800 px-4 py-2 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700">
-              <p className="text-sm font-medium">{tooltip}</p>
+            <div className="absolute top-2 sm:top-4 left-1/2 transform -translate-x-1/2 bg-white dark:bg-gray-800 px-3 py-1 sm:px-4 sm:py-2 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700">
+              <p className="text-xs sm:text-sm font-medium">{tooltip}</p>
             </div>
           )}
         </div>
 
-        <div className="mt-4 flex justify-center gap-6">
+        <div className="mt-3 sm:mt-4 flex justify-center gap-4 sm:gap-6 text-xs sm:text-sm">
           <div className="flex items-center gap-2">
-            <div className="w-4 h-4 bg-[#60A5FA] rounded"></div>
-            <span className="text-sm">Visited</span>
+            <div className="w-3 h-3 sm:w-4 sm:h-4 bg-[#60A5FA] rounded"></div>
+            <span>Visited</span>
           </div>
           <div className="flex items-center gap-2">
-            <div className="w-4 h-4 bg-[#2563EB] rounded"></div>
-            <span className="text-sm">Lived</span>
+            <div className="w-3 h-3 sm:w-4 sm:h-4 bg-[#2563EB] rounded"></div>
+            <span>Lived</span>
           </div>
         </div>
       </div>
 
-      <div className="mt-12 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 p-6">
-        <h2 className="text-2xl font-bold mb-6">Countries Visited</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+      <div className="mt-8 sm:mt-12 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 p-4 sm:p-6">
+        <h2 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6">Countries Visited</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-4 text-sm sm:text-base">
           {countriesList.map((country, index) => (
-            <div key={index} className="text-gray-600 dark:text-gray-400">
+            <div 
+              key={index} 
+              className="text-gray-600 dark:text-gray-400 p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
+            >
               {country}
             </div>
           ))}
