@@ -48,8 +48,13 @@ export default function Guidance() {
         ))}
       </div>
 
-      {/* Calendar Section */}
-      <Calendar />
+      <hr className="my-16 border-gray-300 dark:border-gray-700" />
+
+      {/* Booking Section */}
+      <section id="book" className="scroll-mt-20">
+        <h2 className="text-3xl font-bold mb-8 text-center">Schedule a Session</h2>
+        <Calendar />
+      </section>
     </main>
   );
 } 
