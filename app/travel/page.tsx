@@ -10,60 +10,60 @@ import {
 
 const geoUrl = "/data/world-geo.json";
 
-type CountryCode = {
+type CountryName = {
   [key: string]: boolean;
 };
 
-const visitedCountries: CountryCode = {
-  '124': true,  // Canada
-  '840': true,  // United States
-  '484': true,  // Mexico
-  '388': true,  // Jamaica
-  '044': true,  // Bahamas
-  '214': true,  // Dominican Republic
-  '862': true,  // Venezuela
-  '152': true,  // Chile
-  '032': true,  // Argentina
-  '724': true,  // Spain
-  '380': true,  // Italy
-  '756': true,  // Switzerland
-  '203': true,  // Czech Republic
-  '276': true,  // Germany
-  '528': true,  // Netherlands
-  '056': true,  // Belgium
-  '250': true,  // France
-  '826': true,  // United Kingdom (England)
-  '040': true,  // Austria
-  '376': true,  // Israel
-  '208': true,  // Denmark
-  '348': true,  // Hungary
-  '702': true,  // Singapore
-  '116': true,  // Cambodia
-  '764': true,  // Thailand
-  '336': true,  // Vatican City
-  '340': true,  // Honduras
-  '300': true,  // Greece
-  '191': true,  // Croatia
-  '170': true,  // Colombia
-  '578': true,  // Norway
-  '662': true,  // Saint Lucia
-  '068': true,  // Bolivia
-  '752': true,  // Sweden
-  '084': true,  // Belize
-  '372': true,  // Ireland
-  '620': true,  // Portugal
-  '188': true,  // Costa Rica
-  '554': true,  // New Zealand
-  '604': true,  // Peru
-  '533': true,  // Aruba
-  '531': true,  // Curaçao
-  '534': true,  // Sint Maarten
-  '136': true,  // Cayman Islands
+const visitedCountries: CountryName = {
+  "Argentina": true,
+  "Aruba": true,
+  "Austria": true,
+  "Bahamas": true,
+  "Belgium": true,
+  "Belize": true,
+  "Bolivia": true,
+  "Cambodia": true,
+  "Canada": true,
+  "Chile": true,
+  "Colombia": true,
+  "Costa Rica": true,
+  "Croatia": true,
+  "Curacao": true,
+  "Czech Rep.": true,
+  "Denmark": true,
+  "Dominican Rep.": true,
+  "France": true,
+  "Germany": true,
+  "Greece": true,
+  "Honduras": true,
+  "Hungary": true,
+  "Ireland": true,
+  "Israel": true,
+  "Italy": true,
+  "Jamaica": true,
+  "Mexico": true,
+  "Netherlands": true,
+  "New Zealand": true,
+  "Norway": true,
+  "Peru": true,
+  "Portugal": true,
+  "Saint Lucia": true,
+  "Saint Martin": true,
+  "Scotland": true,
+  "Singapore": true,
+  "Spain": true,
+  "Sweden": true,
+  "Switzerland": true,
+  "Thailand": true,
+  "United Kingdom": true,
+  "United States": true,
+  "Vatican City": true,
+  "Venezuela": true,
 };
 
-const livedCountries: CountryCode = {
-  '840': true,  // USA
-  '862': true,  // Venezuela
+const livedCountries: CountryName = {
+  "United States": true,
+  "Venezuela": true,
 };
 
 export default function Travel() {
@@ -172,8 +172,9 @@ export default function Travel() {
                   geographiesRef.current = geographies;
 
                   return geographies.map((geo) => {
-                    const isVisited = visitedCountries[geo.id as keyof typeof visitedCountries];
-                    const hasLived = livedCountries[geo.id as keyof typeof livedCountries];
+                    const countryName = geo.properties.name;
+                    const isVisited = visitedCountries[countryName];
+                    const hasLived = livedCountries[countryName];
 
                     return (
                       <Geography
@@ -229,7 +230,7 @@ export default function Travel() {
       <div className="mt-8 sm:mt-12 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 p-4 sm:p-6">
         <h2 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6">Countries Visited</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-4 text-sm sm:text-base">
-          {countriesList.map((country, index) => (
+          {Object.keys(visitedCountries).sort().map((country, index) => (
             <div 
               key={index} 
               className="text-gray-600 dark:text-gray-400 p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
