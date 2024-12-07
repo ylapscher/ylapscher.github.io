@@ -55,6 +55,12 @@ export default function ChatWidget() {
       
       setFormStatus('success');
       setFormData({ name: '', email: '', message: '' });
+      
+      // Auto close after success
+      setTimeout(() => {
+        setIsOpen(false);
+        setFormStatus('idle');
+      }, 2000);
     } catch (error) {
       setFormStatus('error');
     }
@@ -67,15 +73,15 @@ export default function ChatWidget() {
         onClick={() => setIsOpen(!isOpen)}
         className={`${
           isOpen ? 'hidden' : 'flex'
-        } items-center justify-center w-14 h-14 rounded-full bg-blue-600 text-white shadow-lg hover:bg-blue-700 transition-colors`}
+        } items-center justify-center w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-blue-600 text-white shadow-lg hover:bg-blue-700 transition-colors`}
       >
-        <ChatBubbleLeftIcon className="w-6 h-6" />
+        <ChatBubbleLeftIcon className="w-5 h-5 sm:w-6 sm:h-6" />
       </button>
 
       {/* Chat Window */}
       <div className={`${
         isOpen ? 'flex' : 'hidden'
-      } flex-col w-96 h-[500px] bg-white dark:bg-gray-800 rounded-lg shadow-xl border border-gray-200 dark:border-gray-700`}>
+      } flex-col fixed bottom-0 right-0 sm:bottom-4 sm:right-4 w-full sm:w-96 h-[100vh] sm:h-[500px] bg-white dark:bg-gray-800 sm:rounded-lg shadow-xl border border-gray-200 dark:border-gray-700`}>
         {/* Header */}
         <div className="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700">
           <h3 className="text-lg font-semibold">Get in Touch!</h3>
@@ -150,13 +156,13 @@ export default function ChatWidget() {
             </button>
             
             {formStatus === 'success' && (
-              <p className="text-green-600 dark:text-green-400 text-sm">
+              <p className="text-green-600 dark:text-green-400 text-sm text-center">
                 Thanks for reaching out!
               </p>
             )}
             
             {formStatus === 'error' && (
-              <p className="text-red-600 dark:text-red-400 text-sm">
+              <p className="text-red-600 dark:text-red-400 text-sm text-center">
                 Failed to send message. Please try again.
               </p>
             )}
