@@ -44,7 +44,7 @@ export default function Hobbies() {
         {hobbies.map((hobby, index) => (
           <div
             key={index}
-            className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 hover:border-blue-500 dark:hover:border-blue-400 transition-colors"
+            className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700"
           >
             <div className="flex items-start gap-4">
               <div className="flex-shrink-0">
