@@ -78,8 +78,8 @@ app/
 ├── us-travel/     # US states map
 └── api/           # API routes
 public/
-├── data/          # GeoJSON files
-└── images/        # Static images
+├── us-states.json        # US states GeoJSON data
+└── images/              # Static images
 ```
 
 ## Technologies Used
