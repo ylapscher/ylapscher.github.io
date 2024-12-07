@@ -309,7 +309,10 @@ export default function Home() {
             </span>
           </h1>
           <p className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-            Welcome | Bienvenido | ברוכים הבאים!  
+            Welcome | Bienvenido | ברוכים הבאים!
+            <br />
+            Hey there! 👋 This is my little corner of the web where I share my professional journey, 
+            hobbies, and travel adventures 😊
           </p>
           <a
             href="/guidance"
