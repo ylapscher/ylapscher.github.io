@@ -9,22 +9,31 @@ import {
 } from 'react-simple-maps';
 import { visitedStates, livedStates } from '../data/us-states-data';
 
-const geoUrl = "/data/us-states.json";
+const geoUrl = "/us-states.json";
 
 export default function USTravel() {
   const [tooltip, setTooltip] = useState<string | null>(null);
   const [mapScale, setMapScale] = useState(800);
   const [mapDimensions, setMapDimensions] = useState({ width: 800, height: 600 });
   const [geoData, setGeoData] = useState<any>(null);
+  const [error, setError] = useState<string | null>(null);
   const visitedCount = Object.keys(visitedStates).length;
   const livedCount = Object.keys(livedStates).length;
 
   // Load GeoJSON data
   useEffect(() => {
     fetch(geoUrl)
-      .then(response => response.json())
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`Failed to load map data: ${response.status}`);
+        }
+        return response.json();
+      })
       .then(data => setGeoData(data))
-      .catch(error => console.error('Error loading map data:', error));
+      .catch(error => {
+        console.error('Error loading map data:', error);
+        setError('Failed to load map data. Please try again later.');
+      });
   }, []);
 
   // Handle window resize
@@ -48,6 +57,15 @@ export default function USTravel() {
     return (
       <div className="flex justify-center items-center min-h-[500px]">
         <div className="text-lg">Loading map data...</div>
+      </div>
+    );
+  }
+
+  // Show error state if loading fails
+  if (error) {
+    return (
+      <div className="flex justify-center items-center min-h-[500px]">
+        <div className="text-lg text-red-600 dark:text-red-400">{error}</div>
       </div>
     );
   }
