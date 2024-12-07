@@ -10,6 +10,12 @@ A modern, interactive portfolio website built with Next.js that showcases my pro
 - Interactive tooltips and hover states
 - Dynamic statistics for places visited
 
+### 📧 Contact Form Integration
+- Floating chat widget for easy contact
+- SendGrid email integration for reliable message delivery
+- Form validation and error handling
+- Success/error state management
+
 ### 🎨 Personal Sections
 - Professional experience and skills
 - Hobby showcase with custom icons
@@ -19,10 +25,11 @@ A modern, interactive portfolio website built with Next.js that showcases my pro
 ### 💻 Technical Highlights
 - Built with Next.js 13 (App Router)
 - Responsive design with Tailwind CSS
-- Dark mode support
+- Dark mode
 - Interactive maps using react-simple-maps
 - TypeScript for type safety
 - Dynamic data loading and state management
+- SendGrid API integration for email handling
 
 ## Getting Started
 
@@ -44,13 +51,21 @@ npm install
 cp .env.example .env
 ```
 
-4. Run the development server:
+4. Set up your SendGrid API key:
+- Create a SendGrid account
+- Generate an API key with email sending permissions
+- Add the key to your `.env` file:
+```
+SENDGRID_API_KEY=your_api_key_here
+```
+
+5. Run the development server:
 
 ```bash
 npm run dev
 ```
 
-5. Open [http://localhost:3000](http://localhost:3000) to view the site
+6. Open [http://localhost:3000](http://localhost:3000) to view the site
 
 ## Project Structure
 
@@ -74,6 +89,7 @@ public/
 - Tailwind CSS
 - React Simple Maps
 - Hero Icons
+- SendGrid API
 - GitHub Pages (Deployment)
 
 ## Contributing

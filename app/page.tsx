@@ -309,7 +309,7 @@ export default function Home() {
             </span>
           </h1>
           <p className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-            Welcome to my personal website! I excel at managing the entire product life cycle, optimizing processes, and collaborating with teams to turn customer insights into solutions that really make a difference.
+            Welcome | Bienvenido | ברוכים הבאים!  
           </p>
           <a
             href="/guidance"

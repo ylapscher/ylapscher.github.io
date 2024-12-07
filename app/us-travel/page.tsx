@@ -15,10 +15,19 @@ export default function USTravel() {
   const [tooltip, setTooltip] = useState<string | null>(null);
   const [mapScale, setMapScale] = useState(800);
   const [mapDimensions, setMapDimensions] = useState({ width: 800, height: 600 });
+  const [geoData, setGeoData] = useState<any>(null);
   const visitedCount = Object.keys(visitedStates).length;
   const livedCount = Object.keys(livedStates).length;
 
-  // Handle window resize and dimensions
+  // Load GeoJSON data
+  useEffect(() => {
+    fetch(geoUrl)
+      .then(response => response.json())
+      .then(data => setGeoData(data))
+      .catch(error => console.error('Error loading map data:', error));
+  }, []);
+
+  // Handle window resize
   useEffect(() => {
     const handleResize = () => {
       const width = typeof window !== 'undefined' ? window.innerWidth : 800;
@@ -33,6 +42,15 @@ export default function USTravel() {
       return () => window.removeEventListener('resize', handleResize);
     }
   }, []);
+
+  // Show loading state if data isn't loaded yet
+  if (!geoData) {
+    return (
+      <div className="flex justify-center items-center min-h-[500px]">
+        <div className="text-lg">Loading map data...</div>
+      </div>
+    );
+  }
 
   return (
     <main className="container mx-auto px-4 sm:px-6 py-8 max-w-6xl">
@@ -73,7 +91,7 @@ export default function USTravel() {
             className="w-full h-full"
           >
             <ZoomableGroup>
-              <Geographies geography={geoUrl}>
+              <Geographies geography={geoData}>
                 {({ geographies }) => 
                   geographies.map((geo) => {
                     const stateName = geo.properties.NAME;
