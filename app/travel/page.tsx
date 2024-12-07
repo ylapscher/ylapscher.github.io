@@ -7,8 +7,10 @@ import {
   Geography,
   ZoomableGroup
 } from 'react-simple-maps';
+import { visitedStates, livedStates } from '../data/us-states-data';
 
-const geoUrl = "/data/world-geo.json";
+const worldGeoUrl = "/data/world-geo.json";
+const usGeoUrl = "/data/us-states.json";
 
 type CountryName = {
   [key: string]: boolean;
@@ -66,22 +68,39 @@ const livedCountries: CountryName = {
   "Venezuela": true,
 };
 
+// Add type for map data
+type GeoData = Record<string, any>;
+
+type GeoProperties = {
+  NAME: string;
+  name: string;
+  rsmKey: string;
+  properties: {
+    NAME: string;
+    name: string;
+  };
+};
+
 export default function Travel() {
+  // 1. All useState hooks
   const [tooltip, setTooltip] = useState<string | null>(null);
   const [countriesList, setCountriesList] = useState<string[]>([]);
   const [geographyData, setGeographyData] = useState<any[]>([]);
   const [mapScale, setMapScale] = useState(150);
   const [mapDimensions, setMapDimensions] = useState({ width: 800, height: 600 });
-  const geographiesRef = useRef<any[]>([]);
-  const visitedCount = Object.keys(visitedCountries).length;
-  const livedCount = Object.keys(livedCountries).length;
+  const [showUSMap, setShowUSMap] = useState(false);
+  const [worldData, setWorldData] = useState<GeoData | null>(null);
+  const [usData, setUsData] = useState<GeoData | null>(null);
 
-  // Handle window resize and dimensions
+  // 2. All useRef hooks
+  const geographiesRef = useRef<any[]>([]);
+
+  // 3. All useEffect hooks
   useEffect(() => {
     const handleResize = () => {
       const width = typeof window !== 'undefined' ? window.innerWidth : 800;
       const height = typeof window !== 'undefined' ? window.innerHeight : 600;
-      setMapScale(width < 640 ? 100 : 150);
+      setMapScale(showUSMap ? (width < 640 ? 600 : 800) : (width < 640 ? 100 : 150));
       setMapDimensions({ width, height });
     };
 
@@ -90,51 +109,71 @@ export default function Travel() {
       window.addEventListener('resize', handleResize);
       return () => window.removeEventListener('resize', handleResize);
     }
-  }, []);
+  }, [showUSMap]);
 
-  // Handle geography data
   useEffect(() => {
-    fetch(geoUrl)
+    fetch(worldGeoUrl)
       .then(response => response.json())
       .then(data => {
         if (data && data.objects && data.objects.countries) {
-          setGeographyData(data.objects.countries.geometries);
+          setWorldData(data);
         }
+      });
+
+    fetch(usGeoUrl)
+      .then(response => response.json())
+      .then(data => {
+        setUsData(data);
       });
   }, []);
 
-  // Update countries list when geography data is available
-  useEffect(() => {
-    if (geographyData.length > 0) {
-      const names = Object.keys(visitedCountries)
-        .map(code => geographyData.find(geo => geo.id === code)?.properties.name)
-        .filter(Boolean)
-        .sort();
-      setCountriesList(names as string[]);
-    }
-  }, [geographyData]);
-
-  // Update geography data when ref changes
   useEffect(() => {
     if (geographiesRef.current.length > 0 && geographyData.length === 0) {
       setGeographyData(geographiesRef.current);
     }
   }, [geographiesRef.current, geographyData]);
 
+  useEffect(() => {
+    if (geographyData.length > 0) {
+      const names = Object.keys(showUSMap ? visitedStates : visitedCountries)
+        .map(code => geographyData.find(geo => geo.id === code)?.properties.name)
+        .filter(Boolean)
+        .sort();
+      setCountriesList(names as string[]);
+    }
+  }, [geographyData, showUSMap]);
+
+  // Calculate counts
+  const visitedCount = Object.entries(showUSMap ? visitedStates : visitedCountries)
+    .filter(([_, value]) => value === true)
+    .length;
+  const livedCount = Object.entries(showUSMap ? livedStates : livedCountries)
+    .filter(([_, value]) => value === true)
+    .length;
+
+  // Loading states
+  if (!worldData || !usData) return <div>Loading maps...</div>;
+
   return (
     <main className="container mx-auto px-4 sm:px-6 py-8 max-w-6xl">
       <div className="text-center mb-8 sm:mb-12">
         <h1 className="text-3xl sm:text-4xl font-bold mb-3 sm:mb-4">Travel Map</h1>
         <p className="text-base sm:text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto mb-6">
-          Places I've visited and lived around the world
+          Places I've visited and lived around the {showUSMap ? 'United States' : 'world'}
         </p>
+        <button
+          onClick={() => setShowUSMap(!showUSMap)}
+          className="mb-6 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors"
+        >
+          Show {showUSMap ? 'World' : 'US'} Map
+        </button>
         <div className="flex justify-center gap-8">
           <div>
             <p className="text-xl sm:text-2xl font-semibold text-[#60A5FA]">
               {visitedCount}
             </p>
             <p className="text-sm text-gray-600 dark:text-gray-400">
-              Countries Visited
+              {showUSMap ? 'States' : 'Countries'} Visited
             </p>
           </div>
           <div>
@@ -142,7 +181,7 @@ export default function Travel() {
               {livedCount}
             </p>
             <p className="text-sm text-gray-600 dark:text-gray-400">
-              Countries Lived
+              {showUSMap ? 'States' : 'Countries'} Lived
             </p>
           </div>
         </div>
@@ -151,10 +190,10 @@ export default function Travel() {
       <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 p-3 sm:p-4">
         <div className="h-[300px] sm:h-[400px] md:h-[500px] lg:h-[600px] relative">
           <ComposableMap
+            projection={showUSMap ? "geoAlbersUsa" : undefined}
             projectionConfig={{
               scale: mapScale,
-              center: [0, 20],
-              rotate: [-10, -5, 0]
+              ...(showUSMap ? {} : { center: [0, 20], rotate: [-10, -5, 0] })
             }}
             width={800}
             height={400}
@@ -166,22 +205,25 @@ export default function Travel() {
                 [1000, 400]
               ]}
             >
-              <Geographies geography={geoUrl}>
+              <Geographies geography={showUSMap ? usData! : worldData!}>
                 {({ geographies }) => {
-                  // Store geography data in ref
                   geographiesRef.current = geographies;
 
-                  return geographies.map((geo) => {
-                    const countryName = geo.properties.name;
-                    const isVisited = visitedCountries[countryName];
-                    const hasLived = livedCountries[countryName];
+                  return geographies.map((geo: GeoProperties) => {
+                    const name = showUSMap ? geo.properties.NAME : geo.properties.name;
+                    const isVisited = showUSMap ? visitedStates[name] : visitedCountries[name];
+                    const hasLived = showUSMap ? livedStates[name] : livedCountries[name];
+                    
+                    // Debug logging
+                    if (showUSMap && !isVisited && !hasLived) {
+                      console.log('Unmatched state name:', name);
+                    }
 
                     return (
                       <Geography
                         key={geo.rsmKey}
                         geography={geo}
                         onMouseEnter={() => {
-                          const name = geo.properties.name;
                           const status = hasLived ? ' (Lived)' : isVisited ? ' (Visited)' : '';
                           setTooltip(`${name}${status}`);
                         }}
@@ -228,16 +270,20 @@ export default function Travel() {
       </div>
 
       <div className="mt-8 sm:mt-12 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 p-4 sm:p-6">
-        <h2 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6">Countries Visited</h2>
+        <h2 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6">
+          {showUSMap ? 'States' : 'Countries'} Visited
+        </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-4 text-sm sm:text-base">
-          {Object.keys(visitedCountries).sort().map((country, index) => (
-            <div 
-              key={index} 
-              className="text-gray-600 dark:text-gray-400 p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
-            >
-              {country}
-            </div>
-          ))}
+          {Object.entries(showUSMap ? visitedStates : visitedCountries)
+            .filter(([_, value]) => value === true)
+            .map(([place, _], index) => (
+              <div 
+                key={index} 
+                className="text-gray-600 dark:text-gray-400 p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
+              >
+                {place}
+              </div>
+            ))}
         </div>
       </div>
     </main>
