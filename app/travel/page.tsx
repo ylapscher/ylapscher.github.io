@@ -62,7 +62,7 @@ const visitedCountries: CountryName = {
 };
 
 const livedCountries: CountryName = {
-  "United States": true,
+  "United States of America": true,
   "Venezuela": true,
 };
 
