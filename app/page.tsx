@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import { useState, FormEvent } from 'react';
+import { useState } from 'react';
 
 type Experience = {
   role: string;
@@ -28,12 +28,6 @@ type Skill = {
   name: string;
   level: 1 | 2 | 3 | 4;
   category: 'Product Management' | 'Leadership & Collaboration' | 'Technical Skills' | 'Languages';
-};
-
-type FormData = {
-  name: string;
-  email: string;
-  message: string;
 };
 
 function SkillBadge({ skill }: { skill: Skill }) {
@@ -291,55 +285,6 @@ export default function Home() {
     small: "text-sm font-geist-sans",
   };
 
-  const [formData, setFormData] = useState<FormData>({
-    name: '',
-    email: '',
-    message: ''
-  });
-  const [formStatus, setFormStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
-  const [emailError, setEmailError] = useState<string>('');
-
-  const validateEmail = (email: string) => {
-    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!email) {
-      setEmailError('Email is required');
-      return false;
-    }
-    if (!regex.test(email)) {
-      setEmailError('Please enter a valid email address');
-      return false;
-    }
-    setEmailError('');
-    return true;
-  };
-
-  const handleSubmit = async (e: FormEvent) => {
-    e.preventDefault();
-    
-    if (!validateEmail(formData.email)) {
-      return;
-    }
-    
-    setFormStatus('submitting');
-    
-    try {
-      const response = await fetch('/api/contact', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      });
-
-      if (!response.ok) throw new Error('Failed to send message');
-      
-      setFormStatus('success');
-      setFormData({ name: '', email: '', message: '' });
-    } catch (error) {
-      setFormStatus('error');
-    }
-  };
-
   return (
     <>
       {/* Hero Section */}
@@ -442,84 +387,6 @@ export default function Home() {
               </div>
             ))}
           </div>
-        </section>
-
-        {/* Contact Form Section */}
-        <hr className="my-8 border-gray-300 dark:border-gray-700" />
-        <section id="contact" className="mb-16 sm:mb-20 scroll-mt-20">
-          <h2 className={`${textStyles.h2} mb-6`}>Get in Touch</h2>
-          <form onSubmit={handleSubmit} className="space-y-6 max-w-xl">
-            <div>
-              <label htmlFor="name" className="block text-sm font-medium mb-2">
-                Name
-              </label>
-              <input
-                type="text"
-                id="name"
-                required
-                className="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 focus:ring-2 focus:ring-blue-500 outline-none transition-shadow"
-                value={formData.name}
-                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-              />
-            </div>
-            
-            <div>
-              <label htmlFor="email" className="block text-sm font-medium mb-2">
-                Email
-              </label>
-              <input
-                type="email"
-                id="email"
-                required
-                className={`w-full px-4 py-2 rounded-lg border ${
-                  emailError ? 'border-red-500' : 'border-gray-300 dark:border-gray-700'
-                } bg-white dark:bg-gray-800 focus:ring-2 focus:ring-blue-500 outline-none transition-shadow`}
-                value={formData.email}
-                onChange={(e) => {
-                  setFormData({ ...formData, email: e.target.value });
-                  validateEmail(e.target.value);
-                }}
-                onBlur={(e) => validateEmail(e.target.value)}
-              />
-              {emailError && (
-                <p className="mt-1 text-sm text-red-500">{emailError}</p>
-              )}
-            </div>
-            
-            <div>
-              <label htmlFor="message" className="block text-sm font-medium mb-2">
-                Message
-              </label>
-              <textarea
-                id="message"
-                required
-                rows={4}
-                className="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 focus:ring-2 focus:ring-blue-500 outline-none transition-shadow resize-none"
-                value={formData.message}
-                onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-              />
-            </div>
-            
-            <button
-              type="submit"
-              disabled={formStatus === 'submitting'}
-              className="w-full bg-blue-600 text-white font-semibold py-2 px-4 rounded hover:bg-blue-700 transition disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              {formStatus === 'submitting' ? 'Sending...' : 'Send Message'}
-            </button>
-            
-            {formStatus === 'success' && (
-              <p className="text-green-600 dark:text-green-400 text-sm">
-                Message sent successfully!
-              </p>
-            )}
-            
-            {formStatus === 'error' && (
-              <p className="text-red-600 dark:text-red-400 text-sm">
-                Failed to send message. Please try again.
-              </p>
-            )}
-          </form>
         </section>
       </main>
     </>
