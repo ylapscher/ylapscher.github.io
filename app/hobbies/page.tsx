@@ -2,7 +2,6 @@ import {
   UserGroupIcon, // for improv comedy
   MusicalNoteIcon, // for piano
   FireIcon, // for hot yoga
-  ArrowTrendingUpIcon // for rock climbing
 } from '@heroicons/react/24/outline';
 import ImageGallery from '../components/ImageGallery';
 import GoodreadsWidget from '../components/GoodreadsWidget';
@@ -11,7 +10,21 @@ const hobbies = [
   {
     title: "Rock Climbing",
     description: "I love sport climbing outdoors and bouldering indoors. It's a great way to stay active and challenge myself.",
-    icon: <ArrowTrendingUpIcon className="w-8 h-8 text-blue-600" />,
+    icon: (
+      <svg 
+        viewBox="0 0 24 24" 
+        fill="none" 
+        className="w-8 h-8 text-blue-600"
+        stroke="currentColor" 
+        strokeWidth="1.5"
+      >
+        <path 
+          d="M5 19L4 12L7 8L10 7L14 4L18 5L20 9L19 14L17 17L13 19L9 19L5 19Z" 
+          fill="currentColor"
+          strokeLinejoin="round"
+        />
+      </svg>
+    ),
   },
   {
     title: "Hot Yoga",

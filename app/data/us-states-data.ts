@@ -29,7 +29,7 @@ export const visitedStates: StateRecord = {
   "Missouri": false,
   "Montana": false,
   "Nebraska": false,
-  "Nevada": false,
+  "Nevada": true,
   "New Hampshire": true,
   "New Jersey": true,
   "New Mexico": false,
@@ -58,6 +58,7 @@ export const visitedStates: StateRecord = {
 export const livedStates: StateRecord = {
   "Florida": true,
   "New York": true,
+  "New Jersey": true,
   "Maine": true,
   "Georgia": true,
   "Louisiana": true,
