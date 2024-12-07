@@ -81,7 +81,7 @@ export default function ChatWidget() {
       {/* Chat Window */}
       <div className={`${
         isOpen ? 'flex' : 'hidden'
-      } flex-col fixed bottom-0 right-0 sm:bottom-4 sm:right-4 w-full sm:w-96 h-[100vh] sm:h-[500px] bg-white dark:bg-gray-800 sm:rounded-lg shadow-xl border border-gray-200 dark:border-gray-700`}>
+      } flex-col absolute bottom-0 right-0 w-[calc(100vw-2rem)] sm:w-96 h-[80vh] sm:h-[500px] max-h-[600px] bg-white dark:bg-gray-800 rounded-lg shadow-xl border border-gray-200 dark:border-gray-700`}>
         {/* Header */}
         <div className="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700">
           <h3 className="text-lg font-semibold">Get in Touch!</h3>
