@@ -105,28 +105,30 @@ function ExperienceTimeline({ experiences }: { experiences: Experience[] }) {
               index % 2 === 1 ? 'md:pl-0' : ''
             }`}>
               <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700">
-                <div className="flex items-start gap-4">
-                  {experience.image && (
-                    <div className="flex-shrink-0 w-12 h-12">
-                      <Image
-                        src={experience.image.src}
-                        alt={experience.image.alt}
-                        width={48}
-                        height={48}
-                        className="rounded object-cover"
-                      />
+                <div className="flex flex-col gap-4">
+                  <div className="flex items-center gap-4">
+                    {experience.image && (
+                      <div className="flex-shrink-0 w-12 h-12">
+                        <Image
+                          src={experience.image.src}
+                          alt={experience.image.alt}
+                          width={48}
+                          height={48}
+                          className="rounded object-cover"
+                        />
+                      </div>
+                    )}
+                    <div>
+                      <h3 className="font-bold text-lg mb-1 text-gray-900 dark:text-white">
+                        {experience.role}
+                      </h3>
+                      <p className="text-gray-700 dark:text-gray-400 text-sm">
+                        {experience.company}
+                      </p>
                     </div>
-                  )}
-                  <div className="flex-grow">
-                    <h3 className="font-bold text-lg mb-1 text-gray-900 dark:text-white">
-                      {experience.role}
-                    </h3>
-                    <p className="text-gray-700 dark:text-gray-400 text-sm mb-3">
-                      {experience.company}
-                    </p>
-                    <div className="text-gray-700 dark:text-gray-400 text-sm leading-relaxed">
-                      {experience.achievements[0]}
-                    </div>
+                  </div>
+                  <div className="text-gray-700 dark:text-gray-400 text-sm leading-relaxed">
+                    {experience.achievements[0]}
                   </div>
                 </div>
               </div>

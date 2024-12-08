@@ -20,8 +20,9 @@ const hobbies = [
       >
         <path 
           d="M5 19L4 12L7 8L10 7L14 4L18 5L20 9L19 14L17 17L13 19L9 19L5 19Z" 
-          fill="currentColor"
+          strokeLinecap="round"
           strokeLinejoin="round"
+          fill="none"
         />
       </svg>
     ),

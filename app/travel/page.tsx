@@ -281,7 +281,7 @@ export default function Travel() {
             .map(([place, _], index) => (
               <div 
                 key={index} 
-                className="text-gray-700 dark:text-gray-400 p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
+                className="text-gray-700 dark:text-gray-400 p-2 rounded-lg"
               >
                 {place}
               </div>
