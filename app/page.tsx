@@ -255,12 +255,12 @@ export default function Home() {
 
   const skills: Skill[] = [
     // Product Management
-    { name: "Product Strategy", level: 3 as const, category: "Product Management" as const },
-    { name: "Market Analysis", level: 2 as const, category: "Product Management" as const },
-    { name: "Roadmapping & Prioritization", level: 4 as const, category: "Product Management" as const },
-    { name: "Customer Journey Mapping", level: 3 as const, category: "Product Management" as const },
     { name: "Product Launch & Planning", level: 4 as const, category: "Product Management" as const },
+    { name: "Roadmapping & Prioritization", level: 4 as const, category: "Product Management" as const },
+    { name: "Product Strategy", level: 3 as const, category: "Product Management" as const },
+    { name: "Customer Journey Mapping", level: 3 as const, category: "Product Management" as const },
     { name: "Backlog Management", level: 3 as const, category: "Product Management" as const },
+    { name: "Market Analysis", level: 2 as const, category: "Product Management" as const },
     
     // Leadership & Collaboration
     { name: "Team Building & Leadership", level: 4 as const, category: "Leadership & Collaboration" as const },
@@ -318,7 +318,7 @@ export default function Home() {
             hobbies, and travel adventures 😊
           </p>
           <a
-            href="/guidance"
+            href="/services"
             className="mt-4 inline-block bg-blue-600 text-white font-semibold py-2 px-4 rounded hover:bg-blue-700 transition mx-auto"
           >
             Let's Connect!
@@ -380,7 +380,7 @@ export default function Home() {
             {Object.entries(
               skills.reduce((acc, skill) => ({
                 ...acc,
-                [skill.category]: [...(acc[skill.category] || []), skill],
+                [skill.category]: [...(acc[skill.category] || []), skill].sort((a, b) => b.level - a.level),
               }), {} as Record<string, typeof skills>)
             ).map(([category, skills]) => (
               <div key={category}>
