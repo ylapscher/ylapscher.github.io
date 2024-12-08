@@ -92,7 +92,7 @@ function ExperienceTimeline({ experiences }: { experiences: Experience[] }) {
             }`}
           >
             {/* Year as Marker */}
-            <div className="absolute left-4 md:left-1/2 transform md:-translate-x-1/2 flex items-center justify-center z-10">
+            <div className="absolute left-4 md:left-1/2 transform md:-translate-x-1/2 flex items-center justify-center z-[1]">
               <div className="bg-blue-600 rounded-full flex items-center">
                 <span className="text-base font-extrabold text-blue-600 bg-gray-50 mx-[1px] my-[1px] px-3 py-0.5 rounded-full">
                   {experience.duration.split(' - ')[0]}
