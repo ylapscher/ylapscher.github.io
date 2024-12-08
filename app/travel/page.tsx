@@ -157,13 +157,15 @@ export default function Travel() {
   return (
     <main className="container mx-auto px-4 sm:px-6 py-8 max-w-6xl">
       <div className="text-center mb-8 sm:mb-12">
-        <h1 className="text-3xl sm:text-4xl font-bold mb-3 sm:mb-4">Travel Map</h1>
-        <p className="text-base sm:text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto mb-6">
+        <h1 className="text-3xl sm:text-4xl font-bold mb-3 sm:mb-4 text-gray-900 dark:text-white">
+          Travel Map
+        </h1>
+        <p className="text-base sm:text-lg text-gray-700 dark:text-gray-400 max-w-2xl mx-auto mb-6">
           Places I've visited and lived around the {showUSMap ? 'United States' : 'world'}
         </p>
         <button
           onClick={() => setShowUSMap(!showUSMap)}
-          className="mb-6 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors"
+          className="mb-6 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors"
         >
           Show {showUSMap ? 'World' : 'US'} Map
         </button>
@@ -172,7 +174,7 @@ export default function Travel() {
             <p className="text-xl sm:text-2xl font-semibold text-[#60A5FA]">
               {visitedCount}
             </p>
-            <p className="text-sm text-gray-600 dark:text-gray-400">
+            <p className="text-sm text-gray-700 dark:text-gray-400">
               {showUSMap ? 'States' : 'Countries'} Visited
             </p>
           </div>
@@ -180,7 +182,7 @@ export default function Travel() {
             <p className="text-xl sm:text-2xl font-semibold text-[#2563EB]">
               {livedCount}
             </p>
-            <p className="text-sm text-gray-600 dark:text-gray-400">
+            <p className="text-sm text-gray-700 dark:text-gray-400">
               {showUSMap ? 'States' : 'Countries'} Lived
             </p>
           </div>
@@ -270,7 +272,7 @@ export default function Travel() {
       </div>
 
       <div className="mt-8 sm:mt-12 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 p-4 sm:p-6">
-        <h2 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6">
+        <h2 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6 text-gray-900 dark:text-white">
           {showUSMap ? 'States' : 'Countries'} Visited
         </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-4 text-sm sm:text-base">
@@ -279,7 +281,7 @@ export default function Travel() {
             .map(([place, _], index) => (
               <div 
                 key={index} 
-                className="text-gray-600 dark:text-gray-400 p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
+                className="text-gray-700 dark:text-gray-400 p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
               >
                 {place}
               </div>
