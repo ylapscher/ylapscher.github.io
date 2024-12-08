@@ -70,8 +70,7 @@ function SkillBadge({ skill }: { skill: Skill }) {
         {getHarveyBall(skill.level)}
       </span>
       
-      {/* Tooltip */}
-      <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 text-xs text-white bg-gray-900 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap">
+      <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 text-xs text-gray-900 dark:text-white bg-gray-100 dark:bg-gray-800 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap">
         Proficiency: {skill.level}/4
       </div>
     </div>
@@ -119,9 +118,13 @@ function ExperienceTimeline({ experiences }: { experiences: Experience[] }) {
                     </div>
                   )}
                   <div className="flex-grow">
-                    <h3 className="font-bold text-lg mb-1">{experience.role}</h3>
-                    <p className="text-gray-500 dark:text-gray-400 text-sm mb-3">{experience.company}</p>
-                    <div className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">
+                    <h3 className="font-bold text-lg mb-1 text-gray-900 dark:text-white">
+                      {experience.role}
+                    </h3>
+                    <p className="text-gray-700 dark:text-gray-400 text-sm mb-3">
+                      {experience.company}
+                    </p>
+                    <div className="text-gray-700 dark:text-gray-400 text-sm leading-relaxed">
                       {experience.achievements[0]}
                     </div>
                   </div>
@@ -303,15 +306,15 @@ export default function Home() {
         </div>
         <div className="flex flex-col gap-6 text-center">
           <h1 className={textStyles.h1}>
-            Joe Lapscher
-            <span className="block text-xl sm:text-2xl text-gray-600 dark:text-gray-400 mt-2 font-geist-sans">
+            <span className="text-gray-900 dark:text-white">Joe Lapscher</span>
+            <span className="block text-xl sm:text-2xl text-gray-700 dark:text-gray-400 mt-2 font-geist-sans">
               Senior Product Manager
             </span>
           </h1>
-          <p className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+          <p className="text-lg text-gray-700 dark:text-gray-400 max-w-2xl mx-auto">
             Welcome | Bienvenido | ברוכים הבאים!
             <br />
-            Hey there! 👋 This is my little corner of the web where I share my professional journey, 
+            Hey there! This is my little corner of the web where I share my professional journey, 
             hobbies, and travel adventures 😊
           </p>
           <a
@@ -329,14 +332,14 @@ export default function Home() {
 
         {/* Work Experience Section */}
         <section id="experience" className="mb-16 sm:mb-20 scroll-mt-20">
-          <h2 className={`${textStyles.h2} mb-12`}>Experience</h2>
+          <h2 className={`${textStyles.h2} mb-12 text-gray-900 dark:text-white`}>Experience</h2>
           <ExperienceTimeline experiences={experiences} />
         </section>
 
         {/* Horizontal Divider for Initiatives */}
         <hr className="my-8 border-gray-300 dark:border-gray-700" />
         <section id="initiatives" className="mb-16 sm:mb-20 scroll-mt-20">
-          <h2 className={`${textStyles.h2} mb-12`}>Initiatives</h2>
+          <h2 className={`${textStyles.h2} mb-12 text-gray-900 dark:text-white`}>Initiatives</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {initiatives.map((initiative, index) => (
               <a
@@ -357,10 +360,10 @@ export default function Home() {
                   </div>
                 )}
                 <div className="p-4 sm:p-6 flex flex-col flex-grow">
-                  <h3 className="text-lg font-bold mb-2 group-hover:text-blue-600 transition-colors">
+                  <h3 className="text-lg font-bold mb-2 text-gray-900 dark:text-white group-hover:text-blue-600 transition-colors">
                     {initiative.title}
                   </h3>
-                  <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">
+                  <p className="text-gray-700 dark:text-gray-400 text-sm leading-relaxed">
                     {initiative.description}
                   </p>
                 </div>
@@ -372,7 +375,7 @@ export default function Home() {
         {/* Horizontal Divider for Skills */}
         <hr className="my-8 border-gray-300 dark:border-gray-700" />
         <section id="skills" className="mb-16 sm:mb-20 scroll-mt-20">
-          <h2 className={`${textStyles.h2} mb-6`}>Skills</h2>
+          <h2 className={`${textStyles.h2} mb-6 text-gray-900 dark:text-white`}>Skills</h2>
           <div className="space-y-8">
             {Object.entries(
               skills.reduce((acc, skill) => ({
@@ -381,7 +384,7 @@ export default function Home() {
               }), {} as Record<string, typeof skills>)
             ).map(([category, skills]) => (
               <div key={category}>
-                <h3 className={`${textStyles.h3} mb-4`}>{category}</h3>
+                <h3 className={`${textStyles.h3} mb-4 text-gray-900 dark:text-white`}>{category}</h3>
                 <div className="flex flex-wrap gap-2">
                   {skills.map((skill) => (
                     <SkillBadge key={skill.name} skill={skill} />

@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
+import { SunIcon, MoonIcon } from '@heroicons/react/24/outline';
 
 const textStyles = {
   h3: "text-lg sm:text-xl font-semibold font-geist-sans",
@@ -18,8 +19,68 @@ const navLinks = [
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState<boolean | null>(null);
   const pathname = usePathname();
   const [activeSection, setActiveSection] = useState('');
+
+  // Initialize dark mode
+  useEffect(() => {
+    // Check if we're in the browser
+    if (typeof window !== 'undefined') {
+      // Check saved preference
+      const savedTheme = localStorage.getItem('theme');
+      const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      
+      // Determine initial mode
+      const shouldBeDark = savedTheme === 'dark' || (!savedTheme && systemPrefersDark);
+      
+      // Update DOM and state
+      if (shouldBeDark) {
+        document.documentElement.classList.add('dark');
+      } else {
+        document.documentElement.classList.remove('dark');
+      }
+      setIsDarkMode(shouldBeDark);
+    }
+  }, []);
+
+  // Handle theme toggle
+  const toggleDarkMode = () => {
+    if (typeof window !== 'undefined') {
+      const newDarkMode = !isDarkMode;
+      
+      // Update DOM
+      if (newDarkMode) {
+        document.documentElement.classList.add('dark');
+        localStorage.setItem('theme', 'dark');
+      } else {
+        document.documentElement.classList.remove('dark');
+        localStorage.setItem('theme', 'light');
+      }
+      
+      // Update state
+      setIsDarkMode(newDarkMode);
+    }
+  };
+
+  // Only render dark mode toggle if state is initialized
+  const renderDarkModeToggle = () => {
+    if (isDarkMode === null) return null;
+    
+    return (
+      <button
+        onClick={toggleDarkMode}
+        className="w-8 h-8 flex items-center justify-center rounded-full border border-gray-300 dark:border-gray-600 hover:border-gray-400 dark:hover:border-gray-500 transition-colors"
+        aria-label="Toggle dark mode"
+      >
+        {isDarkMode ? (
+          <SunIcon className="w-4 h-4 text-gray-700 dark:text-gray-300" />
+        ) : (
+          <MoonIcon className="w-4 h-4 text-gray-700 dark:text-gray-300" />
+        )}
+      </button>
+    );
+  };
 
   // Add intersection observer for section highlighting
   useEffect(() => {
@@ -49,7 +110,7 @@ export default function Navbar() {
         <div className="flex justify-between items-center">
           <Link 
             href="/" 
-            className={`${textStyles.h3} hover:text-gray-600 dark:hover:text-gray-300 transition-colors`}
+            className={`${textStyles.h3} text-gray-900 hover:text-gray-700 dark:text-white dark:hover:text-gray-300 transition-colors`}
           >
             Joe Lapscher
           </Link>
@@ -65,7 +126,7 @@ export default function Navbar() {
                   className={`${textStyles.small} relative transition-colors
                     ${(pathname === href || (pathname === '/' && href === '/'))
                       ? 'text-gray-900 dark:text-white after:absolute after:left-0 after:right-0 after:-bottom-1 after:h-0.5 after:bg-blue-600 after:rounded-full'
-                      : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white'
+                      : 'text-gray-700 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white'
                     }
                   `}
                 >
@@ -74,13 +135,13 @@ export default function Navbar() {
               ))}
             </div>
 
-            {/* Resume and LinkedIn Links */}
+            {/* Resume, LinkedIn, and Dark Mode Toggle */}
             <div className="flex items-center gap-4">
               <a
                 href="https://drive.google.com/file/d/1xGWebBdenzHo2Q7hjaM1R-Ep7yr8M8FU/view?usp=sharing"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors"
+                className="text-sm text-gray-700 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors"
               >
                 Resume
               </a>
@@ -91,45 +152,49 @@ export default function Navbar() {
                 className="w-8 h-8 flex items-center justify-center rounded-full border border-gray-300 dark:border-gray-600 hover:border-gray-400 dark:hover:border-gray-500 transition-colors"
               >
                 <svg
-                  className="w-4 h-4 text-gray-700 dark:text-gray-300"
+                  className="w-4 h-4 text-gray-900 dark:text-gray-300"
                   fill="currentColor"
                   viewBox="0 0 24 24"
                 >
                   <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
                 </svg>
               </a>
+              {renderDarkModeToggle()}
             </div>
           </div>
 
           {/* Mobile menu button */}
-          <button
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="md:hidden p-2"
-            aria-label="Toggle menu"
-          >
-            <svg
-              className="w-6 h-6 text-gray-600 dark:text-gray-400"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
+          <div className="md:hidden flex items-center gap-4">
+            {renderDarkModeToggle()}
+            <button
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              className="p-2"
+              aria-label="Toggle menu"
             >
-              {isMenuOpen ? (
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M6 18L18 6M6 6l12 12"
-                />
-              ) : (
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M4 6h16M4 12h16M4 18h16"
-                />
-              )}
-            </svg>
-          </button>
+              <svg
+                className="w-6 h-6 text-gray-900 dark:text-gray-400"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                {isMenuOpen ? (
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                ) : (
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M4 6h16M4 12h16M4 18h16"
+                  />
+                )}
+              </svg>
+            </button>
+          </div>
         </div>
 
         {/* Mobile menu */}
@@ -144,7 +209,7 @@ export default function Navbar() {
                   className={`text-sm transition-colors px-2 py-1
                     ${(pathname === '/' && activeSection === href.slice(2)) || (pathname === href)
                       ? 'text-gray-900 dark:text-white'
-                      : 'text-gray-600 dark:text-gray-400'
+                      : 'text-gray-700 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white'
                     }
                   `}
                 >
@@ -156,7 +221,7 @@ export default function Navbar() {
                   href="https://drive.google.com/file/d/1xGWebBdenzHo2Q7hjaM1R-Ep7yr8M8FU/view?usp=sharing"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-sm text-gray-600 dark:text-gray-400"
+                  className="text-sm text-gray-700 dark:text-gray-400"
                   onClick={() => setIsMenuOpen(false)}
                 >
                   Resume
@@ -169,7 +234,7 @@ export default function Navbar() {
                   onClick={() => setIsMenuOpen(false)}
                 >
                   <svg
-                    className="w-4 h-4 text-gray-700 dark:text-gray-300"
+                    className="w-4 h-4 text-gray-900 dark:text-gray-300"
                     fill="currentColor"
                     viewBox="0 0 24 24"
                   >

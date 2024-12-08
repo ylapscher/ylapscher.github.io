@@ -47,8 +47,8 @@ export default function Hobbies() {
   return (
     <main className="container mx-auto px-4 sm:px-6 py-12 max-w-4xl">
       <div className="text-center mb-12">
-        <h1 className="text-4xl font-bold mb-4">Hobbies</h1>
-        <p className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+        <h1 className="text-4xl font-bold mb-4 text-gray-900 dark:text-white">Hobbies</h1>
+        <p className="text-lg text-gray-700 dark:text-gray-400 max-w-2xl mx-auto">
           When I'm not building products, you can find me pursuing these passions:
         </p>
       </div>
@@ -64,8 +64,10 @@ export default function Hobbies() {
                 {hobby.icon}
               </div>
               <div>
-                <h3 className="text-xl font-bold mb-2">{hobby.title}</h3>
-                <p className="text-gray-600 dark:text-gray-400">
+                <h3 className="text-xl font-bold mb-2 text-gray-900 dark:text-white">
+                  {hobby.title}
+                </h3>
+                <p className="text-gray-700 dark:text-gray-400">
                   {hobby.description}
                 </p>
               </div>
@@ -77,8 +79,8 @@ export default function Hobbies() {
       <hr className="my-16 border-gray-300 dark:border-gray-700" />
 
       <div id="barber" className="mb-16 scroll-mt-20">
-        <h2 className="text-3xl font-bold mb-6">Barber Portfolio</h2>
-        <p className="text-lg text-gray-600 dark:text-gray-400 mb-8">
+        <h2 className="text-3xl font-bold mb-6 text-gray-900 dark:text-white">Barber Portfolio</h2>
+        <p className="text-lg text-gray-700 dark:text-gray-400 mb-8">
           If you like my work below, schedule your appointment{' '}
           <a 
             href="/guidance#book" 
@@ -94,9 +96,9 @@ export default function Hobbies() {
       <hr className="my-16 border-gray-300 dark:border-gray-700" />
 
       <div id="reading" className="mb-16 scroll-mt-20">
-        <h2 className="text-3xl font-bold mb-6">Reading List</h2>
+        <h2 className="text-3xl font-bold mb-6 text-gray-900 dark:text-white">Reading List</h2>
         <div className="flex items-center gap-4">
-          <p className="text-lg text-gray-600 dark:text-gray-400">
+          <p className="text-lg text-gray-700 dark:text-gray-400">
             You can see some books I've been reading here:
           </p>
           <a 

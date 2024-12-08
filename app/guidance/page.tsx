@@ -23,8 +23,8 @@ export default function Guidance() {
   return (
     <main className="container mx-auto px-4 sm:px-6 py-12 max-w-4xl">
       <div className="text-center mb-12">
-        <h1 className="text-4xl font-bold mb-4">How can I help?</h1>
-        <p className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+        <h1 className="text-4xl font-bold mb-4 text-gray-900 dark:text-white">How can I help?</h1>
+        <p className="text-lg text-gray-700 dark:text-gray-400 max-w-2xl mx-auto">
           With a decade of experience under my belt, I'd love to help where I can. Here are my areas of focus:
         </p>
       </div>
@@ -39,8 +39,10 @@ export default function Guidance() {
               <div className="mb-4">
                 {service.icon}
               </div>
-              <h3 className="text-xl font-bold mb-2">{service.title}</h3>
-              <p className="text-gray-600 dark:text-gray-400">
+              <h3 className="text-xl font-bold mb-2 text-gray-900 dark:text-white">
+                {service.title}
+              </h3>
+              <p className="text-gray-700 dark:text-gray-400">
                 {service.description}
               </p>
             </div>
@@ -52,7 +54,9 @@ export default function Guidance() {
 
       {/* Booking Section */}
       <section id="book" className="scroll-mt-20">
-        <h2 className="text-3xl font-bold mb-8 text-center">Schedule a Session</h2>
+        <h2 className="text-3xl font-bold mb-8 text-center text-gray-900 dark:text-white">
+          Schedule a Session
+        </h2>
         <Calendar />
       </section>
     </main>
