@@ -83,7 +83,7 @@ export default function Hobbies() {
         <p className="text-lg text-gray-700 dark:text-gray-400 mb-8">
           If you like my work below, schedule your appointment{' '}
           <a 
-            href="/guidance#book" 
+            href="/services#book" 
             className="text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 underline"
           >
             here

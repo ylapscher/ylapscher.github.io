@@ -13,7 +13,7 @@ const textStyles = {
 const navLinks = [
   { href: '/', label: 'Experience' },
   { href: '/hobbies', label: 'Hobbies' },
-  { href: '/guidance', label: 'Guidance' },
+  { href: '/services', label: 'Services' },
   { href: '/travel', label: 'Travel' },
 ];
 
