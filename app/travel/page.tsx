@@ -254,7 +254,7 @@ export default function Travel() {
 
           {tooltip && (
             <div className="absolute top-2 sm:top-4 left-1/2 transform -translate-x-1/2 bg-white dark:bg-gray-800 px-3 py-1 sm:px-4 sm:py-2 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700">
-              <p className="text-xs sm:text-sm font-medium">{tooltip}</p>
+              <p className="text-xs sm:text-sm font-medium text-gray-900 dark:text-gray-100">{tooltip}</p>
             </div>
           )}
         </div>
@@ -262,11 +262,11 @@ export default function Travel() {
         <div className="mt-3 sm:mt-4 flex justify-center gap-4 sm:gap-6 text-xs sm:text-sm">
           <div className="flex items-center gap-2">
             <div className="w-3 h-3 sm:w-4 sm:h-4 bg-[#60A5FA] rounded"></div>
-            <span>Visited</span>
+            <span className="text-gray-900 dark:text-gray-400">Visited</span>
           </div>
           <div className="flex items-center gap-2">
             <div className="w-3 h-3 sm:w-4 sm:h-4 bg-[#2563EB] rounded"></div>
-            <span>Lived</span>
+            <span className="text-gray-900 dark:text-gray-400">Lived</span>
           </div>
         </div>
       </div>
