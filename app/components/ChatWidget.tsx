@@ -81,9 +81,9 @@ export default function ChatWidget() {
       {/* Chat Window */}
       <div className={`${
         isOpen ? 'flex' : 'hidden'
-      } flex-col absolute bottom-0 right-0 w-[calc(100vw-2rem)] sm:w-96 h-[80vh] sm:h-[500px] max-h-[600px] bg-white dark:bg-gray-800 rounded-lg shadow-xl border border-gray-200 dark:border-gray-700`}>
+      } flex-col absolute bottom-0 right-0 w-[calc(100vw-2rem)] sm:w-96 h-[calc(100vh-8rem)] sm:h-[450px] max-h-[500px] bg-white dark:bg-gray-800 rounded-lg shadow-xl border border-gray-200 dark:border-gray-700`}>
         {/* Header */}
-        <div className="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700">
+        <div className="flex items-center justify-between p-3 border-b border-gray-200 dark:border-gray-700">
           <h3 className="text-lg font-semibold">Get in Touch!</h3>
           <button
             onClick={() => setIsOpen(false)}
@@ -94,8 +94,8 @@ export default function ChatWidget() {
         </div>
 
         {/* Form */}
-        <div className="flex-1 overflow-y-auto p-4">
-          <form onSubmit={handleSubmit} className="space-y-4">
+        <div className="flex-1 overflow-y-auto p-3">
+          <form onSubmit={handleSubmit} className="space-y-3">
             <div>
               <label htmlFor="name" className="block text-sm font-medium mb-1">
                 Name
@@ -140,7 +140,7 @@ export default function ChatWidget() {
               <textarea
                 id="message"
                 required
-                rows={4}
+                rows={3}
                 className="w-full px-3 py-2 rounded border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 focus:ring-2 focus:ring-blue-500 outline-none transition-shadow resize-none"
                 value={formData.message}
                 onChange={(e) => setFormData({ ...formData, message: e.target.value })}
