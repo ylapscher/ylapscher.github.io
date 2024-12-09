@@ -43,27 +43,31 @@ export default function ChatWidget() {
     setFormStatus('submitting');
     
     try {
-      const response = await fetch(process.env.NEXT_PUBLIC_FORMSPREE_ENDPOINT || '', {
+      const response = await fetch(`https://formspree.io/f/${process.env.NEXT_PUBLIC_FORMSPREE_FORM_ID}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Accept': 'application/json'
         },
         body: JSON.stringify(formData),
       });
 
       if (!response.ok) {
-        const errorData = await response.text();
-        console.error('Response not ok:', response.status, errorData);
-        throw new Error(`Failed to send message: ${response.status} ${errorData}`);
+        throw new Error(`Failed to send message: ${response.status}`);
       }
       
-      setFormStatus('success');
-      setFormData({ name: '', email: '', message: '' });
-      
-      setTimeout(() => {
-        setIsOpen(false);
-        setFormStatus('idle');
-      }, 2000);
+      const data = await response.json();
+      if (data.ok) {
+        setFormStatus('success');
+        setFormData({ name: '', email: '', message: '' });
+        
+        setTimeout(() => {
+          setIsOpen(false);
+          setFormStatus('idle');
+        }, 2000);
+      } else {
+        throw new Error('Formspree submission failed');
+      }
     } catch (error) {
       console.error('Error in handleSubmit:', error);
       setFormStatus('error');
