@@ -33,6 +33,12 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning className={`${geistSans.variable} ${geistMono.variable}`}>
       <head>
         <GoogleAnalytics />
+        <link 
+          rel="preload" 
+          href="https://formspree.io/static/img/loading.svg" 
+          as="image" 
+          type="image/svg+xml"
+        />
       </head>
       <body suppressHydrationWarning className="antialiased font-sans bg-white dark:bg-gray-900">
         <Navbar />

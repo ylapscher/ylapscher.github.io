@@ -15,9 +15,11 @@ const nextConfig = {
             key: 'Content-Security-Policy',
             value: `
               default-src 'self' 'unsafe-eval' 'unsafe-inline' formspree.io *.formspree.io;
-              font-src 'self' data: fonts.gstatic.com;
-              img-src 'self' data: blob: *.formspree.io;
-              style-src 'self' 'unsafe-inline' fonts.googleapis.com;
+              font-src 'self' data: fonts.gstatic.com *.gstatic.com;
+              img-src 'self' data: blob: *.formspree.io static.cloudflareinsights.com;
+              style-src 'self' 'unsafe-inline' fonts.googleapis.com *.googleapis.com;
+              script-src 'self' 'unsafe-inline' 'unsafe-eval' static.cloudflareinsights.com;
+              connect-src 'self' formspree.io *.formspree.io;
             `.replace(/\s{2,}/g, ' ').trim()
           }
         ]
