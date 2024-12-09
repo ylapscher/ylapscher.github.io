@@ -12,7 +12,7 @@ A modern, interactive portfolio website built with Next.js that showcases my pro
 
 ### 📧 Contact Form Integration
 - Floating chat widget for easy contact
-- SendGrid email integration for reliable message delivery
+- Formspree integration for reliable message delivery
 - Form validation and error handling
 - Success/error state management
 
@@ -29,7 +29,7 @@ A modern, interactive portfolio website built with Next.js that showcases my pro
 - Interactive maps using react-simple-maps
 - TypeScript for type safety
 - Dynamic data loading and state management
-- SendGrid API integration for email handling
+- Formspree integration for contact form
 
 ## Getting Started
 
@@ -51,13 +51,6 @@ npm install
 cp .env.example .env
 ```
 
-4. Set up your SendGrid API key:
-- Create a SendGrid account
-- Generate an API key with email sending permissions
-- Add the key to your `.env` file:
-```
-SENDGRID_API_KEY=your_api_key_here
-```
 
 5. Run the development server:
 
@@ -89,7 +82,7 @@ public/
 - Tailwind CSS
 - React Simple Maps
 - Hero Icons
-- SendGrid API
+- Formspree
 - GitHub Pages (Deployment)
 
 ## Contributing

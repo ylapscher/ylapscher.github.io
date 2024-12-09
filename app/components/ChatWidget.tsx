@@ -85,7 +85,7 @@ export default function ChatWidget() {
         {/* Form */}
         <div className="flex-1 overflow-y-auto p-3">
           <form 
-            action="https://formspree.io/yoel@lapscher.com" 
+            action="https://formspree.io/f/xwpkjbzj" 
             method="POST" 
             onSubmit={handleSubmit} 
             className="space-y-3"
