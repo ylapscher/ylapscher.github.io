@@ -51,7 +51,11 @@ export default function ChatWidget() {
         body: JSON.stringify(formData),
       });
 
-      if (!response.ok) throw new Error('Failed to send message');
+      if (!response.ok) {
+        const errorData = await response.text();
+        console.error('Response not ok:', response.status, errorData);
+        throw new Error(`Failed to send message: ${response.status} ${errorData}`);
+      }
       
       setFormStatus('success');
       setFormData({ name: '', email: '', message: '' });
@@ -62,6 +66,7 @@ export default function ChatWidget() {
         setFormStatus('idle');
       }, 2000);
     } catch (error) {
+      console.error('Error in handleSubmit:', error);
       setFormStatus('error');
     }
   };
