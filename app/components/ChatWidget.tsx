@@ -42,8 +42,15 @@ export default function ChatWidget() {
     
     setFormStatus('submitting');
     
+    const formId = process.env.NEXT_PUBLIC_FORMSPREE_FORM_ID;
+    if (!formId) {
+      console.error('Formspree form ID is not configured');
+      setFormStatus('error');
+      return;
+    }
+    
     try {
-      const response = await fetch(`https://formspree.io/f/${process.env.NEXT_PUBLIC_FORMSPREE_FORM_ID}`, {
+      const response = await fetch(`https://formspree.io/f/${formId}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
