@@ -33,7 +33,7 @@ export default function ChatWidget() {
     return true;
   };
 
-  const handleSubmit = async (e: FormEvent) => {
+  const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     
     if (!validateEmail(formData.email)) {
@@ -42,43 +42,17 @@ export default function ChatWidget() {
     
     setFormStatus('submitting');
     
-    const formId = process.env.NEXT_PUBLIC_FORMSPREE_FORM_ID;
-    if (!formId) {
-      console.error('Formspree form ID is not configured');
-      setFormStatus('error');
-      return;
-    }
+    // Get the form element
+    const form = e.target as HTMLFormElement;
+    form.submit();
     
-    try {
-      const response = await fetch(`https://formspree.io/f/${formId}`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json'
-        },
-        body: JSON.stringify(formData),
-      });
-
-      if (!response.ok) {
-        throw new Error(`Failed to send message: ${response.status}`);
-      }
-      
-      const data = await response.json();
-      if (data.ok) {
-        setFormStatus('success');
-        setFormData({ name: '', email: '', message: '' });
-        
-        setTimeout(() => {
-          setIsOpen(false);
-          setFormStatus('idle');
-        }, 2000);
-      } else {
-        throw new Error('Formspree submission failed');
-      }
-    } catch (error) {
-      console.error('Error in handleSubmit:', error);
-      setFormStatus('error');
-    }
+    setFormStatus('success');
+    setFormData({ name: '', email: '', message: '' });
+    
+    setTimeout(() => {
+      setIsOpen(false);
+      setFormStatus('idle');
+    }, 2000);
   };
 
   return (
@@ -110,7 +84,12 @@ export default function ChatWidget() {
 
         {/* Form */}
         <div className="flex-1 overflow-y-auto p-3">
-          <form onSubmit={handleSubmit} className="space-y-3">
+          <form 
+            action="https://formspree.io/yoel@lapscher.com" 
+            method="POST" 
+            onSubmit={handleSubmit} 
+            className="space-y-3"
+          >
             <div>
               <label htmlFor="name" className="block text-sm font-medium mb-1">
                 Name
@@ -118,6 +97,7 @@ export default function ChatWidget() {
               <input
                 type="text"
                 id="name"
+                name="name"
                 required
                 className="w-full px-3 py-2 rounded border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 focus:ring-2 focus:ring-blue-500 outline-none transition-shadow"
                 value={formData.name}
@@ -132,6 +112,7 @@ export default function ChatWidget() {
               <input
                 type="email"
                 id="email"
+                name="_replyto"
                 required
                 className={`w-full px-3 py-2 rounded border ${
                   emailError ? 'border-red-500' : 'border-gray-300 dark:border-gray-700'
@@ -154,6 +135,7 @@ export default function ChatWidget() {
               </label>
               <textarea
                 id="message"
+                name="message"
                 required
                 rows={3}
                 className="w-full px-3 py-2 rounded border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 focus:ring-2 focus:ring-blue-500 outline-none transition-shadow resize-none"

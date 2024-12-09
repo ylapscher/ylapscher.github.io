@@ -32,8 +32,6 @@ jobs:
         run: npm install
 
       - name: Build with Next.js
-        env:
-          NEXT_PUBLIC_FORMSPREE_FORM_ID: ${{ secrets.NEXT_PUBLIC_FORMSPREE_FORM_ID }}
         run: npm run build
 
       - name: Upload artifact
