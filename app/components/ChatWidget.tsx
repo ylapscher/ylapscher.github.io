@@ -9,6 +9,8 @@ type FormData = {
   message: string;
 };
 
+const FORM_ENDPOINT = "https://formspree.io/f/xwpkjbzj";
+
 export default function ChatWidget() {
   const [isOpen, setIsOpen] = useState(false);
   const [formData, setFormData] = useState<FormData>({
@@ -85,7 +87,7 @@ export default function ChatWidget() {
         {/* Form */}
         <div className="flex-1 overflow-y-auto p-3">
           <form 
-            action="https://formspree.io/f/xwpkjbzj" 
+            action={FORM_ENDPOINT} 
             method="POST" 
             onSubmit={handleSubmit} 
             className="space-y-3"

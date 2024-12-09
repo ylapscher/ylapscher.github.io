@@ -6,6 +6,24 @@ const nextConfig = {
   },
   // Add this to ensure proper asset handling
   assetPrefix: process.env.NODE_ENV === 'production' ? 'https://lapscher.com' : '',
+  async headers() {
+    return [
+      {
+        source: '/:path*',
+        headers: [
+          {
+            key: 'Content-Security-Policy',
+            value: `
+              default-src 'self' 'unsafe-eval' 'unsafe-inline' formspree.io *.formspree.io;
+              font-src 'self' data: fonts.gstatic.com;
+              img-src 'self' data: blob: *.formspree.io;
+              style-src 'self' 'unsafe-inline' fonts.googleapis.com;
+            `.replace(/\s{2,}/g, ' ').trim()
+          }
+        ]
+      }
+    ]
+  }
 }
 
 module.exports = nextConfig 

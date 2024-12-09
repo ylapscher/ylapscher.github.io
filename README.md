@@ -29,7 +29,7 @@ A modern, interactive portfolio website built with Next.js that showcases my pro
 - Interactive maps using react-simple-maps
 - TypeScript for type safety
 - Dynamic data loading and state management
-- Formspree integration for contact form
+- Formspree integration for email handling
 
 ## Getting Started
 
@@ -50,6 +50,7 @@ npm install
 ```bash
 cp .env.example .env
 ```
+
 
 
 5. Run the development server:
