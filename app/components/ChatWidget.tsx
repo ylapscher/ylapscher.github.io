@@ -43,7 +43,7 @@ export default function ChatWidget() {
     setFormStatus('submitting');
     
     try {
-      const response = await fetch('/api/contact', {
+      const response = await fetch(process.env.NEXT_PUBLIC_FORMSPREE_ENDPOINT || '', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -60,7 +60,6 @@ export default function ChatWidget() {
       setFormStatus('success');
       setFormData({ name: '', email: '', message: '' });
       
-      // Auto close after success
       setTimeout(() => {
         setIsOpen(false);
         setFormStatus('idle');
