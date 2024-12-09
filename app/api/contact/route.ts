@@ -1,5 +1,10 @@
 import { NextResponse } from 'next/server';
 
+// Add OPTIONS method to handle CORS preflight requests
+export async function OPTIONS() {
+  return NextResponse.json({}, { status: 200 });
+}
+
 export async function POST(req: Request) {
   try {
     const body = await req.json();
