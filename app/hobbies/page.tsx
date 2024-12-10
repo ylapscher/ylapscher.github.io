@@ -1,10 +1,11 @@
+'use client'
+
 import { 
   UserGroupIcon, // for improv comedy
   MusicalNoteIcon, // for piano
   FireIcon, // for hot yoga
 } from '@heroicons/react/24/outline';
 import ImageGallery from '../components/ImageGallery';
-import GoodreadsWidget from '../components/GoodreadsWidget';
 
 const hobbies = [
   {
@@ -36,6 +37,7 @@ const hobbies = [
     title: "Piano",
     description: "I'm a pianist with a love for jazz music. Music provides a creative outlet and a way to express my artistic side.",
     icon: <MusicalNoteIcon className="w-8 h-8 text-blue-600" />,
+    link: "https://soundcloud.com/ylapscher/tracks"
   },
   {
     title: "Improv Comedy",
@@ -45,6 +47,12 @@ const hobbies = [
 ];
 
 export default function Hobbies() {
+  const handleHobbyClick = (link?: string) => {
+    if (link) {
+      window.open(link, '_blank', 'noopener,noreferrer');
+    }
+  };
+
   return (
     <main className="container mx-auto px-4 sm:px-6 py-12 max-w-4xl">
       <div className="text-center mb-12">
@@ -58,15 +66,31 @@ export default function Hobbies() {
         {hobbies.map((hobby, index) => (
           <div
             key={index}
-            className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700"
+            className={`bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 
+              ${hobby.link ? 'transition-transform hover:scale-105 cursor-pointer' : ''}`}
+            onClick={() => handleHobbyClick(hobby.link)}
+            role={hobby.link ? 'button' : undefined}
+            tabIndex={hobby.link ? 0 : undefined}
+            onKeyDown={(e) => {
+              if (hobby.link && (e.key === 'Enter' || e.key === ' ')) {
+                e.preventDefault();
+                handleHobbyClick(hobby.link);
+              }
+            }}
           >
             <div className="flex items-start gap-4">
               <div className="flex-shrink-0">
                 {hobby.icon}
               </div>
               <div>
-                <h3 className="text-xl font-bold mb-2 text-gray-900 dark:text-white">
+                <h3 className={`text-xl font-bold mb-2 text-gray-900 dark:text-white 
+                  ${hobby.link ? 'hover:text-blue-600 dark:hover:text-blue-400' : ''}`}>
                   {hobby.title}
+                  {hobby.link && (
+                    <span className="ml-2 text-sm text-blue-600 dark:text-blue-400">
+                      ↗
+                    </span>
+                  )}
                 </h3>
                 <p className="text-gray-700 dark:text-gray-400">
                   {hobby.description}
@@ -107,11 +131,14 @@ export default function Hobbies() {
             target="_blank"
             rel="noopener noreferrer"
             className="hover:opacity-90 transition-opacity"
+            title="Yoel's book recommendations on Goodreads"
           >
             <img 
-              src="https://s.gr-assets.com/images/badge/badge1.jpg" 
-              alt="Yoel's book recommendations on Goodreads" 
-              className="rounded-lg shadow-md h-8"
+              src="/images/goodreads-badge.jpg"
+              alt="Goodreads reading list" 
+              className="rounded-lg shadow-md h-8 w-auto object-contain"
+              width={100}
+              height={32}
             />
           </a>
         </div>
