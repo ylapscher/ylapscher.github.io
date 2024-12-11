@@ -215,11 +215,6 @@ export default function Travel() {
                     const name = showUSMap ? geo.properties.NAME : geo.properties.name;
                     const isVisited = showUSMap ? visitedStates[name] : visitedCountries[name];
                     const hasLived = showUSMap ? livedStates[name] : livedCountries[name];
-                    
-                    // Debug logging
-                    if (showUSMap && !isVisited && !hasLived) {
-                      console.log('Unmatched state name:', name);
-                    }
 
                     return (
                       <Geography
