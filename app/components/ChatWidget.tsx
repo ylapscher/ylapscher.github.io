@@ -35,26 +35,45 @@ export default function ChatWidget() {
     return true;
   };
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     
     if (!validateEmail(formData.email)) {
       return;
     }
     
+    // Check if all required fields are filled
+    if (!formData.name || !formData.email || !formData.message) {
+      setFormStatus('error');
+      return;
+    }
+    
     setFormStatus('submitting');
     
-    // Get the form element
-    const form = e.target as HTMLFormElement;
-    form.submit();
-    
-    setFormStatus('success');
-    setFormData({ name: '', email: '', message: '' });
-    
-    setTimeout(() => {
-      setIsOpen(false);
-      setFormStatus('idle');
-    }, 2000);
+    try {
+      const response = await fetch(FORM_ENDPOINT, {
+        method: 'POST',
+        body: JSON.stringify(formData),
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+      });
+      
+      if (response.ok) {
+        setFormStatus('success');
+        setFormData({ name: '', email: '', message: '' });
+        
+        setTimeout(() => {
+          setIsOpen(false);
+          setFormStatus('idle');
+        }, 2000);
+      } else {
+        setFormStatus('error');
+      }
+    } catch (err) {
+      setFormStatus('error');
+    }
   };
 
   return (
