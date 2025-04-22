@@ -43,6 +43,7 @@ const visitedCountries: CountryName = {
   "Israel": true,
   "Italy": true,
   "Jamaica": true,
+  "Japan": true,
   "Mexico": true,
   "Netherlands": true,
   "New Zealand": true,
