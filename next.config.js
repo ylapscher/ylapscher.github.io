@@ -20,12 +20,30 @@ const nextConfig = {
               style-src 'self' 'unsafe-inline' fonts.googleapis.com *.googleapis.com;
               script-src 'self' 'unsafe-inline' 'unsafe-eval' static.cloudflareinsights.com;
               connect-src 'self' formspree.io *.formspree.io;
-            `.replace(/\s{2,}/g, ' ').trim()
-          }
-        ]
-      }
-    ]
-  }
-}
+            `.replace(/\s{2,}/g, ' ').trim(),
+          },
+        ],
+      },
+    ];
+  },
+  async rewrites() {
+    return [
+      {
+        source: '/ingest/static/:path*',
+        destination: 'https://us-assets.i.posthog.com/static/:path*',
+      },
+      {
+        source: '/ingest/:path*',
+        destination: 'https://us.i.posthog.com/:path*',
+      },
+      {
+        source: '/ingest/decide',
+        destination: 'https://us.i.posthog.com/decide',
+      },
+    ];
+  },
+  // This is required to support PostHog trailing slash API requests
+  skipTrailingSlashRedirect: true,
+};
 
-module.exports = nextConfig 
+module.exports = nextConfig;
