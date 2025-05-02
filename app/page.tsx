@@ -42,8 +42,10 @@ function SkillBadge({ skill }: { skill: Skill }) {
       case 3:
         return (
           <svg className="w-4 h-4" viewBox="0 0 24 24">
+            {/* Background Stroke */}
             <circle cx="12" cy="12" r="10" className="fill-none stroke-blue-600 stroke-2" />
-            <path d="M12 2a10 10 0 0 1 0 20" fill="currentColor" className="text-blue-600" />
+            {/* Filled 3/4 Pie Slice Path (Top-Right, Bottom-Right, Bottom-Left quadrants) */}
+            <path d="M 12 2 A 10 10 0 1 1 2 12 L 12 12 Z" fill="currentColor" className="text-blue-600" />
           </svg>
         );
       case 2:

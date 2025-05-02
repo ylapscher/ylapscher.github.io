@@ -23,7 +23,7 @@ A modern, interactive portfolio website built with Next.js that showcases my pro
 - Reading list integration with Goodreads
 
 ### 💻 Technical Highlights
-- Built with Next.js 13 (App Router)
+- Built with Next.js (App Router)
 - Responsive design with Tailwind CSS
 - Dark mode
 - Interactive maps using react-simple-maps
@@ -51,15 +51,13 @@ npm install
 cp .env.example .env
 ```
 
-
-
-5. Run the development server:
+4. Run the development server:
 
 ```bash
 npm run dev
 ```
 
-6. Open [http://localhost:3000](http://localhost:3000) to view the site
+5. Open [http://localhost:3000](http://localhost:3000) to view the site
 
 ## Project Structure
 
@@ -70,15 +68,18 @@ app/
 ├── hobbies/       # Hobbies page
 ├── travel/        # Travel tracking features
 ├── us-travel/     # US states map
-└── api/           # API routes
+├── services/      # Services page
+├── fonts/         # Font files
+├── layout.tsx     # Main layout file
+├── page.tsx       # Main page content
+└── globals.css    # Global styles
 public/
-├── us-states.json        # US states GeoJSON data
-└── images/              # Static images
+└── images/        # Static images (including company logos, profile picture, etc.)
 ```
 
 ## Technologies Used
 
-- Next.js 13
+- Next.js
 - TypeScript
 - Tailwind CSS
 - React Simple Maps
