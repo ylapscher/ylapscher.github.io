@@ -5,6 +5,7 @@ import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import GoogleAnalytics from './components/GoogleAnalytics';
 import ChatWidget from './components/ChatWidget';
+import { PostHogProvider } from './components/PostHogProvider';
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -41,10 +42,12 @@ export default function RootLayout({
         />
       </head>
       <body suppressHydrationWarning className="antialiased font-sans bg-white dark:bg-gray-900">
-        <Navbar />
-        {children}
-        <ChatWidget />
-        <Footer textStyles={{ small: "text-sm font-geist-sans" }} />
+        <PostHogProvider>
+          <Navbar />
+          {children}
+          <ChatWidget />
+          <Footer textStyles={{ small: "text-sm font-geist-sans" }} />
+        </PostHogProvider>
       </body>
     </html>
   );
