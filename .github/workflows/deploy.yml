@@ -32,6 +32,8 @@ jobs:
         run: npm install
 
       - name: Build with Next.js
+        env:
+          NEXT_PUBLIC_POSTHOG_KEY: ${{ secrets.NEXT_PUBLIC_POSTHOG_KEY }}
         run: npm run build
 
       - name: Upload artifact
