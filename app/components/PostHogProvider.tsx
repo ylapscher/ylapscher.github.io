@@ -7,19 +7,24 @@ import { usePathname, useSearchParams } from "next/navigation"
 
 export function PostHogProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
-    // Only initialize PostHog if we're in the browser environment
+    // Only initialize PostHog if we're in the browser environment and have a valid key
     if (typeof window !== 'undefined') {
-      posthog.init(process.env.NEXT_PUBLIC_POSTHOG_KEY!, {
-        api_host: "https://us.i.posthog.com",
-        ui_host: "https://us.posthog.com",
-        capture_pageview: false, // We capture pageviews manually
-        capture_pageleave: true,  // Enable pageleave capture
-        debug: process.env.NODE_ENV === "development",
-        autocapture: true,
-        disable_session_recording: false,
-        cross_subdomain_cookie: false,
-        persistence: 'localStorage',
-      })
+      const posthogKey = process.env.NEXT_PUBLIC_POSTHOG_KEY;
+      if (posthogKey) {
+        posthog.init(posthogKey, {
+          api_host: "https://us.i.posthog.com",
+          ui_host: "https://us.posthog.com",
+          capture_pageview: false, // We capture pageviews manually
+          capture_pageleave: true,  // Enable pageleave capture
+          debug: process.env.NODE_ENV === "development",
+          autocapture: true,
+          disable_session_recording: false,
+          cross_subdomain_cookie: false,
+          persistence: 'localStorage',
+        });
+      } else {
+        console.warn("[PostHog] No API key found. Analytics will be disabled.");
+      }
     }
   }, [])
 
