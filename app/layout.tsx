@@ -34,12 +34,13 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning className={`${geistSans.variable} ${geistMono.variable}`}>
       <head>
         <GoogleAnalytics />
-        <link 
-          rel="preload" 
-          href="https://formspree.io/static/img/loading.svg" 
-          as="image" 
-          type="image/svg+xml"
-        />
+        <meta name="theme-color" content="#000000" />
+
+        {/* Favicons */}
+        <link rel="icon" href="/favicons/favicon.ico" sizes="any" />
+        <link rel="icon" href="/favicons/favicon.svg" type="image/svg+xml" />
+        <link rel="apple-touch-icon" href="/favicons/apple-touch-icon.png" />
+        <link rel="manifest" href="/favicons/manifest.webmanifest" />
       </head>
       <body suppressHydrationWarning className="antialiased font-sans bg-white dark:bg-gray-900">
         <PostHogProvider>

@@ -21,7 +21,7 @@ const nextConfig = {
         headers: [
           {
             key: 'Content-Security-Policy',
-            value: "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://us.i.posthog.com https://us-assets.i.posthog.com https://www.googletagmanager.com; connect-src 'self' https://us.i.posthog.com https://formspree.io; style-src 'self' 'unsafe-inline';"
+            value: "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://us.i.posthog.com https://us-assets.i.posthog.com https://www.googletagmanager.com; connect-src 'self' https://us.i.posthog.com https://formspree.io https://www.google-analytics.com; style-src 'self' 'unsafe-inline'; font-src 'self' data:;"
           }
         ],
       },
