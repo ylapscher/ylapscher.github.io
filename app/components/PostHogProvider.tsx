@@ -7,13 +7,20 @@ import { usePathname, useSearchParams } from "next/navigation"
 
 export function PostHogProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
-    posthog.init(process.env.NEXT_PUBLIC_POSTHOG_KEY!, {
-      api_host: "/ingest",
-      ui_host: "https://us.posthog.com",
-      capture_pageview: false, // We capture pageviews manually
-      capture_pageleave: true,  // Enable pageleave capture
-      debug: process.env.NODE_ENV === "development",
-    })
+    // Only initialize PostHog if we're in the browser environment
+    if (typeof window !== 'undefined') {
+      posthog.init(process.env.NEXT_PUBLIC_POSTHOG_KEY!, {
+        api_host: "https://us.i.posthog.com",
+        ui_host: "https://us.posthog.com",
+        capture_pageview: false, // We capture pageviews manually
+        capture_pageleave: true,  // Enable pageleave capture
+        debug: process.env.NODE_ENV === "development",
+        autocapture: true,
+        disable_session_recording: false,
+        cross_subdomain_cookie: false,
+        persistence: 'localStorage',
+      })
+    }
   }, [])
 
   return (
@@ -30,13 +37,19 @@ function PostHogPageView() {
   const posthog = usePostHog()
 
   useEffect(() => {
-    if (pathname && posthog) {
-      let url = window.origin + pathname
-      const search = searchParams.toString()
-      if (search) {
-        url += "?" + search
+    // Don't track on 404 pages
+    if (pathname && posthog && !pathname.includes('/_not-found') && typeof window !== 'undefined') {
+      try {
+        let url = window.origin + pathname
+        const search = searchParams.toString()
+        if (search) {
+          url += "?" + search
+        }
+        posthog.capture("$pageview", { "$current_url": url })
+      } catch (e) {
+        // Silently fail if PostHog capture fails
+        console.debug('PostHog tracking error:', e)
       }
-      posthog.capture("$pageview", { "$current_url": url })
     }
   }, [pathname, searchParams, posthog])
 

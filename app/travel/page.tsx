@@ -85,16 +85,13 @@ type GeoProperties = {
 export default function Travel() {
   // 1. All useState hooks
   const [tooltip, setTooltip] = useState<string | null>(null);
-  const [countriesList, setCountriesList] = useState<string[]>([]);
-  const [geographyData, setGeographyData] = useState<any[]>([]);
   const [mapScale, setMapScale] = useState(150);
   const [mapDimensions, setMapDimensions] = useState({ width: 800, height: 600 });
   const [showUSMap, setShowUSMap] = useState(false);
   const [worldData, setWorldData] = useState<GeoData | null>(null);
   const [usData, setUsData] = useState<GeoData | null>(null);
 
-  // 2. All useRef hooks
-  const geographiesRef = useRef<any[]>([]);
+  // 2. All useRef hooks (Removed geographiesRef)
 
   // 3. All useEffect hooks
   useEffect(() => {
@@ -128,29 +125,9 @@ export default function Travel() {
       });
   }, []);
 
-  useEffect(() => {
-    if (geographiesRef.current.length > 0 && geographyData.length === 0) {
-      setGeographyData(geographiesRef.current);
-    }
-  }, [geographiesRef.current, geographyData]);
-
-  useEffect(() => {
-    if (geographyData.length > 0) {
-      const names = Object.keys(showUSMap ? visitedStates : visitedCountries)
-        .map(code => geographyData.find(geo => geo.id === code)?.properties.name)
-        .filter(Boolean)
-        .sort();
-      setCountriesList(names as string[]);
-    }
-  }, [geographyData, showUSMap]);
-
-  // Calculate counts
-  const visitedCount = Object.entries(showUSMap ? visitedStates : visitedCountries)
-    .filter(([_, value]) => value === true)
-    .length;
-  const livedCount = Object.entries(showUSMap ? livedStates : livedCountries)
-    .filter(([_, value]) => value === true)
-    .length;
+  // Calculate counts more directly
+  const visitedCount = Object.keys(showUSMap ? visitedStates : visitedCountries).length;
+  const livedCount = Object.keys(showUSMap ? livedStates : livedCountries).length;
 
   // Loading states
   if (!worldData || !usData) return <div>Loading maps...</div>;
@@ -210,10 +187,14 @@ export default function Travel() {
             >
               <Geographies geography={showUSMap ? usData! : worldData!}>
                 {({ geographies }) => {
-                  geographiesRef.current = geographies;
+                  return geographies.map((geo) => {
+                    // Added a more specific type for geo and defensive check
+                    const properties = geo.properties as { NAME?: string; name?: string };
+                    const name = showUSMap ? properties?.NAME : properties?.name;
 
-                  return geographies.map((geo: GeoProperties) => {
-                    const name = showUSMap ? geo.properties.NAME : geo.properties.name;
+                    // Added check for name existence
+                    if (!name) return null;
+
                     const isVisited = showUSMap ? visitedStates[name] : visitedCountries[name];
                     const hasLived = showUSMap ? livedStates[name] : livedCountries[name];
 
@@ -274,9 +255,10 @@ export default function Travel() {
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-4 text-sm sm:text-base">
           {Object.entries(showUSMap ? visitedStates : visitedCountries)
             .filter(([_, value]) => value === true)
+            .sort(([placeA], [placeB]) => placeA.localeCompare(placeB))
             .map(([place, _], index) => (
-              <div 
-                key={index} 
+              <div
+                key={index}
                 className="text-gray-700 dark:text-gray-400 p-2 rounded-lg"
               >
                 {place}
