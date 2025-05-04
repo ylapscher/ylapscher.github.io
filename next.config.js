@@ -29,10 +29,4 @@ const nextConfig = {
   } : undefined,
 };
 
-// Explicitly load environment variables
-nextConfig.env = {
-  NEXT_PUBLIC_POSTHOG_KEY: process.env.NEXT_PUBLIC_POSTHOG_KEY,
-  NEXT_PUBLIC_POSTHOG_HOST: process.env.NEXT_PUBLIC_POSTHOG_HOST || 'https://us.i.posthog.com',
-};
-
 module.exports = nextConfig;
