@@ -6,6 +6,7 @@ import Footer from './components/Footer';
 import GoogleAnalytics from './components/GoogleAnalytics';
 import ChatWidget from './components/ChatWidget';
 import { PostHogProvider } from './components/PostHogProvider';
+import FloatingBadge from './components/FloatingBadge';
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -48,6 +49,7 @@ export default function RootLayout({
           {children}
           <ChatWidget />
           <Footer textStyles={{ small: "text-sm font-geist-sans" }} />
+          <FloatingBadge />
         </PostHogProvider>
       </body>
     </html>
