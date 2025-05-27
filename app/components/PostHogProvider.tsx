@@ -4,6 +4,7 @@ import posthog from "posthog-js"
 import { PostHogProvider as PHProvider, usePostHog } from "posthog-js/react"
 import { Suspense, useEffect } from "react"
 import { usePathname, useSearchParams } from "next/navigation"
+import "posthog-js/dist/web-vitals"
 
 // Type guard to check for web vitals methods
 function hasWebVitalsMethod(client: any): boolean {

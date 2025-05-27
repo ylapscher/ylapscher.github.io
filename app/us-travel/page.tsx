@@ -17,7 +17,7 @@ export default function USTravel() {
   const [mapDimensions, setMapDimensions] = useState({ width: 800, height: 600 });
   const [geoData, setGeoData] = useState<any>(null);
   const [error, setError] = useState<string | null>(null);
-  const visitedCount = Object.keys(visitedStates).length;
+  const visitedCount = Object.values(visitedStates).filter(Boolean).length;
   const livedCount = Object.keys(livedStates).length;
 
   // Load GeoJSON data
@@ -173,14 +173,16 @@ export default function USTravel() {
           States Visited
         </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-4 text-sm sm:text-base">
-          {Object.keys(visitedStates).sort().map((state, index) => (
-            <div 
-              key={index} 
-              className="text-gray-700 dark:text-gray-400 p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
-            >
-              {state}
-            </div>
-          ))}
+          {Object.entries(visitedStates)
+            .filter(([_, value]) => value === true)
+            .map(([state], index) => (
+              <div 
+                key={index} 
+                className="text-gray-700 dark:text-gray-400 p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
+              >
+                {state}
+              </div>
+            ))}
         </div>
       </div>
     </main>
