@@ -17,8 +17,12 @@ export default function USTravel() {
   const [mapDimensions, setMapDimensions] = useState({ width: 800, height: 600 });
   const [geoData, setGeoData] = useState<any>(null);
   const [error, setError] = useState<string | null>(null);
-  const visitedCount = Object.values(visitedStates).filter(Boolean).length;
-  const livedCount = Object.keys(livedStates).length;
+  const visitedCount = Object.entries(visitedStates)
+    .filter(([stateName, isVisited]) => 
+      isVisited && stateName !== "District of Columbia" && stateName !== "Puerto Rico"
+    )
+    .length;
+  const livedCount = Object.values(livedStates).filter(Boolean).length;
 
   // Load GeoJSON data
   useEffect(() => {
