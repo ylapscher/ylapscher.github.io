@@ -17,11 +17,16 @@ export default function USTravel() {
   const [mapDimensions, setMapDimensions] = useState({ width: 800, height: 600 });
   const [geoData, setGeoData] = useState<any>(null);
   const [error, setError] = useState<string | null>(null);
-  const visitedCount = Object.entries(visitedStates)
-    .filter(([stateName, isVisited]) => 
-      isVisited && stateName !== "District of Columbia" && stateName !== "Puerto Rico"
-    )
-    .length;
+  
+  // Calculate the correct visited count by excluding territories
+  const nonStateEntities = ["District of Columbia", "Puerto Rico"];
+  const actualVisitedStates = Object.entries(visitedStates)
+    .filter(([stateName, isVisited]) => {
+      return isVisited === true && !nonStateEntities.includes(stateName);
+    });
+  
+  // Use the fixed count
+  const visitedCount = actualVisitedStates.length;
   const livedCount = Object.values(livedStates).filter(Boolean).length;
 
   // Load GeoJSON data
@@ -78,7 +83,7 @@ export default function USTravel() {
     <main className="container mx-auto px-4 sm:px-6 py-8 max-w-6xl">
       <div className="text-center mb-8 sm:mb-12">
         <h1 className="text-3xl sm:text-4xl font-bold mb-3 sm:mb-4 text-gray-900 dark:text-white">
-          US States Travel Map
+          US States Travel Map [UPDATED]
         </h1>
         <p className="text-base sm:text-lg text-gray-700 dark:text-gray-400 max-w-2xl mx-auto mb-6">
           States I've visited and lived in across the USA
@@ -86,7 +91,7 @@ export default function USTravel() {
         <div className="flex justify-center gap-8">
           <div>
             <p className="text-xl sm:text-2xl font-semibold text-[#60A5FA]">
-              {visitedCount}
+              {visitedCount} (Corrected)
             </p>
             <p className="text-sm text-gray-700 dark:text-gray-400">
               States Visited
@@ -177,18 +182,16 @@ export default function USTravel() {
           States Visited
         </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-4 text-sm sm:text-base">
-          {Object.entries(visitedStates)
-            .filter(([_, value]) => value === true)
-            .map(([state], index) => (
-              <div 
-                key={index} 
-                className="text-gray-700 dark:text-gray-400 p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
-              >
-                {state}
-              </div>
-            ))}
+          {actualVisitedStates.map(([state], index) => (
+            <div 
+              key={index} 
+              className="text-gray-700 dark:text-gray-400 p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
+            >
+              {state}
+            </div>
+          ))}
         </div>
       </div>
     </main>
   );
-} 
+}

@@ -25,7 +25,7 @@ export function PostHogProvider({ children }: { children: React.ReactNode }) {
           ui_host: "https://us.posthog.com",
           capture_pageview: true, // Capture pageviews automatically
           capture_pageleave: true,  // Enable pageleave capture
-          debug: process.env.NODE_ENV === "development",
+          debug: false, // Disable debug mode to prevent token exposure
           autocapture: true,
           disable_session_recording: false,
           cross_subdomain_cookie: false,
@@ -33,7 +33,7 @@ export function PostHogProvider({ children }: { children: React.ReactNode }) {
           // Let PostHog handle web vitals automatically with capture_pageview: true
         });
       } else {
-        console.warn("[PostHog] No API key found. Analytics will be disabled.");
+        // Analytics will be disabled without API key
       }
     }
   }, [])
@@ -63,7 +63,6 @@ function PostHogPageView() {
         posthog.capture("$pageview", { "$current_url": url })
       } catch (e) {
         // Silently fail if PostHog capture fails
-        console.debug('PostHog tracking error:', e)
       }
     }
   }, [pathname, searchParams, posthog])
