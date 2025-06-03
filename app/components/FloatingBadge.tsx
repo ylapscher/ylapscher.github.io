@@ -21,7 +21,7 @@ const FloatingBadge = () => {
   };
 
   const linkProps = {
-    href: 'https://book.lapscher.com',
+    href: 'https://www.samstorybook.com/',
     target: '_blank',
     rel: 'noopener noreferrer',
     style: badgeStyle,
