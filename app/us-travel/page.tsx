@@ -94,7 +94,7 @@ export default function USTravel() {
               {visitedCount} (Corrected)
             </p>
             <p className="text-sm text-gray-700 dark:text-gray-400">
-              States Visited
+              States Visited*
             </p>
           </div>
           <div>
