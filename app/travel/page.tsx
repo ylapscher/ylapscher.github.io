@@ -125,9 +125,14 @@ export default function Travel() {
       });
   }, []);
 
-  // Calculate counts more directly
-  const visitedCount = Object.keys(showUSMap ? visitedStates : visitedCountries).length;
-  const livedCount = Object.keys(showUSMap ? livedStates : livedCountries).length;
+  // Calculate counts more directly - only count true values
+  const visitedCount = showUSMap 
+    ? Object.entries(visitedStates).filter(([stateName, isVisited]) => {
+        const nonStateEntities = ["District of Columbia", "Puerto Rico"];
+        return isVisited === true && !nonStateEntities.includes(stateName);
+      }).length
+    : Object.values(visitedCountries).filter(Boolean).length;
+  const livedCount = Object.values(showUSMap ? livedStates : livedCountries).filter(Boolean).length;
 
   // Loading states
   if (!worldData || !usData) return <div>Loading maps...</div>;
@@ -268,4 +273,4 @@ export default function Travel() {
       </div>
     </main>
   );
-} 
+}  
