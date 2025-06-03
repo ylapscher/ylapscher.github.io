@@ -5,7 +5,7 @@ const nextConfig = {
     unoptimized: true,
   },
   // Add this to ensure proper asset handling
-  assetPrefix: process.env.NODE_ENV === 'production' ? 'https://lapscher.com' : '',
+  assetPrefix: '',
   
   // No rewrites or middleware in static exports
   
