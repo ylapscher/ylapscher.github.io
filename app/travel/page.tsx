@@ -135,7 +135,28 @@ export default function Travel() {
   const livedCount = Object.values(showUSMap ? livedStates : livedCountries).filter(Boolean).length;
 
   // Loading states
-  if (!worldData || !usData) return <div>Loading maps...</div>;
+  if (!worldData || !usData) {
+    return (
+      <main className="container mx-auto px-4 sm:px-6 py-8 max-w-6xl">
+        <div className="text-center mb-8 sm:mb-12">
+          <h1 className="text-3xl sm:text-4xl font-bold mb-3 sm:mb-4 text-gray-900 dark:text-white">
+            Travel Map
+          </h1>
+          <p className="text-base sm:text-lg text-gray-700 dark:text-gray-400 max-w-2xl mx-auto mb-6">
+            Places I've visited and lived around the world
+          </p>
+        </div>
+        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 p-3 sm:p-4">
+          <div className="h-[300px] sm:h-[400px] md:h-[500px] lg:h-[600px] relative flex items-center justify-center">
+            <div className="text-center">
+              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+              <p className="text-gray-600 dark:text-gray-400">Loading interactive maps...</p>
+            </div>
+          </div>
+        </div>
+      </main>
+    );
+  }
 
   return (
     <main className="container mx-auto px-4 sm:px-6 py-8 max-w-6xl">
@@ -273,4 +294,4 @@ export default function Travel() {
       </div>
     </main>
   );
-}  
+}    

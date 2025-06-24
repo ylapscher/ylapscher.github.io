@@ -23,7 +23,31 @@ const geistMono = localFont({
 
 export const metadata: Metadata = {
   title: "Joe Lapscher | Product Manager",
-  description: "Joe Lapscher is a product manager with a passion for building products that make a difference.",
+  description: "Joe Lapscher is a product manager with a passion for building products that make a difference. Experienced in fintech, SaaS, and enterprise software with expertise in product strategy, roadmapping, and team leadership.",
+  keywords: "product manager, fintech, SaaS, product strategy, roadmapping, team leadership, Joe Lapscher",
+  authors: [{ name: "Joe Lapscher" }],
+  openGraph: {
+    title: "Joe Lapscher | Product Manager",
+    description: "Joe Lapscher is a product manager with a passion for building products that make a difference. Experienced in fintech, SaaS, and enterprise software.",
+    url: "https://ylapscher.github.io",
+    siteName: "Joe Lapscher Portfolio",
+    images: [
+      {
+        url: "/images/profile.jpg",
+        width: 400,
+        height: 400,
+        alt: "Joe Lapscher Profile Photo",
+      },
+    ],
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Joe Lapscher | Product Manager",
+    description: "Product manager with expertise in fintech, SaaS, and enterprise software. Passionate about building products that make a difference.",
+    images: ["/images/profile.jpg"],
+  },
 };
 
 export default function RootLayout({
