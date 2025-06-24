@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/outline';
 
 const images = [
@@ -22,22 +22,35 @@ const images = [
 export default function ImageGallery() {
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  const nextSlide = () => {
+  const nextSlide = useCallback(() => {
     setCurrentIndex((prevIndex) => 
       prevIndex === images.length - 1 ? 0 : prevIndex + 1
     );
-  };
+  }, []);
 
-  const prevSlide = () => {
+  const prevSlide = useCallback(() => {
     setCurrentIndex((prevIndex) => 
       prevIndex === 0 ? images.length - 1 : prevIndex - 1
     );
-  };
+  }, []);
 
   useEffect(() => {
-    const interval = setInterval(nextSlide, 5000); // Increased to 5 seconds
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'ArrowLeft') {
+        prevSlide();
+      } else if (event.key === 'ArrowRight') {
+        nextSlide();
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [nextSlide, prevSlide]);
+
+  useEffect(() => {
+    const interval = setInterval(nextSlide, 5000);
     return () => clearInterval(interval);
-  }, []);
+  }, [nextSlide]);
 
   return (
     <div className="relative max-w-3xl mx-auto">
@@ -56,6 +69,7 @@ export default function ImageGallery() {
                 height={600}
                 className="w-full object-contain"
                 priority={index === 0}
+                loading={index === 0 ? "eager" : "lazy"}
               />
             </div>
           ))}
@@ -95,4 +109,4 @@ export default function ImageGallery() {
       </div>
     </div>
   );
-} 
+}  
