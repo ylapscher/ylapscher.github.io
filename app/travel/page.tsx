@@ -8,6 +8,7 @@ import {
   ZoomableGroup
 } from 'react-simple-maps';
 import { visitedStates, livedStates } from '../data/us-states-data';
+import { ErrorBoundary } from '../components/ErrorBoundary';
 
 const worldGeoUrl = "/data/world-geo.json";
 const usGeoUrl = "/data/us-states.json";
@@ -195,65 +196,77 @@ export default function Travel() {
 
       <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 p-3 sm:p-4">
         <div className="h-[300px] sm:h-[400px] md:h-[500px] lg:h-[600px] relative">
-          <ComposableMap
-            projection={showUSMap ? "geoAlbersUsa" : undefined}
-            projectionConfig={{
-              scale: mapScale,
-              ...(showUSMap ? {} : { center: [0, 20], rotate: [-10, -5, 0] })
-            }}
-            width={800}
-            height={400}
-            className="w-full h-full"
-          >
-            <ZoomableGroup
-              translateExtent={[
-                [-1000, -400],
-                [1000, 400]
-              ]}
+          <ErrorBoundary fallback={
+            <div className="h-full flex items-center justify-center">
+              <div className="text-center">
+                <p className="text-gray-600 dark:text-gray-400 mb-2">Map temporarily unavailable</p>
+                <button 
+                  onClick={() => window.location.reload()} 
+                  className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors"
+                >
+                  Refresh Page
+                </button>
+              </div>
+            </div>
+          }>
+            <ComposableMap
+              projection={showUSMap ? "geoAlbersUsa" : undefined}
+              projectionConfig={{
+                scale: mapScale,
+                ...(showUSMap ? {} : { center: [0, 20], rotate: [-10, -5, 0] })
+              }}
+              width={800}
+              height={400}
+              className="w-full h-full"
             >
-              <Geographies geography={showUSMap ? usData! : worldData!}>
-                {({ geographies }) => {
-                  return geographies.map((geo) => {
-                    // Added a more specific type for geo and defensive check
-                    const properties = geo.properties as { NAME?: string; name?: string };
-                    const name = showUSMap ? properties?.NAME : properties?.name;
+              <ZoomableGroup
+                translateExtent={[
+                  [-1000, -400],
+                  [1000, 400]
+                ]}
+              >
+                <Geographies geography={showUSMap ? usData! : worldData!}>
+                  {({ geographies }) => {
+                    return geographies.map((geo) => {
+                      const properties = geo.properties as { NAME?: string; name?: string };
+                      const name = showUSMap ? properties?.NAME : properties?.name;
 
-                    // Added check for name existence
-                    if (!name) return null;
+                      if (!name) return null;
 
-                    const isVisited = showUSMap ? visitedStates[name] : visitedCountries[name];
-                    const hasLived = showUSMap ? livedStates[name] : livedCountries[name];
+                      const isVisited = showUSMap ? visitedStates[name] : visitedCountries[name];
+                      const hasLived = showUSMap ? livedStates[name] : livedCountries[name];
 
-                    return (
-                      <Geography
-                        key={geo.rsmKey}
-                        geography={geo}
-                        onMouseEnter={() => {
-                          const status = hasLived ? ' (Lived)' : isVisited ? ' (Visited)' : '';
-                          setTooltip(`${name}${status}`);
-                        }}
-                        onMouseLeave={() => setTooltip(null)}
-                        style={{
-                          default: {
-                            fill: hasLived ? '#2563EB' : isVisited ? '#60A5FA' : '#E5E7EB',
-                            stroke: '#FFFFFF',
-                            strokeWidth: 0.5,
-                            outline: 'none',
-                          },
-                          hover: {
-                            fill: hasLived ? '#1D4ED8' : isVisited ? '#3B82F6' : '#D1D5DB',
-                            stroke: '#FFFFFF',
-                            strokeWidth: 0.5,
-                            outline: 'none',
-                          }
-                        }}
-                      />
-                    );
-                  });
-                }}
-              </Geographies>
-            </ZoomableGroup>
-          </ComposableMap>
+                      return (
+                        <Geography
+                          key={geo.rsmKey}
+                          geography={geo}
+                          onMouseEnter={() => {
+                            const status = hasLived ? ' (Lived)' : isVisited ? ' (Visited)' : '';
+                            setTooltip(`${name}${status}`);
+                          }}
+                          onMouseLeave={() => setTooltip(null)}
+                          style={{
+                            default: {
+                              fill: hasLived ? '#2563EB' : isVisited ? '#60A5FA' : '#E5E7EB',
+                              stroke: '#FFFFFF',
+                              strokeWidth: 0.5,
+                              outline: 'none',
+                            },
+                            hover: {
+                              fill: hasLived ? '#1D4ED8' : isVisited ? '#3B82F6' : '#D1D5DB',
+                              stroke: '#FFFFFF',
+                              strokeWidth: 0.5,
+                              outline: 'none',
+                            }
+                          }}
+                        />
+                      );
+                    });
+                  }}
+                </Geographies>
+              </ZoomableGroup>
+            </ComposableMap>
+          </ErrorBoundary>
 
           {tooltip && (
             <div className="absolute top-2 sm:top-4 left-1/2 transform -translate-x-1/2 bg-white dark:bg-gray-800 px-3 py-1 sm:px-4 sm:py-2 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700">
@@ -294,4 +307,4 @@ export default function Travel() {
       </div>
     </main>
   );
-}    
+}        
