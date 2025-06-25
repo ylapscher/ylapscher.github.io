@@ -142,6 +142,45 @@ function ExperienceTimeline({ experiences }: { experiences: Experience[] }) {
   );
 }
 
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Joe Lapscher",
+  "jobTitle": "Senior Product Manager",
+  "description": "Senior Product Manager with expertise in fintech, SaaS, and enterprise software. Experienced in product strategy, roadmapping, and team leadership.",
+  "url": "https://lapscher.com",
+  "sameAs": [
+    "https://www.linkedin.com/in/ylapscher/",
+    "https://soundcloud.com/ylapscher/tracks"
+  ],
+  "worksFor": {
+    "@type": "Organization",
+    "name": "Transcard"
+  },
+  "alumniOf": [
+    {
+      "@type": "EducationalOrganization",
+      "name": "University of Florida",
+      "degree": "MS in Information Systems & Operations Management"
+    }
+  ],
+  "knowsAbout": [
+    "Product Management",
+    "Fintech",
+    "SaaS",
+    "Product Strategy",
+    "Roadmapping",
+    "Team Leadership",
+    "API and Integrations",
+    "Agile Methodologies"
+  ],
+  "address": {
+    "@type": "PostalAddress",
+    "addressRegion": "New Jersey",
+    "addressCountry": "US"
+  }
+};
+
 export default function Home() {
   const experiences: Experience[] = [
     {
@@ -294,6 +333,13 @@ export default function Home() {
 
   return (
     <>
+      {/* Structured Data */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(structuredData),
+        }}
+      />
       {/* Hero Section */}
       <header className="container mx-auto px-4 sm:px-6 py-12 sm:py-16 max-w-4xl">
         <div className="flex justify-center mb-8">
@@ -303,8 +349,8 @@ export default function Home() {
               alt="Joe Lapscher"
               fill
               priority
-              className="object-cover scale-150 object-[50%_35%]"
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              className="object-cover scale-110 object-[50%_35%]"
+              sizes="(max-width: 768px) 192px, 192px"
             />
           </div>
         </div>
@@ -335,7 +381,7 @@ export default function Home() {
         <hr className="my-8 border-gray-300 dark:border-gray-700" />
 
         {/* Work Experience Section */}
-        <section id="experience" className="mb-16 sm:mb-20 scroll-mt-20">
+        <section id="experience" className="mb-12 sm:mb-16 md:mb-20 scroll-mt-20">
           <h2 className={`${textStyles.h2} mb-12 text-gray-900 dark:text-white`}>Experience</h2>
           <ExperienceTimeline experiences={experiences} />
         </section>

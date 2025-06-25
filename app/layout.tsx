@@ -29,11 +29,11 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Joe Lapscher | Product Manager",
     description: "Joe Lapscher is a product manager with a passion for building products that make a difference. Experienced in fintech, SaaS, and enterprise software.",
-    url: "https://ylapscher.github.io",
+    url: "https://lapscher.com",
     siteName: "Joe Lapscher Portfolio",
     images: [
       {
-        url: "/images/profile.jpg",
+        url: "https://lapscher.com/images/profile.jpg",
         width: 400,
         height: 400,
         alt: "Joe Lapscher Profile Photo",
@@ -46,7 +46,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Joe Lapscher | Product Manager",
     description: "Product manager with expertise in fintech, SaaS, and enterprise software. Passionate about building products that make a difference.",
-    images: ["/images/profile.jpg"],
+    images: ["https://lapscher.com/images/profile.jpg"],
   },
 };
 
