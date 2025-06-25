@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, FormEvent } from 'react';
-import { XMarkIcon, ChatBubbleLeftIcon } from '@heroicons/react/24/outline';
+import { ChatBubbleLeftRightIcon, XMarkIcon, CheckCircleIcon, ExclamationTriangleIcon } from '@heroicons/react/24/outline';
 
 type FormData = {
   name: string;
@@ -85,7 +85,7 @@ export default function ChatWidget() {
           isOpen ? 'hidden' : 'flex'
         } items-center justify-center w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-blue-600 text-white shadow-lg hover:bg-blue-700 transition-colors`}
       >
-        <ChatBubbleLeftIcon className="w-5 h-5 sm:w-6 sm:h-6" />
+        <ChatBubbleLeftRightIcon className="w-5 h-5 sm:w-6 sm:h-6" />
       </button>
 
       {/* Chat Window */}

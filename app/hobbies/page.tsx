@@ -6,6 +6,7 @@ import {
   FireIcon, // for hot yoga
 } from '@heroicons/react/24/outline';
 import ImageGallery from '../components/ImageGallery';
+import Image from 'next/image';
 
 const hobbies = [
   {
@@ -62,7 +63,7 @@ export default function Hobbies() {
         </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 mb-12 sm:mb-16">
         {hobbies.map((hobby, index) => (
           <div
             key={index}
@@ -133,7 +134,7 @@ export default function Hobbies() {
             className="hover:opacity-90 transition-opacity"
             title="Yoel's book recommendations on Goodreads"
           >
-            <img 
+            <Image 
               src="/images/goodreads-badge.jpg"
               alt="Goodreads reading list" 
               className="rounded-lg shadow-md h-8 w-auto object-contain"
