@@ -87,6 +87,45 @@ public/
 - Formspree
 - GitHub Pages (Deployment)
 
+## Maintenance
+
+### Dependency Checks
+
+To ensure all dependencies are up to date and secure:
+
+```bash
+# Check for outdated dependencies
+npm outdated
+
+# Check for security vulnerabilities
+npm audit
+
+# Update dependencies to their latest versions
+npm update
+```
+
+### Repository Maintenance
+
+To keep the repository lean, the following files and directories should be ignored (already configured in .gitignore):
+
+- `node_modules/` - NPM dependencies
+- `.next/` - Next.js build output
+- `out/` - Static export directory
+- `.env` - Environment variables
+- `.DS_Store` - macOS system files
+- `*.log` - Log files
+- `coverage/` - Test coverage reports
+
+Regularly clean your local repository:
+
+```bash
+# Remove development dependencies and cache
+npm clean-install
+
+# Remove unused build artifacts
+npm run clean
+```
+
 ## Contributing
 
 Feel free to submit issues and enhancement requests!
