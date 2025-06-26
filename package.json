@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "npx serve@latest out",
-    "lint": "next lint"
+    "lint": "next lint",
+    "clean": "rm -rf .next out
   },
   "dependencies": {
     "@calcom/embed-react": "^1.5.1",
