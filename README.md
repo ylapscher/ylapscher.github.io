@@ -86,11 +86,11 @@ public/
 
 ## Technologies Used
 
-- **Frontend Framework**: Next.js 15.3.4 (App Router)
+- **Frontend Framework**: Next.js (App Router)
 - **Language**: TypeScript
 - **Styling**: Tailwind CSS
-- **Maps**: React Simple Maps
-- **Icons**: Hero Icons
+- **Maps**: react-simple-maps
+- **Icons**: Heroicons
 - **Forms**: Formspree
 - **Analytics**: PostHog
 - **Deployment**: GitHub Pages
