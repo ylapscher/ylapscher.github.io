@@ -1,6 +1,6 @@
 # Personal Portfolio & Travel Tracker
 
-A modern, interactive portfolio website built with Next.js that showcases my professional experience, hobbies, and travel adventures.
+A modern, interactive portfolio website built with Next.js that showcases my professional experience, web development projects, hobbies, and travel adventures.
 
 ## Features
 
@@ -9,6 +9,12 @@ A modern, interactive portfolio website built with Next.js that showcases my pro
 - US map with state-by-state tracking
 - Interactive tooltips and hover states
 - Dynamic statistics for places visited
+
+### 💼 Project Showcase
+- Portfolio of web development projects
+- Interactive project cards with hover effects
+- Direct links to live websites
+- Responsive grid layout for optimal viewing
 
 ### 📧 Contact Form Integration
 - Floating chat widget for easy contact
@@ -25,7 +31,7 @@ A modern, interactive portfolio website built with Next.js that showcases my pro
 ### 💻 Technical Highlights
 - Built with Next.js (App Router)
 - Responsive design with Tailwind CSS
-- Dark mode
+- Dark mode support
 - Interactive maps using react-simple-maps
 - TypeScript for type safety
 - Dynamic data loading and state management
@@ -66,6 +72,7 @@ app/
 ├── components/     # Reusable UI components
 ├── data/          # Static data files
 ├── hobbies/       # Hobbies page
+├── projects/      # Web development projects showcase
 ├── travel/        # Travel tracking features
 ├── us-travel/     # US states map
 ├── services/      # Services page
@@ -79,13 +86,14 @@ public/
 
 ## Technologies Used
 
-- Next.js
-- TypeScript
-- Tailwind CSS
-- React Simple Maps
-- Hero Icons
-- Formspree
-- GitHub Pages (Deployment)
+- **Frontend Framework**: Next.js (App Router)
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS
+- **Maps**: react-simple-maps
+- **Icons**: Heroicons
+- **Forms**: Formspree
+- **Analytics**: PostHog
+- **Deployment**: GitHub Pages
 
 ## Maintenance
 
@@ -119,12 +127,21 @@ To keep the repository lean, the following files and directories should be ignor
 Regularly clean your local repository:
 
 ```bash
-# Remove development dependencies and cache
-npm clean-install
+# Clean, reproducible install (CI-friendly)
+npm ci
 
 # Remove unused build artifacts
 npm run clean
 ```
+
+## Pages
+
+- **Home** (`/`) - Professional experience, skills, and initiatives
+- **Projects** (`/projects`) - Web development portfolio showcasing live websites
+- **Hobbies** (`/hobbies`) - Personal interests, barber portfolio, and reading list
+- **Services** (`/services`) - Professional services and contact information
+- **Travel** (`/travel`) - Interactive world travel map
+- **US Travel** (`/us-travel`) - Interactive US states travel map
 
 ## Contributing
 
