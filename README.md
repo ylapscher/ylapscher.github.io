@@ -136,7 +136,7 @@ npm run clean
 
 ## Pages
 
-- **Home** (`/`) - Professional experience, skills, and initiatives
+- **Home** (`/`) - Professional experience, skills, and volunteering
 - **Projects** (`/projects`) - Web development portfolio showcasing live websites
 - **Hobbies** (`/hobbies`) - Personal interests, barber portfolio, and reading list
 - **Services** (`/services`) - Professional services and contact information
