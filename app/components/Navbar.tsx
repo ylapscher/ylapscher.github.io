@@ -126,20 +126,25 @@ export default function Navbar() {
             <div className="hidden md:flex items-center">
               {/* Navigation Links */}
               <div className="flex gap-8 mr-8 border-r border-gray-200 dark:border-gray-700 pr-8">
-                {navLinks.map(({ href, label }) => (
-                  <Link
-                    key={href}
-                    href={href === '/' ? '/#experience' : href}
-                    className={`${textStyles.small} relative transition-colors
-                      ${(pathname === href || (pathname === '/' && href === '/'))
-                        ? 'text-gray-900 dark:text-white after:absolute after:left-0 after:right-0 after:-bottom-1 after:h-0.5 after:bg-blue-600 after:rounded-full'
-                        : 'text-gray-700 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white'
-                      }
-                    `}
-                  >
-                    {label}
-                  </Link>
-                ))}
+                {navLinks.map(({ href, label }) => {
+                  const resolvedHref = href === '/' ? '/#experience' : href;
+                  const isActive = pathname === href || (pathname === '/' && href === '/');
+                  return (
+                    <Link
+                      key={href}
+                      href={resolvedHref}
+                      aria-current={isActive ? 'page' : undefined}
+                      className={`${textStyles.small} relative transition-colors
+                        ${isActive
+                          ? 'text-gray-900 dark:text-white after:absolute after:left-0 after:right-0 after:-bottom-1 after:h-0.5 after:bg-blue-600 after:rounded-full'
+                          : 'text-gray-700 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white'
+                        }
+                      `}
+                    >
+                      {label}
+                    </Link>
+                  );
+                })}
               </div>
 
               {/* Resume, LinkedIn, and Dark Mode Toggle */}
@@ -206,21 +211,26 @@ export default function Navbar() {
           {isMenuOpen && (
             <div className="md:hidden pt-4 pb-3 border-t border-gray-200 dark:border-gray-700">
               <div className="flex flex-col gap-4">
-                {navLinks.map(({ href, label }) => (
-                  <Link
-                    key={href}
-                    href={href}
-                    onClick={() => setIsMenuOpen(false)}
-                    className={`text-sm transition-colors px-2 py-1
-                      ${(pathname === '/' && activeSection === href.slice(2)) || (pathname === href)
-                        ? 'text-gray-900 dark:text-white'
-                        : 'text-gray-700 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white'
-                      }
-                    `}
-                  >
-                    {label}
-                  </Link>
-                ))}
+                {navLinks.map(({ href, label }) => {
+                  const resolvedHref = href === '/' ? '/#experience' : href;
+                  const isActive = pathname === href || (pathname === '/' && href === '/');
+                  return (
+                    <Link
+                      key={href}
+                      href={resolvedHref}
+                      onClick={() => setIsMenuOpen(false)}
+                      aria-current={isActive ? 'page' : undefined}
+                      className={`text-sm transition-colors px-2 py-1
+                        ${isActive
+                          ? 'text-gray-900 dark:text-white'
+                          : 'text-gray-700 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white'
+                        }
+                      `}
+                    >
+                      {label}
+                    </Link>
+                  );
+                })}
                 <div className="flex items-center gap-4 px-2 py-1">
                   <button
                     onClick={handleResumeClick}

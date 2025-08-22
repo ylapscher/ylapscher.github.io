@@ -1,4 +1,9 @@
-'use client'
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Projects — Joe Lapscher',
+  description: "Web projects I've built to solve real problems and craft engaging experiences.",
+};
 
 type Project = {
   title: string;
@@ -50,12 +55,13 @@ export default function Projects() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
-        {projects.map((project, index) => (
+        {projects.map((project) => (
           <a
-            key={index}
+            key={project.title}
             href={project.url}
             target="_blank"
             rel="noopener noreferrer"
+            aria-label={`Open ${project.title} in a new tab`}
             className="group bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 overflow-hidden transform transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:border-blue-500"
           >
             <div className="aspect-video relative overflow-hidden">

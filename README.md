@@ -127,8 +127,8 @@ To keep the repository lean, the following files and directories should be ignor
 Regularly clean your local repository:
 
 ```bash
-# Remove development dependencies and cache
-npm clean-install
+# Clean, reproducible install (CI-friendly)
+npm ci
 
 # Remove unused build artifacts
 npm run clean
