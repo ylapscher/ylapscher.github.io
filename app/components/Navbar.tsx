@@ -128,7 +128,9 @@ export default function Navbar() {
               <div className="flex gap-8 mr-8 border-r border-gray-200 dark:border-gray-700 pr-8">
                 {navLinks.map(({ href, label }) => {
                   const resolvedHref = href === '/' ? '/#experience' : href;
-                  const isActive = pathname === href || (pathname === '/' && href === '/');
+                  // normalize both pathname and href to "/" if empty or just "/", else strip any trailing slash
+                  const normalize = (p?: string) => (!p || p === '/') ? '/' : p.replace(/\/$/, '');
+                  const isActive = normalize(pathname) === normalize(href);
                   return (
                     <Link
                       key={href}
