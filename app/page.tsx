@@ -12,6 +12,7 @@ type Experience = {
     src: string;
     alt: string;
   };
+  link?: string; // Added link property
 };
 
 type Initiative = {
@@ -86,57 +87,76 @@ function ExperienceTimeline({ experiences }: { experiences: Experience[] }) {
       <div className="absolute left-4 md:left-1/2 transform md:-translate-x-1/2 h-full w-0.5 bg-blue-600" />
       
       <div className="space-y-4">
-        {experiences.map((experience, index) => (
-          <div 
-            key={index}
-            className={`relative flex items-center ${
-              index % 2 === 1 ? 'md:justify-end' : 'justify-start'
-            }`}
-          >
-            {/* Year as Marker */}
-            <div className="absolute left-4 md:left-1/2 transform md:-translate-x-1/2 flex items-center justify-center z-[1]">
-              <div className="bg-blue-600 rounded-full flex items-center">
-                <span className="text-base font-extrabold text-blue-600 bg-gray-50 mx-[1px] my-[1px] px-3 py-0.5 rounded-full">
-                  {experience.duration.split(' - ')[0]}
-                </span>
-              </div>
-            </div>
-            
-            {/* Content Box */}
-            <div className={`w-full md:w-[48%] pl-16 md:pl-10 pr-4 md:pr-10 ${
-              index % 2 === 1 ? 'md:pl-0' : ''
-            }`}>
-              <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700">
-                <div className="flex flex-col gap-4">
-                  <div className="flex items-center gap-4">
-                    {experience.image && (
-                      <div className="flex-shrink-0 w-12 h-12">
-                        <Image
-                          src={experience.image.src}
-                          alt={experience.image.alt}
-                          width={48}
-                          height={48}
-                          className="rounded object-cover"
-                        />
-                      </div>
-                    )}
-                    <div>
-                      <h3 className="font-bold text-lg mb-1 text-gray-900 dark:text-white">
-                        {experience.role}
-                      </h3>
-                      <p className="text-gray-700 dark:text-gray-400 text-sm">
-                        {experience.company}
-                      </p>
-                    </div>
-                  </div>
-                  <div className="text-gray-700 dark:text-gray-400 text-sm leading-relaxed">
-                    {experience.achievements[0]}
-                  </div>
+        {experiences.map((experience, index) => {
+          const isClickable = experience.link;
+          const ContentWrapper = isClickable ? 'a' : 'div';
+          const contentProps = isClickable ? {
+            href: experience.link,
+            target: "_blank",
+            rel: "noopener noreferrer",
+            className: "block"
+          } : {};
+          
+          return (
+            <div 
+              key={index}
+              className={`relative flex items-center ${
+                index % 2 === 1 ? 'md:justify-end' : 'justify-start'
+              }`}
+            >
+              {/* Year as Marker */}
+              <div className="absolute left-4 md:left-1/2 transform md:-translate-x-1/2 flex items-center justify-center z-[1]">
+                <div className="bg-blue-600 rounded-full flex items-center">
+                  <span className="text-base font-extrabold text-blue-600 bg-gray-50 mx-[1px] my-[1px] px-3 py-0.5 rounded-full">
+                    {experience.duration.split(' - ')[0]}
+                  </span>
                 </div>
               </div>
+              
+              {/* Content Box */}
+              <div className={`w-full md:w-[48%] pl-16 md:pl-10 pr-4 md:pr-10 ${
+                index % 2 === 1 ? 'md:pl-0' : ''
+              }`}>
+                <ContentWrapper {...contentProps}>
+                  <div className={`bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 transition-all duration-300 ${
+                    isClickable 
+                      ? 'hover:-translate-y-1 hover:shadow-xl hover:border-blue-500 cursor-pointer group' 
+                      : ''
+                  }`}>
+                    <div className="flex flex-col gap-4">
+                      <div className="flex items-center gap-4">
+                        {experience.image && (
+                          <div className="flex-shrink-0 w-12 h-12">
+                            <Image
+                              src={experience.image.src}
+                              alt={experience.image.alt}
+                              width={48}
+                              height={48}
+                              className="rounded object-cover"
+                            />
+                          </div>
+                        )}
+                        <div>
+                          <h3 className={`font-bold text-lg mb-1 text-gray-900 dark:text-white ${
+                            isClickable ? 'group-hover:text-blue-600 transition-colors' : ''
+                          }`}>
+                            {experience.role}
+                          </h3>
+                          <p className="text-gray-700 dark:text-gray-400 text-sm">
+                            {experience.company}
+                          </p>
+                        </div>
+                      </div>
+                      <div className="text-gray-700 dark:text-gray-400 text-sm leading-relaxed">
+                        {experience.achievements[0]}
+                      </div>
+                    </div>
+                  </div>
+                </ContentWrapper>
+              </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
     </div>
   );
@@ -217,7 +237,8 @@ export default function Home() {
       image: {
         src: "/images/companies/citrix.png",
         alt: "Citrix Logo"
-      }
+      },
+      link: "https://medium.com/@ylapscher/preview-system-log-for-the-citrix-cloud-platform-citrix-blogs-8306e408ef76"
     },
     {
       role: "Software Engineer",
@@ -229,19 +250,21 @@ export default function Home() {
       image: {
         src: "/images/companies/ge.png",
         alt: "GE Logo"
-      }
+      },
+      link: "https://careers.gevernova.com/global/en/lp-dtlp"
     },
     {
-      role: "Graduate Student",
-      company: "University of Florida",
+      role: "Founder",
+      company: "Macro Excellence",
       duration: "2017 - 2018",
       achievements: [
-        "I earned my MS in Information Systems & Operations Management at UF, where I served as a Teaching Assistant for courses in Managerial Quantitative Analysis and Retail Consulting. I also hold a BS in Industrial & Systems Engineering, where I played water polo"
+        "Founded, managed, and sold a technical consulting practice specializing in building custom software solutions that make business processes more efficient"
       ],
       image: {
-        src: "/images/companies/uf.png",
-        alt: "UF Logo"
-      }
+        src: "/images/initiatives/macro.png",
+        alt: "Macro Excellence"
+      },
+      link: "https://youtu.be/wmdxsiGG1rM?si=lu834SDaqkz8qTuu"
     },
     {
       role: "Intern",
@@ -266,33 +289,6 @@ export default function Home() {
         alt: "Adaptive Climbing"
       },
       link: "https://www.adaptiveclimbinggroup.org/northern-new-jersey"
-    },
-    {
-      title: "Young Jewish Professionals",
-      description: "Founding board member of the Atlanta chapter of Young Jewish Professionals, creating programs for young professionals in the Jewish community",
-      image: {
-        src: "/images/initiatives/yjp.png",
-        alt: "Young Jewish Professionals"
-      },
-      link: "https://www.yjpintown.org/"
-    },
-    {
-      title: "Blockchain Club",
-      description: "Cofounder of the blockchain forums at UF and GE, leading discussions and workshops on blockchain technology, cryptocurrencies, and their impact on financial services",
-      image: {
-        src: "/images/initiatives/blockchain.png",
-        alt: "Blockchain Club"
-      },
-      link: "https://www.instagram.com/gatorblockchain/?hl=en"
-    },
-    {
-      title: "Macro Excellence",
-      description: "Founded, managed, and sold a technical consulting practice specializing in building custom software solutions that make business processes more efficient",
-      image: {
-        src: "/images/initiatives/macro.png",
-        alt: "Macro Excellence"
-      },
-      link: "https://youtu.be/wmdxsiGG1rM?si=_wUAidl0huhKyuye"
     }
   ];
 
@@ -386,39 +382,84 @@ export default function Home() {
           <ExperienceTimeline experiences={experiences} />
         </section>
 
-        {/* Horizontal Divider for Initiatives */}
+        {/* Horizontal Divider for Volunteering and Education */}
         <hr className="my-8 border-gray-300 dark:border-gray-700" />
-        <section id="initiatives" className="mb-16 sm:mb-20 scroll-mt-20">
-          <h2 className={`${textStyles.h2} mb-12 text-gray-900 dark:text-white`}>Initiatives</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {initiatives.map((initiative, index) => (
-              <a
-                key={index}
-                href={initiative.link}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 overflow-hidden flex flex-col transform transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:border-blue-500"
-              >
-                {initiative.image && (
-                  <div className="h-48 sm:h-64 relative">
+        <section id="volunteering-education" className="mb-16 sm:mb-20 scroll-mt-20">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            {/* Volunteering Section */}
+            <div className="flex flex-col">
+              <h2 className={`${textStyles.h2} mb-8 text-gray-900 dark:text-white`}>Volunteering</h2>
+              <div className="flex-1">
+                {initiatives.map((initiative, index) => (
+                  <a
+                    key={index}
+                    href={initiative.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 overflow-hidden flex flex-col h-full transform transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:border-blue-500"
+                  >
+                    {initiative.image && (
+                      <div className="h-32 sm:h-40 relative">
+                        <Image
+                          src={initiative.image.src}
+                          alt={initiative.image.alt}
+                          fill
+                          className="object-cover transition-transform duration-300 group-hover:scale-105"
+                        />
+                      </div>
+                    )}
+                    <div className="p-4 sm:p-6 flex flex-col flex-grow">
+                      <h3 className="text-lg font-bold mb-2 text-gray-900 dark:text-white group-hover:text-blue-600 transition-colors">
+                        {initiative.title}
+                      </h3>
+                      <p className="text-gray-700 dark:text-gray-400 text-sm leading-relaxed">
+                        {initiative.description}
+                      </p>
+                    </div>
+                  </a>
+                ))}
+              </div>
+            </div>
+
+            {/* Education Section */}
+            <div className="flex flex-col">
+              <h2 className={`${textStyles.h2} mb-8 text-gray-900 dark:text-white`}>Education</h2>
+              <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 p-6 flex-1">
+                <div className="flex items-start gap-4 mb-6">
+                  <div className="flex-shrink-0 w-16 h-16">
                     <Image
-                      src={initiative.image.src}
-                      alt={initiative.image.alt}
-                      fill
-                      className="object-cover transition-transform duration-300 group-hover:scale-105"
+                      src="/images/companies/uf.png"
+                      alt="University of Florida Logo"
+                      width={64}
+                      height={64}
+                      className="rounded object-cover"
                     />
                   </div>
-                )}
-                <div className="p-4 sm:p-6 flex flex-col flex-grow">
-                  <h3 className="text-lg font-bold mb-2 text-gray-900 dark:text-white group-hover:text-blue-600 transition-colors">
-                    {initiative.title}
-                  </h3>
-                  <p className="text-gray-700 dark:text-gray-400 text-sm leading-relaxed">
-                    {initiative.description}
-                  </p>
+                  <div>
+                    <h3 className="text-xl font-bold text-gray-900 dark:text-white">University of Florida</h3>
+                    <p className="text-gray-700 dark:text-gray-400 text-sm">Gainesville, FL</p>
+                  </div>
                 </div>
-              </a>
-            ))}
+                
+                <div className="space-y-4">
+                  <div>
+                    <h4 className="font-semibold text-gray-900 dark:text-white">MS, Information Systems & Operations Mgmt</h4>
+                    <div className="mt-2">
+                      <p className="font-medium text-gray-900 dark:text-white text-sm">Teaching Assistant:</p>
+                      <ul className="text-gray-700 dark:text-gray-400 text-sm mt-1 space-y-1">
+                        <li>• Managerial Quantitative Analysis I & II</li>
+                        <li>• Retail Consulting</li>
+                        <li>• Intro to Managerial Statistics</li>
+                      </ul>
+                    </div>
+                  </div>
+                  
+                  <div>
+                    <h4 className="font-semibold text-gray-900 dark:text-white">BS, Industrial & Systems Engineering</h4>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </section>
 
