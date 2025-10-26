@@ -107,7 +107,7 @@ export default function Navbar() {
 
   const handleResumeClick = (e: React.MouseEvent) => {
     e.preventDefault();
-    window.open('https://drive.google.com/file/d/1xGWebBdenzHo2Q7hjaM1R-Ep7yr8M8FU/view?usp=sharing', '_blank');
+    window.open('https://drive.google.com/file/d/1EqxPiOXn3-ao_I5GsP--dh6qYyzUFGsG/view?usp=sharing', '_blank');
   };
 
   return (
