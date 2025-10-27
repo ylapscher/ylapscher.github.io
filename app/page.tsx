@@ -175,7 +175,7 @@ const structuredData = {
   ],
   "worksFor": {
     "@type": "Organization",
-    "name": "Transcard"
+    "name": "Lapscher Consulting"
   },
   "alumniOf": [
     {
@@ -204,11 +204,23 @@ const structuredData = {
 export default function Home() {
   const experiences: Experience[] = [
     {
+      role: "Principal",
+      company: "Lapscher Consulting",
+      duration: "2025 - Present",
+      achievements: [
+        "Building custom websites and exploring new fintech opportunities. Recently completed projects include Sam Storybook, Knock on Block, and Harbor Parking platforms."
+      ],
+      image: {
+        src: "/images/companies/lapscher.png",
+        alt: "Lapscher Consulting"
+      }
+    },
+    {
       role: "Senior Product Manager",
       company: "Transcard",
-      duration: "2024 - Present",
+      duration: "2024 - 2025",
       achievements: [
-        "I'm doubling down in the fintech world, focusing on payments, and driving the launch of a new platform that streamlines how businesses transact without relying on checks"
+        "I doubled down in the fintech world, focusing on payments, and driving the launch of a new platform that streamlines how businesses transact without relying on checks"
       ],
       image: {
         src: "/images/companies/transcard.png",
@@ -358,17 +370,25 @@ export default function Home() {
             </span>
           </h1>
           <p className="text-lg text-gray-700 dark:text-gray-400 max-w-2xl mx-auto">
-            Welcome | Bienvenido | ברוכים הבאים!
+            <em>Welcome | Bienvenido | ברוכים הבאים!</em>
             <br />
-            Hey there! This is my little corner of the web where I share my professional journey, 
-            hobbies, and travel adventures 😊
+            I'm a senior product manager free agent specializing in fintech, currently building custom websites 
+            and exploring new opportunities. This is the corner of the internet where I share my professional journey and recent projects.
           </p>
-          <a
-            href="/services"
-            className="mt-4 inline-block bg-blue-600 text-white font-semibold py-2 px-4 rounded hover:bg-blue-700 transition mx-auto"
-          >
-            Let's Connect!
-          </a>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center mt-6">
+            <a
+              href="/services"
+              className="inline-block bg-blue-600 text-white font-semibold py-2 px-4 rounded hover:bg-blue-700 transition"
+            >
+              Let's Connect
+            </a>
+            <a
+              href="/projects"
+              className="inline-block bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-white font-semibold py-2 px-4 rounded hover:bg-gray-300 dark:hover:bg-gray-600 transition"
+            >
+              View My Projects
+            </a>
+          </div>
         </div>
       </header>
 
