@@ -166,8 +166,8 @@ const structuredData = {
   "@context": "https://schema.org",
   "@type": "Person",
   "name": "Joe Lapscher",
-  "jobTitle": "Senior Product Manager",
-  "description": "Senior Product Manager with expertise in fintech, SaaS, and enterprise software. Experienced in product strategy, roadmapping, and team leadership.",
+  "jobTitle": "Chief Product Officer",
+  "description": "Chief Product Officer at Tienda Pago with expertise in fintech, SaaS, and enterprise software. Experienced in product strategy, roadmapping, and team leadership.",
   "url": "https://lapscher.com",
   "sameAs": [
     "https://www.linkedin.com/in/ylapscher/",
@@ -175,7 +175,7 @@ const structuredData = {
   ],
   "worksFor": {
     "@type": "Organization",
-    "name": "Lapscher Consulting"
+    "name": "Tienda Pago"
   },
   "alumniOf": [
     {
@@ -204,15 +204,15 @@ const structuredData = {
 export default function Home() {
   const experiences: Experience[] = [
     {
-      role: "Principal",
-      company: "Lapscher Consulting",
+      role: "Chief Product Officer",
+      company: "Tienda Pago",
       duration: "2025 - Present",
       achievements: [
-        "Building custom websites and exploring new fintech opportunities. Recently completed projects include Sam Storybook, Knock on Block, and Harbor Parking platforms."
+        "I've launched my career into Product leadership and currently own Product, Growth, and Marketing at a LATAM Fintech that provides microloans to bodegas"
       ],
       image: {
-        src: "/images/companies/lapscher.png",
-        alt: "Lapscher Consulting"
+        src: "/images/companies/tp.png",
+        alt: "Tienda Pago"
       }
     },
     {
@@ -366,14 +366,13 @@ export default function Home() {
           <h1 className={textStyles.h1}>
             <span className="text-gray-900 dark:text-white">Joe Lapscher</span>
             <span className="block text-xl sm:text-2xl text-gray-700 dark:text-gray-400 mt-2 font-geist-sans">
-              Senior Product Manager
+              Chief Product Officer
             </span>
           </h1>
           <p className="text-lg text-gray-700 dark:text-gray-400 max-w-2xl mx-auto">
             <em>Welcome | Bienvenido | ברוכים הבאים!</em>
             <br />
-            I'm a senior product manager free agent specializing in fintech, currently building custom websites 
-            and exploring new opportunities. This is the corner of the internet where I share my professional journey and recent projects.
+            I'm the Chief Product Officer at Tienda Pago, specializing in fintech. This is the corner of the internet where I share my professional journey and recent projects.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center mt-6">
             <a

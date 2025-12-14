@@ -28,6 +28,11 @@ export default function USTravel() {
   // Use the fixed count
   const visitedCount = actualVisitedStates.length;
   const livedCount = Object.values(livedStates).filter(Boolean).length;
+  
+  // Calculate totals and percentages
+  const totalStates = 50; // Excluding DC and Puerto Rico
+  const visitedPercentage = Math.round((visitedCount / totalStates) * 100);
+  const livedPercentage = Math.round((livedCount / totalStates) * 100);
 
   // Load GeoJSON data
   useEffect(() => {
@@ -89,12 +94,18 @@ export default function USTravel() {
           States I've visited and lived in across the USA
         </p>
         <div className="flex justify-center gap-8">
-          <div>
-            <p className="text-xl sm:text-2xl font-semibold text-[#60A5FA]">
-              {visitedCount} (Corrected)
+          <div className="w-full max-w-xs">
+            <p className="text-xl sm:text-2xl font-semibold text-[#60A5FA] mb-2">
+              {visitedCount}
             </p>
+            <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2.5 mb-2">
+              <div 
+                className="bg-[#60A5FA] h-2.5 rounded-full transition-all duration-300"
+                style={{ width: `${visitedPercentage}%` }}
+              ></div>
+            </div>
             <p className="text-sm text-gray-700 dark:text-gray-400">
-              States Visited*
+              States Visited
             </p>
           </div>
           <div>

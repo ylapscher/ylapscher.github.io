@@ -25,7 +25,7 @@ export default function Services() {
       <div className="text-center mb-12">
         <h1 className="text-4xl font-bold mb-4 text-gray-900 dark:text-white">How can I help?</h1>
         <p className="text-lg text-gray-700 dark:text-gray-400 max-w-2xl mx-auto">
-          As a senior product manager free agent, I'm focused on three key areas where I can add immediate value:
+          As Chief Product Officer at Tienda Pago, I'm focused on three key areas where I can add immediate value:
         </p>
       </div>
 
