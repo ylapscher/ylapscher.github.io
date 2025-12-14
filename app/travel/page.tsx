@@ -91,6 +91,7 @@ export default function Travel() {
   const [showUSMap, setShowUSMap] = useState(false);
   const [worldData, setWorldData] = useState<GeoData | null>(null);
   const [usData, setUsData] = useState<GeoData | null>(null);
+  const [totalCountries, setTotalCountries] = useState<number>(0);
 
   // 2. All useRef hooks (Removed geographiesRef)
 
@@ -116,6 +117,11 @@ export default function Travel() {
       .then(data => {
         if (data && data.objects && data.objects.countries) {
           setWorldData(data);
+          // Count total countries from the geometries
+          const geometries = data.objects.countries.geometries;
+          if (geometries && Array.isArray(geometries)) {
+            setTotalCountries(geometries.length);
+          }
         }
       });
 
@@ -134,6 +140,17 @@ export default function Travel() {
       }).length
     : Object.values(visitedCountries).filter(Boolean).length;
   const livedCount = Object.values(showUSMap ? livedStates : livedCountries).filter(Boolean).length;
+
+  // Calculate totals and percentages
+  const totalStates = 50; // Excluding DC and Puerto Rico
+  
+  const visitedPercentage = showUSMap
+    ? Math.round((visitedCount / totalStates) * 100)
+    : totalCountries > 0 ? Math.round((visitedCount / totalCountries) * 100) : 0;
+  
+  const livedPercentage = showUSMap
+    ? Math.round((livedCount / totalStates) * 100)
+    : totalCountries > 0 ? Math.round((livedCount / totalCountries) * 100) : 0;
 
   // Loading states
   if (!worldData || !usData) {
@@ -175,10 +192,16 @@ export default function Travel() {
           Show {showUSMap ? 'World' : 'US'} Map
         </button>
         <div className="flex justify-center gap-8">
-          <div>
-            <p className="text-xl sm:text-2xl font-semibold text-[#60A5FA]">
+          <div className="w-full max-w-xs">
+            <p className="text-xl sm:text-2xl font-semibold text-[#60A5FA] mb-2">
               {visitedCount}
             </p>
+            <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2.5 mb-2">
+              <div 
+                className="bg-[#60A5FA] h-2.5 rounded-full transition-all duration-300"
+                style={{ width: `${visitedPercentage}%` }}
+              ></div>
+            </div>
             <p className="text-sm text-gray-700 dark:text-gray-400">
               {showUSMap ? 'States' : 'Countries'} Visited
             </p>

@@ -22,13 +22,13 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Joe Lapscher | Product Manager",
-  description: "Joe Lapscher is a product manager with a passion for building products that make a difference. Experienced in fintech, SaaS, and enterprise software with expertise in product strategy, roadmapping, and team leadership.",
-  keywords: "product manager, fintech, SaaS, product strategy, roadmapping, team leadership, Joe Lapscher",
+  title: "Joe Lapscher | Product Leader",
+  description: "Joe Lapscher is a Chief Product Officer at Tienda Pago with a passion for building products that make a difference. Experienced in fintech, SaaS, and enterprise software with expertise in product strategy, roadmapping, and team leadership.",
+  keywords: "Chief Product Officer, CPO, product leader, fintech, SaaS, product strategy, roadmapping, team leadership, Tienda Pago, Joe Lapscher",
   authors: [{ name: "Joe Lapscher" }],
   openGraph: {
-    title: "Joe Lapscher | Product Manager",
-    description: "Joe Lapscher is a product manager with a passion for building products that make a difference. Experienced in fintech, SaaS, and enterprise software.",
+    title: "Joe Lapscher | Product Leader",
+    description: "Chief Product Officer at Tienda Pago. Experienced in fintech, SaaS, and enterprise software with expertise in product strategy, roadmapping, and team leadership.",
     url: "https://lapscher.com",
     siteName: "Joe Lapscher Portfolio",
     images: [
@@ -44,8 +44,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Joe Lapscher | Product Manager",
-    description: "Product manager with expertise in fintech, SaaS, and enterprise software. Passionate about building products that make a difference.",
+    title: "Joe Lapscher | Product Leader",
+    description: "Chief Product Officer at Tienda Pago. Product leader with expertise in fintech, SaaS, and enterprise software. Passionate about building products that make a difference.",
     images: ["https://lapscher.com/images/profile.jpg"],
   },
 };
