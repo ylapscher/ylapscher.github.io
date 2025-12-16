@@ -370,9 +370,7 @@ export default function Home() {
             </span>
           </h1>
           <p className="text-lg text-gray-700 dark:text-gray-400 max-w-2xl mx-auto">
-            <em>Welcome | Bienvenido | ברוכים הבאים!</em>
-            <br />
-            I'm the Chief Product Officer at Tienda Pago, specializing in fintech. This is the corner of the internet where I share my professional journey and recent projects.
+            Hi! My name is Yoel, but I go by Joe. I'm currently the CPO at Tienda Pago, and this is my corner of the web where I showcase my experience, hobbies, and projects 💻
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center mt-6">
             <a
@@ -380,12 +378,6 @@ export default function Home() {
               className="inline-block bg-blue-600 text-white font-semibold py-2 px-4 rounded hover:bg-blue-700 transition"
             >
               Let's Connect
-            </a>
-            <a
-              href="/projects"
-              className="inline-block bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-white font-semibold py-2 px-4 rounded hover:bg-gray-300 dark:hover:bg-gray-600 transition"
-            >
-              View My Projects
             </a>
           </div>
         </div>
