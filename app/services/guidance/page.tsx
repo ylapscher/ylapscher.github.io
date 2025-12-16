@@ -19,6 +19,11 @@ const services = [
   },
 ];
 
+/**
+ * Guidance page component displaying mentorship and coaching services.
+ * Shows service offerings with icons and descriptions, plus a booking calendar.
+ * @returns {JSX.Element} The guidance page with service cards and booking calendar
+ */
 export default function Guidance() {
   return (
     <main className="container mx-auto px-4 sm:px-6 py-12 max-w-4xl">

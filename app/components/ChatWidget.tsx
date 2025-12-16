@@ -3,6 +3,13 @@
 import { useState, FormEvent } from 'react';
 import { ChatBubbleOvalLeftIcon, XMarkIcon, CheckCircleIcon, ExclamationTriangleIcon } from '@heroicons/react/24/outline';
 
+/**
+ * Form data structure for the contact form.
+ * @typedef {Object} FormData
+ * @property {string} name - User's name
+ * @property {string} email - User's email address
+ * @property {string} message - Message content
+ */
 type FormData = {
   name: string;
   email: string;
@@ -11,6 +18,12 @@ type FormData = {
 
 const FORM_ENDPOINT = "https://formspree.io/f/xwpkjbzj";
 
+/**
+ * Floating chat widget component with contact form.
+ * Provides a toggleable chat interface that slides in from the bottom right.
+ * Includes form validation and submission to Formspree service.
+ * @returns {JSX.Element} A floating chat widget with contact form
+ */
 export default function ChatWidget() {
   const [isOpen, setIsOpen] = useState(false);
   const [formData, setFormData] = useState<FormData>({
@@ -21,6 +34,11 @@ export default function ChatWidget() {
   const [formStatus, setFormStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
   const [emailError, setEmailError] = useState<string>('');
 
+  /**
+   * Validates an email address format and sets error state if invalid.
+   * @param {string} email - Email address to validate
+   * @returns {boolean} True if email is valid, false otherwise
+   */
   const validateEmail = (email: string) => {
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!email) {
@@ -35,6 +53,12 @@ export default function ChatWidget() {
     return true;
   };
 
+  /**
+   * Handles form submission by validating data and sending to Formspree endpoint.
+   * Manages form state (submitting, success, error) and resets form on success.
+   * @param {FormEvent} e - Form submission event
+   * @returns {Promise<void>}
+   */
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     

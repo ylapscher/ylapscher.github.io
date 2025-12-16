@@ -19,6 +19,11 @@ const services = [
   },
 ];
 
+/**
+ * Services page component displaying available services and booking calendar.
+ * Shows three main service offerings with icons and descriptions.
+ * @returns {JSX.Element} The services page with service cards and booking calendar
+ */
 export default function Services() {
   return (
     <main className="container mx-auto px-4 sm:px-6 py-12 max-w-4xl">

@@ -13,6 +13,11 @@ import { ErrorBoundary } from '../components/ErrorBoundary';
 const worldGeoUrl = "/data/world-geo.json";
 const usGeoUrl = "/data/us-states.json";
 
+/**
+ * Record type mapping country names to boolean values.
+ * Used to track visited or lived countries.
+ * @typedef {Record<string, boolean>} CountryName
+ */
 type CountryName = {
   [key: string]: boolean;
 };
@@ -70,9 +75,20 @@ const livedCountries: CountryName = {
   "Venezuela": true,
 };
 
-// Add type for map data
+/**
+ * Type for geographic map data.
+ * @typedef {Record<string, any>} GeoData
+ */
 type GeoData = Record<string, any>;
 
+/**
+ * Properties interface for geographic features.
+ * @interface GeoProperties
+ * @property {string} NAME - Geographic name
+ * @property {string} name - Alternative name
+ * @property {string} rsmKey - React Simple Maps key
+ * @property {Object} properties - Additional properties
+ */
 type GeoProperties = {
   NAME: string;
   name: string;
@@ -83,6 +99,12 @@ type GeoProperties = {
   };
 };
 
+/**
+ * Travel page component displaying interactive world and US state maps.
+ * Shows visited and lived locations with color coding and statistics.
+ * Supports toggling between world and US state views.
+ * @returns {JSX.Element} The travel page with interactive maps
+ */
 export default function Travel() {
   // 1. All useState hooks
   const [tooltip, setTooltip] = useState<string | null>(null);

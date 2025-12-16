@@ -50,6 +50,13 @@ export const metadata: Metadata = {
   },
 };
 
+/**
+ * Root layout component that wraps all pages with common elements.
+ * Includes navigation, footer, chat widget, analytics, and structured metadata.
+ * @param {Object} props - Component props
+ * @param {React.ReactNode} props.children - Page content to render
+ * @returns {JSX.Element} Root layout with all global components
+ */
 export default function RootLayout({
   children,
 }: {

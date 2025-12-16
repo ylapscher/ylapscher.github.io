@@ -1,5 +1,14 @@
 'use client';
 
+/**
+ * Props for the HobbyCard component.
+ * @typedef {Object} HobbyProps
+ * @property {Object} hobby - Hobby information object
+ * @property {string} hobby.title - Hobby title
+ * @property {string} hobby.description - Hobby description
+ * @property {React.ReactNode} hobby.icon - Icon element for the hobby
+ * @property {string} [hobby.link] - Optional link URL for the hobby
+ */
 type HobbyProps = {
   hobby: {
     title: string;
@@ -9,6 +18,13 @@ type HobbyProps = {
   };
 };
 
+/**
+ * Card component for displaying hobby information.
+ * Shows title, description, and icon. Optionally clickable if a link is provided.
+ * @param {HobbyProps} props - Component props
+ * @param {Object} props.hobby - Hobby information object
+ * @returns {JSX.Element} A card component displaying hobby details
+ */
 export default function HobbyCard({ hobby }: HobbyProps) {
   return (
     <div

@@ -1,3 +1,8 @@
+/**
+ * Skeleton loader component for the experience timeline section.
+ * Displays placeholder content with animated pulse effect while data loads.
+ * @returns {JSX.Element} A skeleton timeline component
+ */
 export function TimelineSkeleton() {
   return (
     <div className="relative">
@@ -51,6 +56,11 @@ export function TimelineSkeleton() {
   );
 }
 
+/**
+ * Skeleton loader component for the volunteering and education sections.
+ * Displays placeholder content with animated pulse effect while data loads.
+ * @returns {JSX.Element} A skeleton component for initiatives and education
+ */
 export function InitiativesSkeleton() {
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
@@ -107,6 +117,11 @@ export function InitiativesSkeleton() {
   );
 }
 
+/**
+ * Skeleton loader component for the skills section.
+ * Displays placeholder skill badges with animated pulse effect while data loads.
+ * @returns {JSX.Element} A skeleton component for skills
+ */
 export function SkillsSkeleton() {
   return (
     <div className="space-y-8">
@@ -131,6 +146,11 @@ export function SkillsSkeleton() {
   );
 }
 
+/**
+ * Skeleton loader component for the hero section.
+ * Displays placeholder content for profile image, name, and description while data loads.
+ * @returns {JSX.Element} A skeleton component for the hero section
+ */
 export function HeroSkeleton() {
   return (
     <header className="container mx-auto px-4 sm:px-6 py-12 sm:py-16 max-w-4xl">

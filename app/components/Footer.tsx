@@ -1,11 +1,23 @@
 'use client';
 
+/**
+ * Props for the Footer component.
+ * @typedef {Object} FooterProps
+ * @property {Object} textStyles - Text styling classes
+ * @property {string} textStyles.small - CSS class for small text
+ */
 type FooterProps = {
   textStyles: {
     small: string;
   };
 };
 
+/**
+ * Footer component displaying copyright information.
+ * @param {FooterProps} props - Component props
+ * @param {Object} props.textStyles - Text styling classes
+ * @returns {JSX.Element} Footer component with copyright text
+ */
 export default function Footer({ textStyles }: FooterProps) {
   return (
     <footer className="container mx-auto px-4 sm:px-6 py-6 sm:py-8 border-t border-gray-200 dark:border-gray-700">

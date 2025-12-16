@@ -5,6 +5,15 @@ export const metadata: Metadata = {
   description: "Web projects I've built to solve real problems and craft engaging experiences.",
 };
 
+/**
+ * Represents a web project with title, description, URL, and visual styling.
+ * @typedef {Object} Project
+ * @property {string} title - Project title
+ * @property {string} description - Project description
+ * @property {string} url - Project URL
+ * @property {string} color - Tailwind CSS gradient classes for background
+ * @property {string} icon - Emoji or icon character for the project
+ */
 type Project = {
   title: string;
   description: string;
@@ -44,6 +53,11 @@ const projects: Project[] = [
   }
 ];
 
+/**
+ * Projects page component displaying a grid of web projects.
+ * Shows project cards with descriptions, links, and visual styling.
+ * @returns {JSX.Element} The projects page with project grid
+ */
 export default function Projects() {
   return (
     <main className="container mx-auto px-4 sm:px-6 py-12 max-w-4xl">

@@ -1,5 +1,14 @@
+/**
+ * Record type mapping state names to boolean values.
+ * Used to track visited or lived states.
+ * @typedef {Record<string, boolean>} StateRecord
+ */
 type StateRecord = Record<string, boolean>;
 
+/**
+ * Record of all US states and territories with visited status.
+ * @type {StateRecord}
+ */
 export const visitedStates: StateRecord = {
   "Alabama": true,
   "Alaska": false,
@@ -55,6 +64,10 @@ export const visitedStates: StateRecord = {
   "Puerto Rico": false
 };
 
+/**
+ * Record of US states where the person has lived.
+ * @type {StateRecord}
+ */
 export const livedStates: StateRecord = {
   "Florida": true,
   "New York": true,

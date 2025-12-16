@@ -2,6 +2,12 @@
 
 import React from 'react';
 
+/**
+ * Floating badge component that displays a fixed promotional link.
+ * Positioned at the bottom left of the viewport with hover effects.
+ * Links to an external baby book ordering website.
+ * @returns {JSX.Element} A fixed floating badge with link
+ */
 const FloatingBadge = () => {
   const badgeStyle: React.CSSProperties = {
     position: 'fixed',

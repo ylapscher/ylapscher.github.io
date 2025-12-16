@@ -3,6 +3,18 @@
 import Image from 'next/image';
 import { useState } from 'react';
 
+/**
+ * Represents a work experience entry with role, company, duration, and achievements.
+ * @typedef {Object} Experience
+ * @property {string} role - The job title or role name
+ * @property {string} company - The company name
+ * @property {string} duration - The time period (e.g., "2020 - 2022")
+ * @property {string[]} achievements - Array of achievement descriptions
+ * @property {Object} [image] - Optional company logo image
+ * @property {string} image.src - Image source path
+ * @property {string} image.alt - Image alt text
+ * @property {string} [link] - Optional link to related content
+ */
 type Experience = {
   role: string;
   company: string;
@@ -15,6 +27,16 @@ type Experience = {
   link?: string; // Added link property
 };
 
+/**
+ * Represents a volunteer initiative or community involvement.
+ * @typedef {Object} Initiative
+ * @property {string} title - The initiative title
+ * @property {string} description - Brief description of the initiative
+ * @property {Object} [image] - Optional image for the initiative
+ * @property {string} image.src - Image source path
+ * @property {string} image.alt - Image alt text
+ * @property {string} link - URL to learn more about the initiative
+ */
 type Initiative = {
   title: string;
   description: string;
@@ -25,13 +47,32 @@ type Initiative = {
   link: string;
 };
 
+/**
+ * Represents a skill with proficiency level and category.
+ * @typedef {Object} Skill
+ * @property {string} name - The skill name
+ * @property {1|2|3|4} level - Proficiency level from 1 (beginner) to 4 (expert)
+ * @property {'Product Management'|'Leadership & Collaboration'|'Technical Skills'|'Languages'} category - Skill category
+ */
 type Skill = {
   name: string;
   level: 1 | 2 | 3 | 4;
   category: 'Product Management' | 'Leadership & Collaboration' | 'Technical Skills' | 'Languages';
 };
 
+/**
+ * Displays a skill badge with a Harvey ball indicator showing proficiency level.
+ * Shows a tooltip on hover displaying the proficiency level.
+ * @param {Object} props - Component props
+ * @param {Skill} props.skill - The skill object to display
+ * @returns {JSX.Element} A skill badge component with visual proficiency indicator
+ */
 function SkillBadge({ skill }: { skill: Skill }) {
+  /**
+   * Generates a Harvey ball SVG icon based on proficiency level.
+   * @param {number} level - Proficiency level (1-4)
+   * @returns {JSX.Element} SVG element representing the proficiency level
+   */
   const getHarveyBall = (level: number) => {
     switch (level) {
       case 4:
@@ -80,6 +121,14 @@ function SkillBadge({ skill }: { skill: Skill }) {
   );
 }
 
+/**
+ * Renders a vertical timeline of work experiences with alternating left/right layout.
+ * Displays role, company, duration, and achievements for each experience.
+ * Supports clickable experiences with links.
+ * @param {Object} props - Component props
+ * @param {Experience[]} props.experiences - Array of work experience objects
+ * @returns {JSX.Element} A timeline component displaying work experiences
+ */
 function ExperienceTimeline({ experiences }: { experiences: Experience[] }) {
   return (
     <div className="relative">
@@ -162,6 +211,11 @@ function ExperienceTimeline({ experiences }: { experiences: Experience[] }) {
   );
 }
 
+/**
+ * Structured data for SEO and social media sharing (JSON-LD format).
+ * Contains person schema information including job title, education, and skills.
+ * @type {Object}
+ */
 const structuredData = {
   "@context": "https://schema.org",
   "@type": "Person",
@@ -201,6 +255,11 @@ const structuredData = {
   }
 };
 
+/**
+ * Main home page component displaying profile, experience, volunteering, education, and skills.
+ * Includes structured data for SEO and renders hero section, experience timeline, and skills sections.
+ * @returns {JSX.Element} The complete home page with all sections
+ */
 export default function Home() {
   const experiences: Experience[] = [
     {

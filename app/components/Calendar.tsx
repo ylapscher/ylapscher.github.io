@@ -8,11 +8,22 @@ declare global {
   }
 }
 
+/**
+ * Interface for Cal.com embed API.
+ * @interface CalApi
+ * @property {any[]} q - Queue array for API calls
+ * @property {Function} push - Method to push arguments to the queue
+ */
 interface CalApi {
   q: any[];
   push: (arg: any) => void;
 }
 
+/**
+ * Calendar component that embeds a Cal.com calendar widget.
+ * Initializes the Cal.com embed script and renders an inline calendar view.
+ * @returns {JSX.Element} A container with the embedded Cal.com calendar
+ */
 export default function Calendar() {
   useEffect(() => {
     // Initialize Cal

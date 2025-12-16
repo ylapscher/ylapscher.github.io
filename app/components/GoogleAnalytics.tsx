@@ -2,6 +2,11 @@
 
 import Script from 'next/script';
 
+/**
+ * Google Analytics component that initializes and loads Google Analytics tracking.
+ * Loads the gtag script and configures tracking with the site's GA ID.
+ * @returns {JSX.Element} Script tags for Google Analytics
+ */
 export default function GoogleAnalytics() {
   return (
     <>

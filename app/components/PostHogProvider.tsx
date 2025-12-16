@@ -6,7 +6,11 @@ import { Suspense, useEffect } from "react"
 import { usePathname, useSearchParams } from "next/navigation"
 import "posthog-js/dist/web-vitals"
 
-// Type guard to check for web vitals methods
+/**
+ * Type guard to check if PostHog client has web vitals methods.
+ * @param {any} client - PostHog client instance to check
+ * @returns {boolean} True if client has web vitals methods, false otherwise
+ */
 function hasWebVitalsMethod(client: any): boolean {
   return typeof client === 'object' && (
     typeof client.capture_web_vitals === 'function' || 
@@ -14,6 +18,13 @@ function hasWebVitalsMethod(client: any): boolean {
   );
 }
 
+/**
+ * PostHog provider component that initializes PostHog analytics.
+ * Wraps children with PostHog context and handles page view tracking.
+ * @param {Object} props - Component props
+ * @param {React.ReactNode} props.children - Child components to wrap
+ * @returns {JSX.Element} PostHog provider with page view tracking
+ */
 export function PostHogProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     // Only initialize PostHog if we're in the browser environment and have a valid key
@@ -46,6 +57,11 @@ export function PostHogProvider({ children }: { children: React.ReactNode }) {
   )
 }
 
+/**
+ * Component that tracks page views in PostHog when route changes.
+ * Captures pageview events with current URL including search params.
+ * @returns {null} This component doesn't render anything
+ */
 function PostHogPageView() {
   const pathname = usePathname()
   const searchParams = useSearchParams()
@@ -70,6 +86,11 @@ function PostHogPageView() {
   return null
 }
 
+/**
+ * Wrapper component that suspends PostHogPageView to handle async navigation.
+ * Prevents hydration issues with Next.js navigation hooks.
+ * @returns {JSX.Element} Suspense-wrapped PostHogPageView component
+ */
 function SuspendedPostHogPageView() {
   return (
     <Suspense fallback={null}>

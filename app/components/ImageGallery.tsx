@@ -19,15 +19,28 @@ const images = [
   },
 ];
 
+/**
+ * Image gallery component with auto-rotation, keyboard navigation, and manual controls.
+ * Displays a carousel of images with navigation arrows, dot indicators, and keyboard support.
+ * @returns {JSX.Element} An image gallery carousel component
+ */
 export default function ImageGallery() {
   const [currentIndex, setCurrentIndex] = useState(0);
 
+  /**
+   * Advances to the next slide in the gallery.
+   * Wraps around to the first slide if currently on the last slide.
+   */
   const nextSlide = useCallback(() => {
     setCurrentIndex((prevIndex) => 
       prevIndex === images.length - 1 ? 0 : prevIndex + 1
     );
   }, []);
 
+  /**
+   * Goes back to the previous slide in the gallery.
+   * Wraps around to the last slide if currently on the first slide.
+   */
   const prevSlide = useCallback(() => {
     setCurrentIndex((prevIndex) => 
       prevIndex === 0 ? images.length - 1 : prevIndex - 1

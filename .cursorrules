@@ -1,0 +1,180 @@
+# Cursor Rules for Documentation Standards
+
+## Documentation Requirements
+
+### JSDoc Docstrings are Mandatory
+
+All exported and public functions, components, types, interfaces, and classes MUST have JSDoc docstrings. This ensures maintainability and improves code documentation coverage.
+
+### What Needs Docstrings
+
+1. **React Components** (both default and named exports)
+   - Include component purpose, props description, and return type
+   - Document any complex behavior or side effects
+
+2. **Functions** (exported and internal helper functions)
+   - Include parameter descriptions with `@param` tags
+   - Include return value descriptions with `@returns` tags
+   - Document any side effects or exceptions
+
+3. **Type Definitions and Interfaces**
+   - Document the purpose and structure
+   - Document each property when helpful for complex types
+
+4. **Classes**
+   - Document the class purpose
+   - Document all public methods and properties
+   - Document constructor parameters
+
+5. **Constants and Exported Objects**
+   - Document their purpose and usage when not self-explanatory
+
+### JSDoc Format Standards
+
+Use the following format for all docstrings:
+
+```typescript
+/**
+ * Brief description of what the function/component/type does.
+ * Additional detailed description if needed.
+ * 
+ * @param {Type} paramName - Description of the parameter
+ * @returns {Type} Description of the return value
+ * @example
+ * // Usage example if helpful
+ */
+```
+
+### Component Documentation Template
+
+For React components, use this format:
+
+```typescript
+/**
+ * Component description explaining its purpose and behavior.
+ * Include any important details about props, state, or side effects.
+ * 
+ * @param {Object} props - Component props
+ * @param {Type} props.propName - Description of prop
+ * @returns {JSX.Element} Description of what the component renders
+ */
+export default function ComponentName({ propName }: PropsType) {
+  // ...
+}
+```
+
+### Type Documentation Template
+
+For types and interfaces:
+
+```typescript
+/**
+ * Description of what this type represents and its purpose.
+ * @typedef {Object} TypeName
+ * @property {Type} propertyName - Description of the property
+ */
+type TypeName = {
+  propertyName: Type;
+};
+```
+
+### Function Documentation Template
+
+For helper functions:
+
+```typescript
+/**
+ * Brief description of what the function does.
+ * 
+ * @param {Type} paramName - Description of the parameter
+ * @returns {Type} Description of the return value
+ */
+function functionName(paramName: Type): ReturnType {
+  // ...
+}
+```
+
+### When Creating New Code
+
+- **ALWAYS** add JSDoc docstrings when creating new functions, components, or types
+- **ALWAYS** update docstrings when modifying function signatures or component props
+- **ALWAYS** document exported constants and objects that aren't self-explanatory
+
+### When Modifying Existing Code
+
+- **ALWAYS** update docstrings if you change function signatures, component props, or type definitions
+- **ALWAYS** ensure docstrings accurately reflect the current implementation
+- **ALWAYS** add docstrings to any new exported functions or components you add
+
+### Code Review Checklist
+
+Before submitting code, ensure:
+- [ ] All exported functions have JSDoc docstrings
+- [ ] All React components have JSDoc docstrings
+- [ ] All type definitions and interfaces have JSDoc docstrings
+- [ ] All `@param` tags are accurate and complete
+- [ ] All `@returns` tags are present and accurate
+- [ ] Docstrings match the current implementation
+
+### Examples
+
+#### Good Component Documentation
+
+```typescript
+/**
+ * Navigation bar component with responsive menu, dark mode toggle, and active section highlighting.
+ * Includes desktop and mobile menu variants with intersection observer for section tracking.
+ * @returns {JSX.Element} A navigation bar component
+ */
+export default function Navbar() {
+  // ...
+}
+```
+
+#### Good Type Documentation
+
+```typescript
+/**
+ * Represents a work experience entry with role, company, duration, and achievements.
+ * @typedef {Object} Experience
+ * @property {string} role - The job title or role name
+ * @property {string} company - The company name
+ * @property {string} duration - The time period (e.g., "2020 - 2022")
+ * @property {string[]} achievements - Array of achievement descriptions
+ */
+type Experience = {
+  role: string;
+  company: string;
+  duration: string;
+  achievements: string[];
+};
+```
+
+#### Good Function Documentation
+
+```typescript
+/**
+ * Validates an email address format and sets error state if invalid.
+ * @param {string} email - Email address to validate
+ * @returns {boolean} True if email is valid, false otherwise
+ */
+const validateEmail = (email: string): boolean => {
+  // ...
+};
+```
+
+### Enforcement
+
+- Code without proper docstrings should be flagged during code review
+- New code should not be merged without complete documentation
+- When refactoring, ensure docstrings are updated to match the new implementation
+
+### Benefits
+
+Maintaining comprehensive docstrings:
+- Improves code maintainability
+- Helps new developers understand the codebase
+- Enables better IDE autocomplete and IntelliSense
+- Supports automated documentation generation
+- Ensures consistent documentation coverage across the project
+

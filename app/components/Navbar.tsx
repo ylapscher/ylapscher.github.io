@@ -18,6 +18,11 @@ const navLinks = [
   { href: '/travel', label: 'Travel' },
 ];
 
+/**
+ * Navigation bar component with responsive menu, dark mode toggle, and active section highlighting.
+ * Includes desktop and mobile menu variants with intersection observer for section tracking.
+ * @returns {JSX.Element} A navigation bar component
+ */
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState<boolean | null>(null);
@@ -45,7 +50,10 @@ export default function Navbar() {
     }
   }, []);
 
-  // Handle theme toggle
+  /**
+   * Toggles between dark and light mode themes.
+   * Updates the DOM class and saves preference to localStorage.
+   */
   const toggleDarkMode = () => {
     if (typeof window !== 'undefined') {
       const newDarkMode = !isDarkMode;
@@ -64,7 +72,11 @@ export default function Navbar() {
     }
   };
 
-  // Only render dark mode toggle if state is initialized
+  /**
+   * Renders the dark mode toggle button if theme state is initialized.
+   * Prevents hydration mismatch by not rendering until client-side state is ready.
+   * @returns {JSX.Element|null} Dark mode toggle button or null
+   */
   const renderDarkModeToggle = () => {
     if (isDarkMode === null) return null;
     
@@ -105,6 +117,10 @@ export default function Navbar() {
     return () => observer.disconnect();
   }, []);
 
+  /**
+   * Handles resume link click by opening resume in a new tab.
+   * @param {React.MouseEvent} e - Click event
+   */
   const handleResumeClick = (e: React.MouseEvent) => {
     e.preventDefault();
     window.open('https://drive.google.com/file/d/1EqxPiOXn3-ao_I5GsP--dh6qYyzUFGsG/view?usp=sharing', '_blank');

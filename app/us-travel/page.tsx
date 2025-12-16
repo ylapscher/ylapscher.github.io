@@ -11,6 +11,11 @@ import { visitedStates, livedStates } from '../data/us-states-data';
 
 const geoUrl = "/us-states.json";
 
+/**
+ * US Travel page component displaying an interactive map of visited US states.
+ * Shows visited and lived states with color coding, statistics, and a list of visited states.
+ * @returns {JSX.Element} The US travel page with interactive state map
+ */
 export default function USTravel() {
   const [tooltip, setTooltip] = useState<string | null>(null);
   const [mapScale, setMapScale] = useState(800);

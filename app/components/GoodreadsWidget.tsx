@@ -2,6 +2,11 @@
 
 import Script from 'next/script';
 
+/**
+ * Goodreads widget component that displays currently reading books.
+ * Embeds the Goodreads grid widget script and renders a styled book grid.
+ * @returns {JSX.Element} A container with the Goodreads book widget
+ */
 export default function GoodreadsWidget() {
   return (
     <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 p-8">

@@ -47,7 +47,17 @@ const hobbies = [
   },
 ];
 
+/**
+ * Hobbies page component displaying personal interests and activities.
+ * Includes hobby cards, barber portfolio gallery, and reading list section.
+ * @returns {JSX.Element} The hobbies page with all hobby sections
+ */
 export default function Hobbies() {
+  /**
+   * Handles clicking on a hobby card with an optional link.
+   * Opens the link in a new tab if provided.
+   * @param {string} [link] - Optional URL to open
+   */
   const handleHobbyClick = (link?: string) => {
     if (link) {
       window.open(link, '_blank', 'noopener,noreferrer');
