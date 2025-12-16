@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 type Experience = {
   role: string;
@@ -80,13 +80,37 @@ function SkillBadge({ skill }: { skill: Skill }) {
   );
 }
 
-function ExperienceTimeline({ experiences }: { experiences: Experience[] }) {
+function ScrollExperience({ experiences }: { experiences: Experience[] }) {
+  const [activeIndex, setActiveIndex] = useState<number>(0);
+
+  useEffect(() => {
+    const observerOptions = {
+      root: null,
+      rootMargin: '-30% 0px -30% 0px',
+      threshold: 0,
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const index = parseInt(entry.target.getAttribute('data-index') || '0', 10);
+          setActiveIndex(index);
+        }
+      });
+    }, observerOptions);
+
+    const experienceElements = document.querySelectorAll('[data-experience-item]');
+    experienceElements.forEach((el) => observer.observe(el));
+
+    return () => {
+      experienceElements.forEach((el) => observer.unobserve(el));
+      observer.disconnect();
+    };
+  }, []);
+
   return (
     <div className="relative">
-      {/* Vertical Timeline Line */}
-      <div className="absolute left-4 md:left-1/2 transform md:-translate-x-1/2 h-full w-0.5 bg-blue-600" />
-      
-      <div className="space-y-4">
+      <div className="space-y-6">
         {experiences.map((experience, index) => {
           const isClickable = experience.link;
           const ContentWrapper = isClickable ? 'a' : 'div';
@@ -97,63 +121,64 @@ function ExperienceTimeline({ experiences }: { experiences: Experience[] }) {
             className: "block"
           } : {};
           
+          const isActive = activeIndex === index;
+          const opacity = isActive ? 1 : 0.4;
+          const scale = isActive ? 1 : 0.95;
+          const yOffset = isActive ? 0 : 8;
+          
           return (
-            <div 
+            <div
               key={index}
-              className={`relative flex items-center ${
-                index % 2 === 1 ? 'md:justify-end' : 'justify-start'
-              }`}
+              data-experience-item
+              data-index={index}
+              className="sticky top-16 sm:top-20 min-h-[180px] sm:min-h-[200px] transition-all duration-700 ease-out"
+              style={{
+                opacity,
+                transform: `translateY(${yOffset}px) scale(${scale})`,
+                zIndex: isActive ? experiences.length : experiences.length - index,
+              }}
             >
-              {/* Year as Marker */}
-              <div className="absolute left-4 md:left-1/2 transform md:-translate-x-1/2 flex items-center justify-center z-[1]">
-                <div className="bg-blue-600 rounded-full flex items-center">
-                  <span className="text-base font-extrabold text-blue-600 bg-gray-50 mx-[1px] my-[1px] px-3 py-0.5 rounded-full">
-                    {experience.duration.split(' - ')[0]}
-                  </span>
-                </div>
-              </div>
-              
-              {/* Content Box */}
-              <div className={`w-full md:w-[48%] pl-16 md:pl-10 pr-4 md:pr-10 ${
-                index % 2 === 1 ? 'md:pl-0' : ''
-              }`}>
-                <ContentWrapper {...contentProps}>
-                  <div className={`bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 transition-all duration-300 ${
-                    isClickable 
-                      ? 'hover:-translate-y-1 hover:shadow-xl hover:border-blue-500 cursor-pointer group' 
-                      : ''
-                  }`}>
-                    <div className="flex flex-col gap-4">
-                      <div className="flex items-center gap-4">
-                        {experience.image && (
-                          <div className="flex-shrink-0 w-12 h-12">
-                            <Image
-                              src={experience.image.src}
-                              alt={experience.image.alt}
-                              width={48}
-                              height={48}
-                              className="rounded object-cover"
-                            />
-                          </div>
-                        )}
-                        <div>
-                          <h3 className={`font-bold text-lg mb-1 text-gray-900 dark:text-white ${
+              <ContentWrapper {...contentProps}>
+                <div className={`bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 transition-all duration-300 ${
+                  isClickable 
+                    ? 'hover:-translate-y-1 hover:shadow-xl hover:border-blue-500 cursor-pointer group' 
+                    : ''
+                }`}>
+                  <div className="flex flex-col gap-4">
+                    <div className="flex items-center gap-4">
+                      {experience.image && (
+                        <div className="flex-shrink-0 w-12 h-12">
+                          <Image
+                            src={experience.image.src}
+                            alt={experience.image.alt}
+                            width={48}
+                            height={48}
+                            className="rounded object-cover"
+                          />
+                        </div>
+                      )}
+                      <div className="flex-1">
+                        <div className="flex items-center gap-3 mb-1 flex-wrap">
+                          <h3 className={`font-bold text-lg text-gray-900 dark:text-white ${
                             isClickable ? 'group-hover:text-blue-600 transition-colors' : ''
                           }`}>
                             {experience.role}
                           </h3>
-                          <p className="text-gray-700 dark:text-gray-400 text-sm">
-                            {experience.company}
-                          </p>
+                          <span className="text-xs font-extrabold text-blue-600 bg-blue-50 dark:bg-blue-900/30 px-2 py-0.5 rounded-full">
+                            {experience.duration.split(' - ')[0]}
+                          </span>
                         </div>
-                      </div>
-                      <div className="text-gray-700 dark:text-gray-400 text-sm leading-relaxed">
-                        {experience.achievements[0]}
+                        <p className="text-gray-700 dark:text-gray-400 text-sm">
+                          {experience.company}
+                        </p>
                       </div>
                     </div>
+                    <div className="text-gray-700 dark:text-gray-400 text-sm leading-relaxed">
+                      {experience.achievements[0]}
+                    </div>
                   </div>
-                </ContentWrapper>
-              </div>
+                </div>
+              </ContentWrapper>
             </div>
           );
         })}
@@ -398,7 +423,7 @@ export default function Home() {
         {/* Work Experience Section */}
         <section id="experience" className="mb-12 sm:mb-16 md:mb-20 scroll-mt-20">
           <h2 className={`${textStyles.h2} mb-12 text-gray-900 dark:text-white`}>Experience</h2>
-          <ExperienceTimeline experiences={experiences} />
+          <ScrollExperience experiences={experiences} />
         </section>
 
         {/* Horizontal Divider for Volunteering and Education */}
