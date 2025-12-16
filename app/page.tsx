@@ -86,7 +86,7 @@ function ScrollExperience({ experiences }: { experiences: Experience[] }) {
   useEffect(() => {
     const observerOptions = {
       root: null,
-      rootMargin: '-30% 0px -30% 0px',
+      rootMargin: '-40% 0px -40% 0px',
       threshold: 0,
     };
 
@@ -110,7 +110,7 @@ function ScrollExperience({ experiences }: { experiences: Experience[] }) {
 
   return (
     <div className="relative">
-      <div className="space-y-6">
+      <div className="space-y-0">
         {experiences.map((experience, index) => {
           const isClickable = experience.link;
           const ContentWrapper = isClickable ? 'a' : 'div';
@@ -122,20 +122,32 @@ function ScrollExperience({ experiences }: { experiences: Experience[] }) {
           } : {};
           
           const isActive = activeIndex === index;
-          const opacity = isActive ? 1 : 0.4;
-          const scale = isActive ? 1 : 0.95;
-          const yOffset = isActive ? 0 : 8;
+          const isPast = index < activeIndex;
+          const isFuture = index > activeIndex;
+          
+          // Hide past items completely, show active fully, show future with reduced opacity
+          const opacity = isPast ? 0 : (isActive ? 1 : 0.3);
+          const scale = isActive ? 1 : 0.96;
+          const yOffset = isActive ? 0 : (isPast ? -10 : 10);
+          const pointerEvents = isPast ? 'none' : 'auto';
+          const visibility = isPast ? 'hidden' : 'visible';
+          
+          // Add spacing between items for scroll effect - each item needs space to scroll into view
+          // Last item has less padding to allow normal page scroll to continue
+          const paddingBottom = index === experiences.length - 1 ? 'pb-8' : 'pb-[60vh]';
           
           return (
             <div
               key={index}
               data-experience-item
               data-index={index}
-              className="sticky top-16 sm:top-20 min-h-[180px] sm:min-h-[200px] transition-all duration-700 ease-out"
+              className={`sticky top-16 sm:top-20 ${paddingBottom} transition-all duration-700 ease-out`}
               style={{
                 opacity,
                 transform: `translateY(${yOffset}px) scale(${scale})`,
                 zIndex: isActive ? experiences.length : experiences.length - index,
+                pointerEvents,
+                visibility,
               }}
             >
               <ContentWrapper {...contentProps}>
