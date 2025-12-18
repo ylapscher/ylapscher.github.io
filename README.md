@@ -72,7 +72,7 @@ app/
 ├── components/     # Reusable UI components
 ├── data/          # Static data files
 ├── hobbies/       # Hobbies page
-├── projects/      # Web development projects showcase
+├── portfolio/     # Web development portfolio with individual project pages
 ├── travel/        # Travel tracking features
 ├── us-travel/     # US states map
 ├── services/      # Services page
@@ -137,7 +137,7 @@ npm run clean
 ## Pages
 
 - **Home** (`/`) - Professional experience, skills, and volunteering
-- **Projects** (`/projects`) - Web development portfolio showcasing live websites
+- **Portfolio** (`/portfolio`) - Web development portfolio with individual project pages
 - **Hobbies** (`/hobbies`) - Personal interests, barber portfolio, and reading list
 - **Services** (`/services`) - Professional services and contact information
 - **Travel** (`/travel`) - Interactive world travel map
