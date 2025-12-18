@@ -264,7 +264,7 @@ export default function Home() {
         src: "/images/companies/ge.png",
         alt: "GE Logo"
       },
-      link: "https://careers.gevernova.com/global/en/lp-dtlp"
+      link: "https://careers.gevernova.com/digital-technology-development-program"
     },
     {
       role: "Founder",
