@@ -2,6 +2,7 @@
 
 import Image from 'next/image';
 import { useState } from 'react';
+import CollapsibleSection from './components/CollapsibleSection';
 
 type Experience = {
   role: string;
@@ -393,108 +394,107 @@ export default function Home() {
           <ExperienceTimeline experiences={experiences} />
         </section>
 
-        {/* Horizontal Divider for Volunteering and Education */}
-        <hr className="my-8 border-gray-300 dark:border-gray-700" />
-        <section id="volunteering-education" className="mb-16 sm:mb-20 scroll-mt-20">
+        <section id="volunteering-education" className="scroll-mt-20">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             {/* Volunteering Section */}
             <div className="flex flex-col">
-              <h2 className={`${textStyles.h2} mb-8 text-gray-900 dark:text-white`}>Volunteering</h2>
-              <div className="flex-1">
-                {initiatives.map((initiative, index) => (
-                  <a
-                    key={index}
-                    href={initiative.link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="group bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 overflow-hidden flex flex-col h-full transform transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:border-blue-500"
-                  >
-                    {initiative.image && (
-                      <div className="h-32 sm:h-40 relative">
-                        <Image
-                          src={initiative.image.src}
-                          alt={initiative.image.alt}
-                          fill
-                          className="object-cover transition-transform duration-300 group-hover:scale-105"
-                        />
+              <CollapsibleSection title="Volunteering" defaultOpen={false}>
+                <div className="flex-1">
+                  {initiatives.map((initiative, index) => (
+                    <a
+                      key={index}
+                      href={initiative.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="group bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 overflow-hidden flex flex-col h-full transform transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:border-blue-500"
+                    >
+                      {initiative.image && (
+                        <div className="h-32 sm:h-40 relative">
+                          <Image
+                            src={initiative.image.src}
+                            alt={initiative.image.alt}
+                            fill
+                            className="object-cover transition-transform duration-300 group-hover:scale-105"
+                          />
+                        </div>
+                      )}
+                      <div className="p-4 sm:p-6 flex flex-col flex-grow">
+                        <h3 className="text-lg font-bold mb-2 text-gray-900 dark:text-white group-hover:text-blue-600 transition-colors">
+                          {initiative.title}
+                        </h3>
+                        <p className="text-gray-700 dark:text-gray-400 text-sm leading-relaxed">
+                          {initiative.description}
+                        </p>
                       </div>
-                    )}
-                    <div className="p-4 sm:p-6 flex flex-col flex-grow">
-                      <h3 className="text-lg font-bold mb-2 text-gray-900 dark:text-white group-hover:text-blue-600 transition-colors">
-                        {initiative.title}
-                      </h3>
-                      <p className="text-gray-700 dark:text-gray-400 text-sm leading-relaxed">
-                        {initiative.description}
-                      </p>
-                    </div>
-                  </a>
-                ))}
-              </div>
+                    </a>
+                  ))}
+                </div>
+              </CollapsibleSection>
             </div>
 
             {/* Education Section */}
             <div className="flex flex-col">
-              <h2 className={`${textStyles.h2} mb-8 text-gray-900 dark:text-white`}>Education</h2>
-              <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 p-6 flex-1">
-                <div className="flex items-start gap-4 mb-6">
-                  <div className="flex-shrink-0 w-16 h-16">
-                    <Image
-                      src="/images/companies/uf.png"
-                      alt="University of Florida Logo"
-                      width={64}
-                      height={64}
-                      className="rounded object-cover"
-                    />
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-bold text-gray-900 dark:text-white">University of Florida</h3>
-                    <p className="text-gray-700 dark:text-gray-400 text-sm">Gainesville, FL</p>
-                  </div>
-                </div>
-                
-                <div className="space-y-4">
-                  <div>
-                    <h4 className="font-semibold text-gray-900 dark:text-white">MS, Information Systems & Operations Mgmt</h4>
-                    <div className="mt-2">
-                      <p className="font-medium text-gray-900 dark:text-white text-sm">Teaching Assistant:</p>
-                      <ul className="text-gray-700 dark:text-gray-400 text-sm mt-1 space-y-1">
-                        <li>• Managerial Quantitative Analysis I & II</li>
-                        <li>• Retail Consulting</li>
-                        <li>• Intro to Managerial Statistics</li>
-                      </ul>
+              <CollapsibleSection title="Education" defaultOpen={false}>
+                <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 p-6 flex-1">
+                  <div className="flex items-start gap-4 mb-6">
+                    <div className="flex-shrink-0 w-16 h-16">
+                      <Image
+                        src="/images/companies/uf.png"
+                        alt="University of Florida Logo"
+                        width={64}
+                        height={64}
+                        className="rounded object-cover"
+                      />
+                    </div>
+                    <div>
+                      <h3 className="text-xl font-bold text-gray-900 dark:text-white">University of Florida</h3>
+                      <p className="text-gray-700 dark:text-gray-400 text-sm">Gainesville, FL</p>
                     </div>
                   </div>
                   
-                  <div>
-                    <h4 className="font-semibold text-gray-900 dark:text-white">BS, Industrial & Systems Engineering</h4>
+                  <div className="space-y-4">
+                    <div>
+                      <h4 className="font-semibold text-gray-900 dark:text-white">MS, Information Systems & Operations Mgmt</h4>
+                      <div className="mt-2">
+                        <CollapsibleSection title="Teaching Assistant" size="small" defaultOpen={false}>
+                          <ul className="text-gray-700 dark:text-gray-400 text-sm mt-1 space-y-1">
+                            <li>• Managerial Quantitative Analysis I & II</li>
+                            <li>• Retail Consulting</li>
+                            <li>• Intro to Managerial Statistics</li>
+                          </ul>
+                        </CollapsibleSection>
+                      </div>
+                    </div>
+                    
+                    <div>
+                      <h4 className="font-semibold text-gray-900 dark:text-white">BS, Industrial & Systems Engineering</h4>
+                    </div>
                   </div>
                 </div>
-              </div>
+              </CollapsibleSection>
             </div>
           </div>
         </section>
 
-        {/* Horizontal Divider for Skills */}
-        <hr className="my-8 border-gray-300 dark:border-gray-700" />
-        <section id="skills" className="mb-16 sm:mb-20 scroll-mt-20">
-          <h2 className={`${textStyles.h2} mb-6 text-gray-900 dark:text-white`}>Skills</h2>
-          <div className="space-y-8">
-            {Object.entries(
-              skills.reduce((acc, skill) => ({
-                ...acc,
-                [skill.category]: [...(acc[skill.category] || []), skill].sort((a, b) => b.level - a.level),
-              }), {} as Record<string, typeof skills>)
-            ).map(([category, skills]) => (
-              <div key={category}>
-                <h3 className={`${textStyles.h3} mb-4 text-gray-900 dark:text-white`}>{category}</h3>
-                <div className="flex flex-wrap gap-2">
-                  {skills.map((skill) => (
-                    <SkillBadge key={skill.name} skill={skill} />
-                  ))}
-                </div>
-              </div>
-            ))}
-          </div>
+        <section id="skills" className="mt-16 sm:mt-20 mb-16 sm:mb-20 scroll-mt-20">
+          <CollapsibleSection title="Skills" defaultOpen={false}>
+            <div className="space-y-8">
+              {Object.entries(
+                skills.reduce((acc, skill) => ({
+                  ...acc,
+                  [skill.category]: [...(acc[skill.category] || []), skill].sort((a, b) => b.level - a.level),
+                }), {} as Record<string, typeof skills>)
+              ).map(([category, skills]) => (
+                <CollapsibleSection key={category} title={category} size="medium" defaultOpen={false}>
+                  <div className="flex flex-wrap gap-2">
+                    {skills.map((skill) => (
+                      <SkillBadge key={skill.name} skill={skill} />
+                    ))}
+                  </div>
+                </CollapsibleSection>
+              ))}
+            </div>
+          </CollapsibleSection>
         </section>
       </main>
     </>
