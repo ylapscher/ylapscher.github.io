@@ -167,8 +167,8 @@ const structuredData = {
   "@context": "https://schema.org",
   "@type": "Person",
   "name": "Joe Lapscher",
-  "jobTitle": "Chief Product Officer",
-  "description": "Chief Product Officer at Tienda Pago with expertise in fintech, SaaS, and enterprise software. Experienced in product strategy, roadmapping, and team leadership.",
+  "jobTitle": "Associate",
+  "description": "Associate at Expense Reduction Coaching with expertise in fintech, SaaS, and enterprise software. Experienced in product strategy, roadmapping, and team leadership.",
   "url": "https://lapscher.com",
   "sameAs": [
     "https://www.linkedin.com/in/ylapscher/",
@@ -176,7 +176,7 @@ const structuredData = {
   ],
   "worksFor": {
     "@type": "Organization",
-    "name": "Tienda Pago"
+    "name": "Expense Reduction Coaching"
   },
   "alumniOf": [
     {
@@ -205,9 +205,19 @@ const structuredData = {
 export default function Home() {
   const experiences: Experience[] = [
     {
+      role: "Associate",
+      company: "Expense Reduction Coaching",
+      duration: "2025 - Present",
+      achievements: [],
+      image: {
+        src: "/images/companies/erc.png",
+        alt: "Expense Reduction Coaching"
+      }
+    },
+    {
       role: "Chief Product Officer",
       company: "Tienda Pago",
-      duration: "2025 - Present",
+      duration: "2025",
       achievements: [
         "I've launched my career into Product leadership and currently own Product, Growth, and Marketing at a LATAM Fintech that provides microloans to bodegas"
       ],
@@ -367,11 +377,11 @@ export default function Home() {
           <h1 className={textStyles.h1}>
             <span className="text-gray-900 dark:text-white">Joe Lapscher</span>
             <span className="block text-xl sm:text-2xl text-gray-700 dark:text-gray-400 mt-2 font-geist-sans">
-              Chief Product Officer
+              Associate at Expense Reduction Coaching
             </span>
           </h1>
           <p className="text-lg text-gray-700 dark:text-gray-400 max-w-2xl mx-auto">
-            Hi! My name is Yoel, but I go by Joe. I'm currently the CPO at Tienda Pago, and this is my corner of the web where I showcase my experience, hobbies, and projects 💻
+            Hi! My name is Yoel, but I go by Joe. I'm currently an Associate at Expense Reduction Coaching, and this is my corner of the web where I showcase my experience, hobbies, and projects 💻
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center mt-6">
             <a
