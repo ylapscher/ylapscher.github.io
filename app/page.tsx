@@ -207,8 +207,10 @@ export default function Home() {
     {
       role: "Associate",
       company: "Expense Reduction Coaching",
-      duration: "2025 - Present",
-      achievements: [],
+      duration: "2026 - Present",
+      achievements: [
+        "Evolved from the product world to consulting, where I help companies find operational cost savings"
+      ],
       image: {
         src: "/images/companies/erc.png",
         alt: "Expense Reduction Coaching"
@@ -219,7 +221,7 @@ export default function Home() {
       company: "Tienda Pago",
       duration: "2025",
       achievements: [
-        "I've launched my career into Product leadership and currently own Product, Growth, and Marketing at a LATAM Fintech that provides microloans to bodegas"
+        "I launched my career into Product leadership and owned Product, Growth, and Marketing at a LATAM Fintech that provided microloans to bodegas"
       ],
       image: {
         src: "/images/companies/tp.png",
