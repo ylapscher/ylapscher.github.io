@@ -14,9 +14,8 @@
     "@heroicons/react": "^2.2.0",
     "@types/react-simple-maps": "^3.0.6",
     "d3-scale": "^4.0.2",
-    "next": "^15.4.7",
+    "next": "^15.5.22",
     "posthog-js": "^1.239.0",
-    "posthog-node": "^4.17.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "react-simple-maps": "^4.0.0-beta.6"
@@ -27,10 +26,14 @@
     "@types/react": "^19.1.8",
     "@types/react-dom": "^19.1.6",
     "autoprefixer": "^10.4.21",
-    "eslint": "^9.29.0",
+    "eslint": "^9.39.5",
     "eslint-config-next": "^15.3.4",
-    "postcss": "^8",
+    "postcss": "^8.5.23",
     "tailwindcss": "^3.4.17",
     "typescript": "^5"
+  },
+  "overrides": {
+    "postcss": "^8.5.23",
+    "sharp": "^0.35.3"
   }
 }

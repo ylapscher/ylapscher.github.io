@@ -23,13 +23,30 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
-          node-version: "18"
-          
+          node-version: "22"
+          cache: "npm"
+
       - name: Setup Pages
         uses: actions/configure-pages@1f0c5cde4bc74cd7e1254d0cb4de8d49e9068c7d # v4
 
+      # `npm ci` instead of `npm install`: installs exactly what the lockfile
+      # pins and fails if package.json and the lockfile have drifted apart.
+      # `npm install` would silently resolve newer versions at build time, which
+      # means the deployed artifact might not match what was reviewed and would
+      # quietly route around the `overrides` block in package.json.
       - name: Install dependencies
-        run: npm install
+        run: npm ci
+
+      # Blocking gate on what actually reaches a visitor's browser. This must
+      # stay clean.
+      - name: Audit production dependencies
+        run: npm audit --omit=dev --audit-level=high
+
+      # Advisory only. Dev-only tooling (eslint and its glob chain) is never
+      # bundled into the static export, so an advisory there cannot affect the
+      # deployed site and must not be able to block a deploy.
+      - name: Audit all dependencies (advisory)
+        run: npm audit || true
 
       - name: Build with Next.js
         env:
