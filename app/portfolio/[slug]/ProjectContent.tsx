@@ -93,7 +93,7 @@ export default function ProjectContent({ project, nextProject, previousProject }
       {/* Back to Portfolio Link */}
       <Link
         href="/portfolio"
-        className="inline-flex items-center text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 mb-8 transition-colors"
+        className="inline-flex items-center text-signal hover:brightness-110 mb-8 transition-colors"
       >
         <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
@@ -120,7 +120,7 @@ export default function ProjectContent({ project, nextProject, previousProject }
           href={project.url}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center bg-blue-600 text-white font-semibold py-3 px-6 rounded-lg hover:bg-blue-700 transition-colors"
+          className="inline-flex items-center bg-signal text-white font-semibold py-3 px-6 rounded-lg hover:brightness-110 transition-colors"
         >
           Visit Site
           <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -149,7 +149,7 @@ export default function ProjectContent({ project, nextProject, previousProject }
           {previousProject && (
             <Link
               href={`/portfolio/${previousProject.slug}`}
-              className="group flex items-center text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors w-full sm:w-auto"
+              className="group flex items-center text-gray-600 dark:text-gray-400 hover:text-signal transition-colors w-full sm:w-auto"
             >
               <svg className="w-5 h-5 mr-2 group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
@@ -164,7 +164,7 @@ export default function ProjectContent({ project, nextProject, previousProject }
           {/* Back to Portfolio (center) */}
           <Link
             href="/portfolio"
-            className="inline-flex items-center justify-center px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-700 dark:text-gray-300 hover:border-blue-500 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+            className="inline-flex items-center justify-center px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-700 dark:text-gray-300 hover:border-signal hover:text-signal transition-colors"
           >
             View All Projects
           </Link>
@@ -173,7 +173,7 @@ export default function ProjectContent({ project, nextProject, previousProject }
           {nextProject && (
             <Link
               href={`/portfolio/${nextProject.slug}`}
-              className="group flex items-center text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors w-full sm:w-auto justify-end"
+              className="group flex items-center text-gray-600 dark:text-gray-400 hover:text-signal transition-colors w-full sm:w-auto justify-end"
             >
               <div className="text-right">
                 <span className="block text-xs uppercase tracking-wide text-gray-500 dark:text-gray-500">Next</span>

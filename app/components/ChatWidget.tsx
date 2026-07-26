@@ -83,7 +83,7 @@ export default function ChatWidget() {
         onClick={() => setIsOpen(!isOpen)}
         className={`${
           isOpen ? 'hidden' : 'flex'
-        } items-center justify-center w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-blue-600 text-white shadow-lg hover:bg-blue-700 transition-colors`}
+        } items-center justify-center w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-signal text-white shadow-lg hover:brightness-110 transition-colors`}
       >
         <ChatBubbleOvalLeftIcon className="w-5 h-5 sm:w-6 sm:h-6" />
       </button>
@@ -120,7 +120,7 @@ export default function ChatWidget() {
                 id="name"
                 name="name"
                 required
-                className="w-full px-3 py-2 rounded border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 focus:ring-2 focus:ring-blue-500 outline-none transition-shadow"
+                className="w-full px-3 py-2 rounded border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 focus:ring-2 focus:ring-signal outline-none transition-shadow"
                 value={formData.name}
                 onChange={(e) => setFormData({ ...formData, name: e.target.value })}
               />
@@ -137,7 +137,7 @@ export default function ChatWidget() {
                 required
                 className={`w-full px-3 py-2 rounded border ${
                   emailError ? 'border-red-500' : 'border-gray-300 dark:border-gray-700'
-                } bg-white dark:bg-gray-800 focus:ring-2 focus:ring-blue-500 outline-none transition-shadow`}
+                } bg-white dark:bg-gray-900 focus:ring-2 focus:ring-signal outline-none transition-shadow`}
                 value={formData.email}
                 onChange={(e) => {
                   setFormData({ ...formData, email: e.target.value });
@@ -159,7 +159,7 @@ export default function ChatWidget() {
                 name="message"
                 required
                 rows={3}
-                className="w-full px-3 py-2 rounded border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 focus:ring-2 focus:ring-blue-500 outline-none transition-shadow resize-none"
+                className="w-full px-3 py-2 rounded border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 focus:ring-2 focus:ring-signal outline-none transition-shadow resize-none"
                 value={formData.message}
                 onChange={(e) => setFormData({ ...formData, message: e.target.value })}
               />
@@ -168,7 +168,7 @@ export default function ChatWidget() {
             <button
               type="submit"
               disabled={formStatus === 'submitting'}
-              className="w-full bg-blue-600 text-white font-semibold py-2 px-4 rounded hover:bg-blue-700 transition disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full bg-signal text-white font-semibold py-2 px-4 rounded hover:brightness-110 transition disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {formStatus === 'submitting' ? 'Sending...' : 'Send Message'}
             </button>

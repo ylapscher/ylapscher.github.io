@@ -2,20 +2,73 @@
 @tailwind components;
 @tailwind utilities;
 
+/*
+ * "Engineering Notebook" palette.
+ *
+ * These are keyed off the .dark class, NOT @media (prefers-color-scheme).
+ * Tailwind runs in darkMode:'class' and app/components/Navbar.tsx toggles
+ * .dark on <html>, so a media query here would ignore the toggle entirely --
+ * which is exactly what used to happen. It went unnoticed only because
+ * <body> carried `bg-white dark:bg-gray-900`, painting over these variables.
+ * The OS preference is still honoured: the inline script in app/layout.tsx
+ * resolves it into the class before first paint.
+ */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --paper: #f1f3ee; /* cool ledger stock -- deliberately not warm cream */
+  --ink: #141a1f; /* drafting-ink blue-black, not a neutral near-black */
+  --muted: #5b6874; /* grey biased blue, so it reads chosen */
+  --signal: #e04e0f; /* marking orange */
+  --signal-ink: #ffffff; /* text on top of the signal colour */
+  --rule: rgba(20, 26, 31, 0.13);
+  --rule-hi: rgba(20, 26, 31, 0.3);
+  --grid: rgba(23, 74, 94, 0.055); /* blueprint cyan, barely there */
+  --tick: rgba(20, 26, 31, 0.26);
+
+  --background: var(--paper);
+  --foreground: var(--ink);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+:root.dark {
+  --paper: #0e1418;
+  --ink: #e7eae5;
+  --muted: #8b98a4;
+  --signal: #ff6b2c; /* lifted, not inverted, to hold on the dark ground */
+  --signal-ink: #160a03;
+  --rule: rgba(231, 234, 229, 0.15);
+  --rule-hi: rgba(231, 234, 229, 0.34);
+  --grid: rgba(120, 200, 225, 0.06);
+  --tick: rgba(231, 234, 229, 0.3);
 }
 
 body {
   color: var(--foreground);
   background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  /* The old `font-family: Arial, Helvetica, sans-serif` rule lived here and
+     was already dead -- the `font-sans` class on <body> out-specifies an
+     element selector. Geist now comes from that class via tailwind.config.ts. */
+}
+
+/* Graph-paper ground for the hero. Pure CSS, zero bytes over the wire. */
+.notebook-grid::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    repeating-linear-gradient(to right, var(--grid) 0 1px, transparent 1px 100%),
+    repeating-linear-gradient(to bottom, var(--grid) 0 1px, transparent 1px 100%);
+  background-size: 26px 26px, 26px 26px;
+  -webkit-mask-image: radial-gradient(115% 88% at 74% 8%, #000 0%, transparent 72%);
+  mask-image: radial-gradient(115% 88% at 74% 8%, #000 0%, transparent 72%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

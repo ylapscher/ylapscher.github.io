@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/24/outline';
+import { textStyles } from '../lib/typography';
 
 interface CollapsibleSectionProps {
   title: string;
@@ -18,10 +19,12 @@ export default function CollapsibleSection({
 }: CollapsibleSectionProps) {
   const [isOpen, setIsOpen] = useState(defaultOpen);
 
+  // Sizes preserved exactly as they were; only the dead `font-geist-sans`
+  // class is gone, since Geist now arrives via `font-sans` on <body>.
   const headingClasses = {
-    large: 'text-2xl sm:text-3xl font-bold font-geist-sans',
-    medium: 'text-lg sm:text-xl font-semibold font-geist-sans',
-    small: 'text-base font-medium font-geist-sans',
+    large: textStyles.sectionTitle,
+    medium: textStyles.sectionHeading,
+    small: textStyles.sectionLabel,
   };
 
   const iconSizes = {
@@ -45,7 +48,7 @@ export default function CollapsibleSection({
     <div className="w-full">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="w-full flex items-center justify-between py-2 text-left focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 rounded"
+        className="w-full flex items-center justify-between py-2 text-left focus:outline-none focus:ring-2 focus:ring-signal focus:ring-offset-2 rounded"
         aria-expanded={isOpen}
         aria-controls={`collapsible-content-${title.toLowerCase().replace(/\s+/g, '-')}`}
       >

@@ -23,7 +23,7 @@ export default function Portfolio() {
             key={project.title}
             href={`/portfolio/${project.slug}`}
             aria-label={`View ${project.title} project details`}
-            className="group bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 overflow-hidden transform transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:border-blue-500"
+            className="group bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 overflow-hidden transform transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:border-signal"
           >
             <div className="aspect-video relative overflow-hidden">
               <div className={`w-full h-full ${project.color} flex items-center justify-center transition-transform duration-300 group-hover:scale-105`}>
@@ -35,10 +35,10 @@ export default function Portfolio() {
             </div>
             <div className="p-6">
               <div className="flex items-center justify-between mb-3">
-                <h3 className="text-xl font-bold text-gray-900 dark:text-white group-hover:text-blue-600 transition-colors">
+                <h3 className="text-xl font-bold text-gray-900 dark:text-white group-hover:text-signal transition-colors">
                   {project.title}
                 </h3>
-                <span className="text-blue-600 dark:text-blue-400 text-sm font-medium">
+                <span className="text-signal text-sm font-medium">
                   →
                 </span>
               </div>

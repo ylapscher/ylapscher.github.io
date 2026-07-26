@@ -5,17 +5,17 @@ const services = [
   {
     title: "Resume & Interview Prep",
     description: "Will help you prepare for your next big opportunity with personalized resume review and interview coaching.",
-    icon: <DocumentTextIcon className="w-8 h-8 text-blue-600" />,
+    icon: <DocumentTextIcon className="w-8 h-8 text-signal" />,
   },
   {
     title: "Product Coaching / Mentorship",
     description: "Get guidance on product management fundamentals, strategy, and career growth from someone who's been there.",
-    icon: <BeakerIcon className="w-8 h-8 text-blue-600" />,
+    icon: <BeakerIcon className="w-8 h-8 text-signal" />,
   },
   {
     title: "How to Use Cursor AI",
     description: "Learn how to leverage AI tools to boost productivity and innovate quickly.",
-    icon: <CalendarIcon className="w-8 h-8 text-blue-600" />,
+    icon: <CalendarIcon className="w-8 h-8 text-signal" />,
   },
 ];
 
@@ -50,7 +50,7 @@ export default function Guidance() {
         ))}
       </div>
 
-      <hr className="my-16 border-gray-300 dark:border-gray-700" />
+      <hr className="my-16 border-rule" />
 
       {/* Booking Section */}
       <section id="book" className="scroll-mt-20">
