@@ -5,17 +5,17 @@ const services = [
   {
     title: "Fractional CPO / Product Leadership",
     description: "Strategic product leadership for early to growth-stage startups. I help build product foundations, define roadmaps, and scale product teams.",
-    icon: <BuildingOfficeIcon className="w-8 h-8 text-blue-600" />,
+    icon: <BuildingOfficeIcon className="w-8 h-8 text-signal" />,
   },
   {
     title: "Freelance Website Development",
     description: "Custom website development using modern technologies. From concept to deployment, I build fast, responsive, and user-friendly web experiences.",
-    icon: <CodeBracketIcon className="w-8 h-8 text-blue-600" />,
+    icon: <CodeBracketIcon className="w-8 h-8 text-signal" />,
   },
   {
     title: "PM Mentoring & Interview Prep",
     description: "Guidance for aspiring and junior product managers. Resume reviews, interview coaching, and career strategy from someone who's been there.",
-    icon: <AcademicCapIcon className="w-8 h-8 text-blue-600" />,
+    icon: <AcademicCapIcon className="w-8 h-8 text-signal" />,
   },
 ];
 
@@ -50,7 +50,7 @@ export default function Services() {
         ))}
       </div>
 
-      <hr className="my-16 border-gray-300 dark:border-gray-700" />
+      <hr className="my-16 border-rule" />
 
       {/* Booking Section */}
       <section id="book" className="scroll-mt-20">

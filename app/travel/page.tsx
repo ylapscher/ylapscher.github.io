@@ -167,7 +167,7 @@ export default function Travel() {
         <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 p-3 sm:p-4">
           <div className="h-[300px] sm:h-[400px] md:h-[500px] lg:h-[600px] relative flex items-center justify-center">
             <div className="text-center">
-              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-signal mx-auto mb-4"></div>
               <p className="text-gray-600 dark:text-gray-400">Loading interactive maps...</p>
             </div>
           </div>
@@ -187,7 +187,7 @@ export default function Travel() {
         </p>
         <button
           onClick={() => setShowUSMap(!showUSMap)}
-          className="mb-6 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors"
+          className="mb-6 px-4 py-2 bg-signal text-white rounded hover:brightness-110 transition-colors"
         >
           Show {showUSMap ? 'World' : 'US'} Map
         </button>
@@ -225,7 +225,7 @@ export default function Travel() {
                 <p className="text-gray-600 dark:text-gray-400 mb-2">Map temporarily unavailable</p>
                 <button 
                   onClick={() => window.location.reload()} 
-                  className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors"
+                  className="px-4 py-2 bg-signal text-white rounded hover:brightness-110 transition-colors"
                 >
                   Refresh Page
                 </button>

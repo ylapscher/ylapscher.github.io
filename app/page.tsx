@@ -1,8 +1,37 @@
 'use client';
 
 import Image from 'next/image';
+import Link from 'next/link';
 import { useState } from 'react';
 import CollapsibleSection from './components/CollapsibleSection';
+import { textStyles, monoStyles } from './lib/typography';
+
+/** Also opened by the Navbar's Résumé button. */
+const RESUME_URL =
+  'https://drive.google.com/file/d/1EqxPiOXn3-ao_I5GsP--dh6qYyzUFGsG/view';
+
+/**
+ * The hero's measurement rail. This is the real chronology, not decoration --
+ * it puts the eight-role arc above the fold, where the Experience accordion
+ * below currently hides it behind `defaultOpen={false}`.
+ *
+ * Company names only: at eight stops across the container each label gets
+ * roughly 137px, so anything longer truncates.
+ */
+const career: ReadonlyArray<{
+  year: string;
+  company: string;
+  current?: boolean;
+}> = [
+  { year: '2015', company: 'P&G' },
+  { year: '2017', company: 'Macro' },
+  { year: '2018', company: 'GE' },
+  { year: '2020', company: 'Citrix' },
+  { year: '2022', company: 'Raistone' },
+  { year: '2024', company: 'Transcard' },
+  { year: '2025', company: 'Tienda Pago' },
+  { year: '2026', company: 'ERC', current: true },
+] as const;
 
 type Experience = {
   role: string;
@@ -38,30 +67,30 @@ function SkillBadge({ skill }: { skill: Skill }) {
       case 4:
         return (
           <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
-            <circle cx="12" cy="12" r="10" className="text-blue-600" />
+            <circle cx="12" cy="12" r="10" className="text-signal" />
           </svg>
         );
       case 3:
         return (
           <svg className="w-4 h-4" viewBox="0 0 24 24">
             {/* Background Stroke */}
-            <circle cx="12" cy="12" r="10" className="fill-none stroke-blue-600 stroke-2" />
+            <circle cx="12" cy="12" r="10" className="fill-none stroke-signal stroke-2" />
             {/* Filled 3/4 Pie Slice Path (Top-Right, Bottom-Right, Bottom-Left quadrants) */}
-            <path d="M 12 2 A 10 10 0 1 1 2 12 L 12 12 Z" fill="currentColor" className="text-blue-600" />
+            <path d="M 12 2 A 10 10 0 1 1 2 12 L 12 12 Z" fill="currentColor" className="text-signal" />
           </svg>
         );
       case 2:
         return (
           <svg className="w-4 h-4" viewBox="0 0 24 24">
-            <circle cx="12" cy="12" r="10" className="fill-none stroke-blue-600 stroke-2" />
-            <path d="M12 22a10 10 0 0 1 0-20" fill="currentColor" className="text-blue-600" />
+            <circle cx="12" cy="12" r="10" className="fill-none stroke-signal stroke-2" />
+            <path d="M12 22a10 10 0 0 1 0-20" fill="currentColor" className="text-signal" />
           </svg>
         );
       default: // level 1
         return (
           <svg className="w-4 h-4" viewBox="0 0 24 24">
-            <circle cx="12" cy="12" r="10" className="fill-none stroke-blue-600 stroke-2" />
-            <path d="M12 22a10 10 0 0 1 0-10" fill="currentColor" className="text-blue-600" />
+            <circle cx="12" cy="12" r="10" className="fill-none stroke-signal stroke-2" />
+            <path d="M12 22a10 10 0 0 1 0-10" fill="currentColor" className="text-signal" />
           </svg>
         );
     }
@@ -85,7 +114,7 @@ function ExperienceTimeline({ experiences }: { experiences: Experience[] }) {
   return (
     <div className="relative">
       {/* Vertical Timeline Line */}
-      <div className="absolute left-4 md:left-1/2 transform md:-translate-x-1/2 h-full w-0.5 bg-blue-600" />
+      <div className="absolute left-4 md:left-1/2 transform md:-translate-x-1/2 h-full w-0.5 bg-signal" />
       
       <div className="space-y-4">
         {experiences.map((experience, index) => {
@@ -107,8 +136,10 @@ function ExperienceTimeline({ experiences }: { experiences: Experience[] }) {
             >
               {/* Year as Marker */}
               <div className="absolute left-4 md:left-1/2 transform md:-translate-x-1/2 flex items-center justify-center z-[1]">
-                <div className="bg-blue-600 rounded-full flex items-center">
-                  <span className="text-base font-extrabold text-blue-600 bg-gray-50 mx-[1px] my-[1px] px-3 py-0.5 rounded-full">
+                <div className="bg-signal rounded-full flex items-center">
+                  {/* bg-paper, not bg-gray-50: the old value had no dark
+                      variant, so the pill stayed light-grey in dark mode. */}
+                  <span className="text-base font-extrabold text-signal bg-paper mx-[1px] my-[1px] px-3 py-0.5 rounded-full">
                     {experience.duration.split(' - ')[0]}
                   </span>
                 </div>
@@ -121,7 +152,7 @@ function ExperienceTimeline({ experiences }: { experiences: Experience[] }) {
                 <ContentWrapper {...contentProps}>
                   <div className={`bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 transition-all duration-300 ${
                     isClickable 
-                      ? 'hover:-translate-y-1 hover:shadow-xl hover:border-blue-500 cursor-pointer group' 
+                      ? 'hover:-translate-y-1 hover:shadow-xl hover:border-signal cursor-pointer group' 
                       : ''
                   }`}>
                     <div className="flex flex-col gap-4">
@@ -139,7 +170,7 @@ function ExperienceTimeline({ experiences }: { experiences: Experience[] }) {
                         )}
                         <div>
                           <h3 className={`font-bold text-lg mb-1 text-gray-900 dark:text-white ${
-                            isClickable ? 'group-hover:text-blue-600 transition-colors' : ''
+                            isClickable ? 'group-hover:text-signal transition-colors' : ''
                           }`}>
                             {experience.role}
                           </h3>
@@ -344,14 +375,6 @@ export default function Home() {
     { name: "Hebrew", level: 2 as const, category: "Languages" as const }
   ];
 
-  const textStyles = {
-    h1: "text-4xl sm:text-5xl font-bold font-geist-sans",
-    h2: "text-2xl sm:text-3xl font-bold font-geist-sans",
-    h3: "text-lg sm:text-xl font-semibold font-geist-sans",
-    body: "text-base font-geist-sans text-gray-600 dark:text-gray-400",
-    small: "text-sm font-geist-sans",
-  };
-
   return (
     <>
       {/* Structured Data */}
@@ -362,43 +385,134 @@ export default function Home() {
         }}
       />
       {/* Hero Section */}
-      <header className="container mx-auto px-4 sm:px-6 py-12 sm:py-16 max-w-4xl">
-        <div className="flex justify-center mb-8">
-          <div className="w-48 h-48 relative rounded-full overflow-hidden">
-            <Image
-              src="/images/profile.jpg"
-              alt="Joe Lapscher"
-              fill
-              priority
-              className="object-cover scale-110 object-[50%_35%]"
-              sizes="(max-width: 768px) 192px, 192px"
-            />
+      <header className="relative notebook-grid border-b border-rule">
+        <div className="container mx-auto px-4 sm:px-6 max-w-5xl">
+          <div className="relative grid grid-cols-1 md:grid-cols-[1.42fr_1fr] gap-8 md:gap-12 items-center py-12 sm:py-16 md:py-20">
+            {/* Left column: the claim */}
+            <div>
+              <p className={`${monoStyles.eyebrow} flex items-center gap-2.5 motion-safe:animate-rise`}>
+                <span aria-hidden="true" className="block w-4 h-px bg-signal" />
+                New Jersey &middot; Operations &amp; product
+              </p>
+
+              <h1
+                className="mt-4 font-bold text-ink tracking-claim text-balance
+                           text-[2.1rem] leading-[1.03] sm:text-5xl md:text-[3.4rem] md:leading-[1.015]
+                           motion-safe:animate-rise [animation-delay:70ms]"
+              >
+                Ten years finding money that&rsquo;s{' '}
+                <span className="text-signal">stuck</span>.
+              </h1>
+
+              <p className="mt-5 max-w-[46ch] text-muted text-base sm:text-[1.03rem] leading-relaxed motion-safe:animate-rise [animation-delay:140ms]">
+                Industrial engineer <span className="font-mono text-ink text-[0.94em]">&rarr;</span>{' '}
+                software engineer <span className="font-mono text-ink text-[0.94em]">&rarr;</span>{' '}
+                chief product officer. Now I find operational cost savings at
+                Expense Reduction Coaching.
+              </p>
+
+              <div className="mt-7 flex flex-wrap items-center gap-x-6 gap-y-4 motion-safe:animate-rise [animation-delay:210ms]">
+                <Link
+                  href="/services"
+                  className="inline-block bg-signal text-signal-ink font-semibold text-sm py-3 px-5
+                             hover:brightness-110 focus-visible:outline focus-visible:outline-2
+                             focus-visible:outline-offset-2 focus-visible:outline-signal transition"
+                >
+                  Work with me
+                </Link>
+                <Link
+                  href="/portfolio"
+                  className={`${monoStyles.label} text-ink border-b border-rule-hi pb-0.5
+                             hover:border-signal hover:text-signal focus-visible:outline
+                             focus-visible:outline-2 focus-visible:outline-offset-2
+                             focus-visible:outline-signal transition-colors`}
+                >
+                  See what I&rsquo;ve built &rarr;
+                </Link>
+                <a
+                  href={RESUME_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`${monoStyles.eyebrow} hover:text-signal focus-visible:outline
+                             focus-visible:outline-2 focus-visible:outline-offset-2
+                             focus-visible:outline-signal transition-colors`}
+                >
+                  R&eacute;sum&eacute; &#8599;
+                </a>
+              </div>
+            </div>
+
+            {/* Right column: portrait, hard-edged rather than a circle */}
+            <div className="w-full max-w-[336px] md:ml-auto motion-safe:animate-rise [animation-delay:160ms]">
+              <div className="relative aspect-[4/5] ring-1 ring-rule-hi">
+                <Image
+                  src="/images/profile-portrait.jpg"
+                  alt="Joe Lapscher"
+                  fill
+                  priority
+                  sizes="(max-width: 768px) 336px, 336px"
+                  className="object-cover saturate-[.78] contrast-[1.03] dark:saturate-[.7] dark:brightness-[.8]"
+                />
+              </div>
+              <p className={`${monoStyles.eyebrow} mt-3 leading-loose`}>
+                <span className="text-ink">Yoel &ldquo;Joe&rdquo; Lapscher</span>
+                <br />
+                Engineer &middot; operator &middot; cuts his own hair
+              </p>
+            </div>
           </div>
         </div>
-        <div className="flex flex-col gap-6 text-center">
-          <h1 className={textStyles.h1}>
-            <span className="text-gray-900 dark:text-white">Joe Lapscher</span>
-            <span className="block text-xl sm:text-2xl text-gray-700 dark:text-gray-400 mt-2 font-geist-sans">
-              Associate at Expense Reduction Coaching
-            </span>
-          </h1>
-          <p className="text-lg text-gray-700 dark:text-gray-400 max-w-2xl mx-auto">
-            Hi! My name is Yoel, but I go by Joe. I'm currently an Associate at Expense Reduction Coaching, and this is my corner of the web where I showcase my experience, hobbies, and projects 💻
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center mt-6">
-            <a
-              href="/services"
-              className="inline-block bg-blue-600 text-white font-semibold py-2 px-4 rounded hover:bg-blue-700 transition"
-            >
-              Let's Connect
-            </a>
+
+        {/* Measurement rail: the ornament is the actual chronology. */}
+        <div className="border-t border-rule">
+          <div className="container mx-auto px-4 sm:px-6 max-w-5xl">
+            <ol className="flex flex-wrap md:flex-nowrap">
+              {career.map((stop, i) => (
+                <li
+                  key={stop.year}
+                  className="relative basis-1/3 sm:basis-1/4 md:basis-0 md:flex-1 min-w-0 pt-4 pb-4 pr-2
+                             motion-safe:animate-rise"
+                  style={{ animationDelay: `${300 + i * 60}ms` }}
+                >
+                  <span
+                    aria-hidden="true"
+                    className={`absolute top-0 left-0 ${
+                      stop.current ? 'w-0.5 h-3.5 bg-signal' : 'w-px h-2 bg-tick'
+                    }`}
+                  />
+                  <span className={`${monoStyles.data} block text-[10.5px] text-muted mb-0.5`}>
+                    {stop.year}
+                  </span>
+                  <span
+                    className={`${monoStyles.label} block truncate ${
+                      stop.current ? 'text-signal' : 'text-ink'
+                    }`}
+                  >
+                    {stop.company}
+                  </span>
+                </li>
+              ))}
+            </ol>
+          </div>
+        </div>
+
+        {/* Credibility strip: surfaces what the accordions below hide. */}
+        <div className="border-t border-rule">
+          <div
+            className={`container mx-auto px-4 sm:px-6 max-w-5xl py-3.5 flex flex-wrap gap-x-7 gap-y-2
+                        ${monoStyles.eyebrow} motion-safe:animate-rise [animation-delay:740ms]`}
+          >
+            <span><b className="font-medium text-ink tabular-nums">8</b> roles</span>
+            <span><b className="font-medium text-ink tabular-nums">4</b> products shipped</span>
+            <span><b className="font-medium text-ink tabular-nums">2</b> fintechs scaled</span>
+            <span><b className="font-medium text-ink tabular-nums">1</b> practice founded &amp; sold</span>
           </div>
         </div>
       </header>
 
       <main className="container mx-auto px-4 sm:px-6 max-w-4xl">
         {/* Horizontal Divider */}
-        <hr className="my-8 border-gray-300 dark:border-gray-700" />
+        <hr className="my-8 border-rule" />
 
         {/* Work Experience Section */}
         <section id="experience" className="mb-12 sm:mb-16 md:mb-20 scroll-mt-20">
@@ -418,7 +532,7 @@ export default function Home() {
                       href={initiative.link}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="group bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 overflow-hidden flex flex-col h-full transform transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:border-blue-500"
+                      className="group bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 overflow-hidden flex flex-col h-full transform transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:border-signal"
                     >
                       {initiative.image && (
                         <div className="h-32 sm:h-40 relative">
@@ -431,7 +545,7 @@ export default function Home() {
                         </div>
                       )}
                       <div className="p-4 sm:p-6 flex flex-col flex-grow">
-                        <h3 className="text-lg font-bold mb-2 text-gray-900 dark:text-white group-hover:text-blue-600 transition-colors">
+                        <h3 className="text-lg font-bold mb-2 text-gray-900 dark:text-white group-hover:text-signal transition-colors">
                           {initiative.title}
                         </h3>
                         <p className="text-gray-700 dark:text-gray-400 text-sm leading-relaxed">

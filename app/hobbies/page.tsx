@@ -16,7 +16,7 @@ const hobbies = [
       <svg 
         viewBox="0 0 24 24" 
         fill="none" 
-        className="w-8 h-8 text-blue-600"
+        className="w-8 h-8 text-signal"
         stroke="currentColor" 
         strokeWidth="1.5"
       >
@@ -32,18 +32,18 @@ const hobbies = [
   {
     title: "Hot Yoga",
     description: "Practice hot yoga to maintain flexibility and mental clarity. The heat adds an extra challenge and helps deepen the practice.",
-    icon: <FireIcon className="w-8 h-8 text-blue-600" />,
+    icon: <FireIcon className="w-8 h-8 text-signal" />,
   },
   {
     title: "Piano",
     description: "I'm a pianist with a love for jazz music. Music provides a creative outlet and a way to express my artistic side.",
-    icon: <MusicalNoteIcon className="w-8 h-8 text-blue-600" />,
+    icon: <MusicalNoteIcon className="w-8 h-8 text-signal" />,
     link: "https://soundcloud.com/ylapscher/tracks"
   },
   {
     title: "Improv Comedy",
     description: "I enjoy performing with improv groups, where I've honed my quick thinking and public speaking skills through the joy and creativity of improvcomedy.",
-    icon: <UserGroupIcon className="w-8 h-8 text-blue-600" />,
+    icon: <UserGroupIcon className="w-8 h-8 text-signal" />,
   },
 ];
 
@@ -85,10 +85,10 @@ export default function Hobbies() {
               </div>
               <div>
                 <h3 className={`text-xl font-bold mb-2 text-gray-900 dark:text-white 
-                  ${hobby.link ? 'hover:text-blue-600 dark:hover:text-blue-400' : ''}`}>
+                  ${hobby.link ? 'hover:text-signal' : ''}`}>
                   {hobby.title}
                   {hobby.link && (
-                    <span className="ml-2 text-sm text-blue-600 dark:text-blue-400">
+                    <span className="ml-2 text-sm text-signal">
                       ↗
                     </span>
                   )}
@@ -102,7 +102,7 @@ export default function Hobbies() {
         ))}
       </div>
 
-      <hr className="my-16 border-gray-300 dark:border-gray-700" />
+      <hr className="my-16 border-rule" />
 
       <div id="barber" className="mb-16 scroll-mt-20">
         <h2 className="text-3xl font-bold mb-6 text-gray-900 dark:text-white">Barber Portfolio</h2>
@@ -110,7 +110,7 @@ export default function Hobbies() {
           If you like my work below, schedule your appointment{' '}
           <a 
             href="/services#book" 
-            className="text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 underline"
+            className="text-signal hover:brightness-110 text-signal hover:brightness-110 underline"
           >
             here
           </a>
@@ -119,7 +119,7 @@ export default function Hobbies() {
         <ImageGallery />
       </div>
 
-      <hr className="my-16 border-gray-300 dark:border-gray-700" />
+      <hr className="my-16 border-rule" />
 
       <div id="reading" className="mb-16 scroll-mt-20">
         <h2 className="text-3xl font-bold mb-6 text-gray-900 dark:text-white">Reading List</h2>

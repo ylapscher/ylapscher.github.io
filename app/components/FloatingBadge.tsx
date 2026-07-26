@@ -2,42 +2,27 @@
 
 import React from 'react';
 
-const FloatingBadge = () => {
-  const badgeStyle: React.CSSProperties = {
-    position: 'fixed',
-    bottom: '20px',
-    left: '20px',
-    backgroundColor: '#D97706', // Elegant orange (Amber 600)
-    color: 'white',
-    padding: '12px 18px', // Adjusted padding
-    textDecoration: 'none',
-    fontSize: '14px',
-    fontWeight: 'bold',
-    boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
-    zIndex: 1000, // Ensure it's above other content
-    transition: 'transform 0.2s ease-in-out',
-    cursor: 'pointer',
-    borderRadius: '8px', // Simple rounded corners
-  };
-
-  const linkProps = {
-    href: 'https://www.samstorybook.com/',
-    target: '_blank',
-    rel: 'noopener noreferrer',
-    style: badgeStyle,
-    onMouseOver: (e: React.MouseEvent<HTMLAnchorElement>) => {
-        e.currentTarget.style.transform = 'scale(1.05)';
-    },
-    onMouseOut: (e: React.MouseEvent<HTMLAnchorElement>) => {
-        e.currentTarget.style.transform = 'scale(1)';
-    }
-  };
-
-  return (
-    <a {...linkProps}>
-      Order Baby Book!
-    </a>
-  );
-};
+/**
+ * Rewritten from inline styles to Tailwind so it uses the shared tokens.
+ *
+ * It previously hardcoded #D97706 (Amber 600), which sat a few degrees off the
+ * new signal orange -- and since it lives bottom-left while the ChatWidget FAB
+ * lives bottom-right, both oranges were on screen at once and visibly
+ * disagreed. It now reads from the same `signal` token, so there is one orange.
+ */
+const FloatingBadge = () => (
+  <a
+    href="https://www.samstorybook.com/"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="fixed bottom-5 left-5 z-[1000] inline-block bg-signal text-signal-ink
+               px-4 py-3 text-sm font-semibold shadow-lg
+               hover:scale-105 motion-reduce:hover:scale-100
+               focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2
+               focus-visible:outline-signal transition-transform"
+  >
+    Order Baby Book!
+  </a>
+);
 
 export default FloatingBadge;

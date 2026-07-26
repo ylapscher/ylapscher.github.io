@@ -7,6 +7,7 @@ import GoogleAnalytics from './components/GoogleAnalytics';
 import ChatWidget from './components/ChatWidget';
 import { PostHogProvider } from './components/PostHogProvider';
 import FloatingBadge from './components/FloatingBadge';
+import { textStyles } from './lib/typography';
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -21,22 +22,27 @@ const geistMono = localFont({
   display: 'swap',
 });
 
+const SITE_DESCRIPTION =
+  "Industrial engineer turned software engineer turned chief product officer. Now finding operational cost savings at Expense Reduction Coaching. Ten years across payments, working capital, and fintech.";
+
 export const metadata: Metadata = {
-  title: "Joe Lapscher | Product Leader",
-  description: "Joe Lapscher is an Associate at Expense Reduction Coaching with a passion for building products that make a difference. Experienced in fintech, SaaS, and enterprise software with expertise in product strategy, roadmapping, and team leadership.",
-  keywords: "Associate, Expense Reduction Coaching, product leader, fintech, SaaS, product strategy, roadmapping, team leadership, Joe Lapscher",
+  metadataBase: new URL("https://lapscher.com"),
+  title: "Joe Lapscher — finding money that's stuck",
+  description: SITE_DESCRIPTION,
+  keywords:
+    "Joe Lapscher, Yoel Lapscher, Expense Reduction Coaching, cost reduction, operational savings, product leader, chief product officer, fintech, payments, working capital",
   authors: [{ name: "Joe Lapscher" }],
   openGraph: {
-    title: "Joe Lapscher | Product Leader",
-    description: "Associate at Expense Reduction Coaching. Experienced in fintech, SaaS, and enterprise software with expertise in product strategy, roadmapping, and team leadership.",
+    title: "Joe Lapscher — finding money that's stuck",
+    description: SITE_DESCRIPTION,
     url: "https://lapscher.com",
-    siteName: "Joe Lapscher Portfolio",
+    siteName: "Joe Lapscher",
     images: [
       {
-        url: "https://lapscher.com/images/profile.jpg",
-        width: 400,
-        height: 400,
-        alt: "Joe Lapscher Profile Photo",
+        url: "/images/og-card.png",
+        width: 1200,
+        height: 630,
+        alt: "Joe Lapscher — ten years finding money that's stuck",
       },
     ],
     locale: "en_US",
@@ -44,11 +50,20 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Joe Lapscher | Product Leader",
-    description: "Associate at Expense Reduction Coaching. Product leader with expertise in fintech, SaaS, and enterprise software. Passionate about building products that make a difference.",
-    images: ["https://lapscher.com/images/profile.jpg"],
+    title: "Joe Lapscher — finding money that's stuck",
+    description: SITE_DESCRIPTION,
+    images: ["/images/og-card.png"],
   },
 };
+
+/**
+ * Resolves the theme before first paint.
+ *
+ * Without this, the .dark class is only applied in a useEffect inside Navbar,
+ * so dark-mode visitors get a flash of the light palette on every navigation.
+ * Kept deliberately tiny and dependency-free; it must run synchronously.
+ */
+const THEME_SCRIPT = `(function(){try{var t=localStorage.getItem('theme');var d=t?t==='dark':window.matchMedia('(prefers-color-scheme: dark)').matches;document.documentElement.classList.toggle('dark',d);}catch(e){}})();`;
 
 export default function RootLayout({
   children,
@@ -58,8 +73,10 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning className={`${geistSans.variable} ${geistMono.variable}`}>
       <head>
+        {/* Must stay before any paint -- see THEME_SCRIPT above. */}
+        <script dangerouslySetInnerHTML={{ __html: THEME_SCRIPT }} />
         <GoogleAnalytics />
-        <meta name="theme-color" content="#000000" />
+        <meta name="theme-color" content="#E04E0F" />
 
         {/* Favicons */}
         <link rel="icon" href="/favicons/favicon.ico" sizes="any" />
@@ -67,12 +84,12 @@ export default function RootLayout({
         <link rel="apple-touch-icon" href="/favicons/apple-touch-icon.png" />
         <link rel="manifest" href="/favicons/manifest.webmanifest" />
       </head>
-      <body suppressHydrationWarning className="antialiased font-sans bg-white dark:bg-gray-900">
+      <body suppressHydrationWarning className="antialiased font-sans bg-paper text-ink">
         <PostHogProvider>
           <Navbar />
           {children}
           <ChatWidget />
-          <Footer textStyles={{ small: "text-sm font-geist-sans" }} />
+          <Footer textStyles={{ small: textStyles.small }} />
           <FloatingBadge />
         </PostHogProvider>
       </body>
