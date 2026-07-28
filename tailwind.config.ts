@@ -47,6 +47,10 @@ export default {
         "signal-ink": "var(--signal-ink)",
         rule: "var(--rule)",
         "rule-hi": "var(--rule-hi)",
+        // Used by the hero's chronology rail (bg-tick) and the notebook
+        // graph-paper background. Both CSS vars live in app/globals.css.
+        tick: "var(--tick)",
+        grid: "var(--grid)",
       },
       letterSpacing: {
         claim: "-0.032em",

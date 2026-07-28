@@ -73,8 +73,7 @@ app/
 ├── data/          # Static data files
 ├── hobbies/       # Hobbies page
 ├── portfolio/     # Web development portfolio with individual project pages
-├── travel/        # Travel tracking features
-├── us-travel/     # US states map
+├── travel/        # Travel tracking features (world + US states maps)
 ├── services/      # Services page
 ├── fonts/         # Font files
 ├── layout.tsx     # Main layout file
@@ -140,8 +139,7 @@ npm run clean
 - **Portfolio** (`/portfolio`) - Web development portfolio with individual project pages
 - **Hobbies** (`/hobbies`) - Personal interests, barber portfolio, and reading list
 - **Services** (`/services`) - Professional services and contact information
-- **Travel** (`/travel`) - Interactive world travel map
-- **US Travel** (`/us-travel`) - Interactive US states travel map
+- **Travel** (`/travel`) - Interactive travel map, toggling between world and US states
 
 ## Contributing
 

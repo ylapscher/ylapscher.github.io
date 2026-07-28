@@ -3,8 +3,10 @@ import Link from 'next/link';
 import { projects } from '../data/projects-data';
 
 export const metadata: Metadata = {
-  title: 'Portfolio — Joe Lapscher',
+  // The root layout's title template appends the wordmark.
+  title: 'Portfolio',
   description: "Web projects I've built to solve real problems and craft engaging experiences.",
+  alternates: { canonical: '/portfolio' },
 };
 
 export default function Portfolio() {

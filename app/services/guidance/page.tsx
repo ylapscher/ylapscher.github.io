@@ -1,5 +1,13 @@
+import type { Metadata } from 'next';
 import { CalendarIcon, DocumentTextIcon, BeakerIcon } from '@heroicons/react/24/outline';
 import Calendar from '../../components/Calendar';
+
+export const metadata: Metadata = {
+  title: 'Guidance',
+  description:
+    'Resume and interview prep, product coaching and mentorship, and hands-on help getting productive with AI tools like Cursor.',
+  alternates: { canonical: '/services/guidance' },
+};
 
 const services = [
   {

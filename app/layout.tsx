@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import Navbar from './components/Navbar';
@@ -22,19 +22,49 @@ const geistMono = localFont({
   display: 'swap',
 });
 
+const SITE_TITLE = "Joe Lapscher — finding money that's stuck";
+
+/** Kept under ~160 characters so Google renders it without truncating. */
 const SITE_DESCRIPTION =
+  "Engineer turned product leader, now a partner at Expense Reduction Coaching finding operational cost savings. Ten years across payments and fintech.";
+
+/** The social card has room for the longer version. */
+const SOCIAL_DESCRIPTION =
   "Industrial engineer turned software engineer turned chief product officer. Now finding operational cost savings at Expense Reduction Coaching. Ten years across payments, working capital, and fintech.";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://lapscher.com"),
-  title: "Joe Lapscher — finding money that's stuck",
+  title: {
+    default: SITE_TITLE,
+    // Child routes set only their own name; this appends the wordmark.
+    template: "%s · Joe Lapscher",
+  },
   description: SITE_DESCRIPTION,
   keywords:
     "Joe Lapscher, Yoel Lapscher, Expense Reduction Coaching, cost reduction, operational savings, product leader, chief product officer, fintech, payments, working capital",
   authors: [{ name: "Joe Lapscher" }],
+  alternates: { canonical: "/" },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
+  manifest: "/favicons/manifest.webmanifest",
+  icons: {
+    icon: [
+      { url: "/favicons/favicon.ico", sizes: "any" },
+      { url: "/favicons/favicon.svg", type: "image/svg+xml" },
+    ],
+    apple: "/favicons/apple-touch-icon.png",
+  },
   openGraph: {
-    title: "Joe Lapscher — finding money that's stuck",
-    description: SITE_DESCRIPTION,
+    title: SITE_TITLE,
+    description: SOCIAL_DESCRIPTION,
     url: "https://lapscher.com",
     siteName: "Joe Lapscher",
     images: [
@@ -50,10 +80,14 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Joe Lapscher — finding money that's stuck",
-    description: SITE_DESCRIPTION,
+    title: SITE_TITLE,
+    description: SOCIAL_DESCRIPTION,
     images: ["/images/og-card.png"],
   },
+};
+
+export const viewport: Viewport = {
+  themeColor: "#E04E0F",
 };
 
 /**
@@ -76,13 +110,9 @@ export default function RootLayout({
         {/* Must stay before any paint -- see THEME_SCRIPT above. */}
         <script dangerouslySetInnerHTML={{ __html: THEME_SCRIPT }} />
         <GoogleAnalytics />
-        <meta name="theme-color" content="#E04E0F" />
-
-        {/* Favicons */}
-        <link rel="icon" href="/favicons/favicon.ico" sizes="any" />
-        <link rel="icon" href="/favicons/favicon.svg" type="image/svg+xml" />
-        <link rel="apple-touch-icon" href="/favicons/apple-touch-icon.png" />
-        <link rel="manifest" href="/favicons/manifest.webmanifest" />
+        {/* theme-color, favicons and the manifest now come from the
+            Metadata/Viewport exports above -- declaring them twice made the
+            App Router emit duplicate <link rel="icon"> tags. */}
       </head>
       <body suppressHydrationWarning className="antialiased font-sans bg-paper text-ink">
         <PostHogProvider>
