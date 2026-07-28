@@ -10,6 +10,9 @@ import { textStyles, monoStyles } from './lib/typography';
 const RESUME_URL =
   'https://drive.google.com/file/d/1EqxPiOXn3-ao_I5GsP--dh6qYyzUFGsG/view';
 
+/** The hero CTA books straight into the 15-minute intro slot. */
+const BOOKING_URL = 'https://cal.com/joe-erc/15min';
+
 /**
  * The hero's measurement rail. This is the real chronology, not decoration --
  * it puts the eight-role arc above the fold, where the Experience accordion
@@ -198,9 +201,11 @@ const structuredData = {
   "@context": "https://schema.org",
   "@type": "Person",
   "name": "Joe Lapscher",
-  "jobTitle": "Associate",
-  "description": "Associate at Expense Reduction Coaching with expertise in fintech, SaaS, and enterprise software. Experienced in product strategy, roadmapping, and team leadership.",
+  "alternateName": "Yoel Lapscher",
+  "jobTitle": "Partner",
+  "description": "Partner at Expense Reduction Coaching with expertise in fintech, SaaS, and enterprise software. Experienced in product strategy, roadmapping, and team leadership.",
   "url": "https://lapscher.com",
+  "image": "https://lapscher.com/images/profile-portrait.jpg",
   "sameAs": [
     "https://www.linkedin.com/in/ylapscher/",
     "https://soundcloud.com/ylapscher/tracks"
@@ -213,7 +218,7 @@ const structuredData = {
     {
       "@type": "EducationalOrganization",
       "name": "University of Florida",
-      "degree": "MS in Information Systems & Operations Management"
+      "description": "MS in Information Systems & Operations Management"
     }
   ],
   "knowsAbout": [
@@ -236,7 +241,7 @@ const structuredData = {
 export default function Home() {
   const experiences: Experience[] = [
     {
-      role: "Associate",
+      role: "Partner",
       company: "Expense Reduction Coaching",
       duration: "2026 - Present",
       achievements: [
@@ -390,36 +395,33 @@ export default function Home() {
           <div className="relative grid grid-cols-1 md:grid-cols-[1.42fr_1fr] gap-8 md:gap-12 items-center py-12 sm:py-16 md:py-20">
             {/* Left column: the claim */}
             <div>
-              <p className={`${monoStyles.eyebrow} flex items-center gap-2.5 motion-safe:animate-rise`}>
-                <span aria-hidden="true" className="block w-4 h-px bg-signal" />
-                New Jersey &middot; Operations &amp; product
-              </p>
-
               <h1
-                className="mt-4 font-bold text-ink tracking-claim text-balance
+                className="font-bold text-ink tracking-claim text-balance
                            text-[2.1rem] leading-[1.03] sm:text-5xl md:text-[3.4rem] md:leading-[1.015]
-                           motion-safe:animate-rise [animation-delay:70ms]"
+                           motion-safe:animate-rise"
               >
                 Ten years finding money that&rsquo;s{' '}
                 <span className="text-signal">stuck</span>.
               </h1>
 
-              <p className="mt-5 max-w-[46ch] text-muted text-base sm:text-[1.03rem] leading-relaxed motion-safe:animate-rise [animation-delay:140ms]">
+              <p className="mt-5 max-w-[46ch] text-muted text-base sm:text-[1.03rem] leading-relaxed motion-safe:animate-rise [animation-delay:70ms]">
                 Industrial engineer <span className="font-mono text-ink text-[0.94em]">&rarr;</span>{' '}
                 software engineer <span className="font-mono text-ink text-[0.94em]">&rarr;</span>{' '}
                 chief product officer. Now I find operational cost savings at
                 Expense Reduction Coaching.
               </p>
 
-              <div className="mt-7 flex flex-wrap items-center gap-x-6 gap-y-4 motion-safe:animate-rise [animation-delay:210ms]">
-                <Link
-                  href="/services"
+              <div className="mt-7 flex flex-wrap items-center gap-x-6 gap-y-4 motion-safe:animate-rise [animation-delay:140ms]">
+                <a
+                  href={BOOKING_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="inline-block bg-signal text-signal-ink font-semibold text-sm py-3 px-5
                              hover:brightness-110 focus-visible:outline focus-visible:outline-2
                              focus-visible:outline-offset-2 focus-visible:outline-signal transition"
                 >
                   Work with me
-                </Link>
+                </a>
                 <Link
                   href="/portfolio"
                   className={`${monoStyles.label} text-ink border-b border-rule-hi pb-0.5
@@ -443,19 +445,19 @@ export default function Home() {
             </div>
 
             {/* Right column: portrait, hard-edged rather than a circle */}
-            <div className="w-full max-w-[336px] md:ml-auto motion-safe:animate-rise [animation-delay:160ms]">
+            <div className="w-full max-w-[336px] md:ml-auto motion-safe:animate-rise [animation-delay:110ms]">
               <div className="relative aspect-[4/5] ring-1 ring-rule-hi">
                 <Image
                   src="/images/profile-portrait.jpg"
-                  alt="Joe Lapscher"
+                  alt="Portrait of Joe Lapscher"
                   fill
                   priority
                   sizes="(max-width: 768px) 336px, 336px"
-                  className="object-cover saturate-[.78] contrast-[1.03] dark:saturate-[.7] dark:brightness-[.8]"
+                  className="object-cover"
                 />
               </div>
               <p className={`${monoStyles.eyebrow} mt-3 leading-loose`}>
-                <span className="text-ink">Yoel &ldquo;Joe&rdquo; Lapscher</span>
+                <span className="text-ink">Joe Lapscher</span>
                 <br />
                 Engineer &middot; operator &middot; cuts his own hair
               </p>
@@ -472,7 +474,7 @@ export default function Home() {
                   key={stop.year}
                   className="relative basis-1/3 sm:basis-1/4 md:basis-0 md:flex-1 min-w-0 pt-4 pb-4 pr-2
                              motion-safe:animate-rise"
-                  style={{ animationDelay: `${300 + i * 60}ms` }}
+                  style={{ animationDelay: `${230 + i * 60}ms` }}
                 >
                   <span
                     aria-hidden="true"
@@ -493,19 +495,6 @@ export default function Home() {
                 </li>
               ))}
             </ol>
-          </div>
-        </div>
-
-        {/* Credibility strip: surfaces what the accordions below hide. */}
-        <div className="border-t border-rule">
-          <div
-            className={`container mx-auto px-4 sm:px-6 max-w-5xl py-3.5 flex flex-wrap gap-x-7 gap-y-2
-                        ${monoStyles.eyebrow} motion-safe:animate-rise [animation-delay:740ms]`}
-          >
-            <span><b className="font-medium text-ink tabular-nums">8</b> roles</span>
-            <span><b className="font-medium text-ink tabular-nums">4</b> products shipped</span>
-            <span><b className="font-medium text-ink tabular-nums">2</b> fintechs scaled</span>
-            <span><b className="font-medium text-ink tabular-nums">1</b> practice founded &amp; sold</span>
           </div>
         </div>
       </header>

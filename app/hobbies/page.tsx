@@ -132,7 +132,7 @@ export default function Hobbies() {
             target="_blank"
             rel="noopener noreferrer"
             className="hover:opacity-90 transition-opacity"
-            title="Yoel's book recommendations on Goodreads"
+            title="Joe's book recommendations on Goodreads"
           >
             <Image 
               src="/images/goodreads-badge.jpg"

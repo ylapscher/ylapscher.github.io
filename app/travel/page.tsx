@@ -17,6 +17,13 @@ type CountryName = {
   [key: string]: boolean;
 };
 
+/**
+ * Keys must match `properties.name` in public/data/world-geo.json or the
+ * country silently fails to paint. Aruba, Curacao, Saint Lucia, Saint Martin,
+ * Singapore and Vatican City have no geometry at this 110m resolution, and
+ * Scotland is folded into the United Kingdom -- they are kept here so they
+ * still appear in the list below.
+ */
 const visitedCountries: CountryName = {
   "Argentina": true,
   "Aruba": true,
@@ -32,7 +39,7 @@ const visitedCountries: CountryName = {
   "Costa Rica": true,
   "Croatia": true,
   "Curacao": true,
-  "Czech Rep.": true,
+  "Czechia": true,
   "Denmark": true,
   "Dominican Rep.": true,
   "France": true,
@@ -60,7 +67,7 @@ const visitedCountries: CountryName = {
   "Switzerland": true,
   "Thailand": true,
   "United Kingdom": true,
-  "United States": true,
+  "United States of America": true,
   "Vatican City": true,
   "Venezuela": true,
 };
@@ -69,6 +76,14 @@ const livedCountries: CountryName = {
   "United States of America": true,
   "Venezuela": true,
 };
+
+/** Geo names that read awkwardly in prose. Keys above stay geo-accurate. */
+const displayNames: Record<string, string> = {
+  "United States of America": "United States",
+};
+
+/** Neither is a state, so both stay out of the counts and the list. */
+const nonStateEntities = ["District of Columbia", "Puerto Rico"];
 
 // Add type for map data
 type GeoData = Record<string, any>;
@@ -133,11 +148,10 @@ export default function Travel() {
   }, []);
 
   // Calculate counts more directly - only count true values
-  const visitedCount = showUSMap 
-    ? Object.entries(visitedStates).filter(([stateName, isVisited]) => {
-        const nonStateEntities = ["District of Columbia", "Puerto Rico"];
-        return isVisited === true && !nonStateEntities.includes(stateName);
-      }).length
+  const visitedCount = showUSMap
+    ? Object.entries(visitedStates).filter(([stateName, isVisited]) =>
+        isVisited === true && !nonStateEntities.includes(stateName)
+      ).length
     : Object.values(visitedCountries).filter(Boolean).length;
   const livedCount = Object.values(showUSMap ? livedStates : livedCountries).filter(Boolean).length;
 
@@ -152,29 +166,30 @@ export default function Travel() {
     ? Math.round((livedCount / totalStates) * 100)
     : totalCountries > 0 ? Math.round((livedCount / totalCountries) * 100) : 0;
 
-  // Loading states
-  if (!worldData || !usData) {
-    return (
-      <main className="container mx-auto px-4 sm:px-6 py-8 max-w-6xl">
-        <div className="text-center mb-8 sm:mb-12">
-          <h1 className="text-3xl sm:text-4xl font-bold mb-3 sm:mb-4 text-gray-900 dark:text-white">
-            Travel Map
-          </h1>
-          <p className="text-base sm:text-lg text-gray-700 dark:text-gray-400 max-w-2xl mx-auto mb-6">
-            Places I've visited and lived around the world
-          </p>
-        </div>
-        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 p-3 sm:p-4">
-          <div className="h-[300px] sm:h-[400px] md:h-[500px] lg:h-[600px] relative flex items-center justify-center">
-            <div className="text-center">
-              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-signal mx-auto mb-4"></div>
-              <p className="text-gray-600 dark:text-gray-400">Loading interactive maps...</p>
-            </div>
-          </div>
-        </div>
-      </main>
-    );
-  }
+  /**
+   * One list, lived-in places flagged inline. Built from the union of the two
+   * records rather than from `visited` alone, so a place marked lived-in but
+   * never added to the visited record still shows up.
+   */
+  const visitedRecord = showUSMap ? visitedStates : visitedCountries;
+  const livedRecord = showUSMap ? livedStates : livedCountries;
+  const places = Array.from(
+    new Set(
+      [...Object.entries(visitedRecord), ...Object.entries(livedRecord)]
+        .filter(([, value]) => value === true)
+        .map(([name]) => name)
+    )
+  )
+    .filter((name) => !nonStateEntities.includes(name))
+    .sort((a, b) => (displayNames[a] ?? a).localeCompare(displayNames[b] ?? b))
+    .map((name) => ({ name, hasLived: livedRecord[name] === true }));
+
+  /**
+   * The geographies arrive via fetch, so only the map itself waits on them.
+   * Everything else -- headings, counts, the place list -- renders on the
+   * server, which is what crawlers and no-JS visitors actually see.
+   */
+  const mapsReady = Boolean(worldData && usData);
 
   return (
     <main className="container mx-auto px-4 sm:px-6 py-8 max-w-6xl">
@@ -219,6 +234,14 @@ export default function Travel() {
 
       <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 p-3 sm:p-4">
         <div className="h-[300px] sm:h-[400px] md:h-[500px] lg:h-[600px] relative">
+          {!mapsReady ? (
+            <div className="h-full flex items-center justify-center">
+              <div className="text-center">
+                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-signal mx-auto mb-4" />
+                <p className="text-gray-600 dark:text-gray-400">Loading interactive maps...</p>
+              </div>
+            </div>
+          ) : (
           <ErrorBoundary fallback={
             <div className="h-full flex items-center justify-center">
               <div className="text-center">
@@ -290,6 +313,7 @@ export default function Travel() {
               </ZoomableGroup>
             </ComposableMap>
           </ErrorBoundary>
+          )}
 
           {tooltip && (
             <div className="absolute top-2 sm:top-4 left-1/2 transform -translate-x-1/2 bg-white dark:bg-gray-800 px-3 py-1 sm:px-4 sm:py-2 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700">
@@ -311,22 +335,37 @@ export default function Travel() {
       </div>
 
       <div className="mt-8 sm:mt-12 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 p-4 sm:p-6">
-        <h2 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6 text-gray-900 dark:text-white">
-          {showUSMap ? 'States' : 'Countries'} Visited
+        <h2 className="text-xl sm:text-2xl font-bold mb-2 text-gray-900 dark:text-white">
+          {showUSMap ? 'States' : 'Countries'} I&apos;ve Been
         </h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-4 text-sm sm:text-base">
-          {Object.entries(showUSMap ? visitedStates : visitedCountries)
-            .filter(([_, value]) => value === true)
-            .sort(([placeA], [placeB]) => placeA.localeCompare(placeB))
-            .map(([place, _], index) => (
-              <div
-                key={index}
-                className="text-gray-700 dark:text-gray-400 p-2 rounded-lg"
-              >
-                {place}
-              </div>
-            ))}
-        </div>
+        <p className="text-sm text-gray-700 dark:text-gray-400 mb-4 sm:mb-6">
+          {livedCount} of these are {showUSMap ? 'states' : 'countries'} I&apos;ve
+          lived in, marked below.
+        </p>
+        <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-4 text-sm sm:text-base">
+          {places.map(({ name, hasLived }) => (
+            <li
+              key={name}
+              className={`flex items-center gap-2 p-2 rounded-lg ${
+                hasLived
+                  ? 'bg-[#2563EB]/10 font-semibold text-[#2563EB] dark:text-[#93B4FB]'
+                  : 'text-gray-700 dark:text-gray-400'
+              }`}
+            >
+              <span
+                aria-hidden="true"
+                className="w-2 h-2 rounded-full flex-shrink-0"
+                style={{ backgroundColor: hasLived ? '#2563EB' : '#60A5FA' }}
+              />
+              <span>{displayNames[name] ?? name}</span>
+              {hasLived && (
+                <span className="ml-auto text-[10px] font-mono uppercase tracking-widest">
+                  Lived
+                </span>
+              )}
+            </li>
+          ))}
+        </ul>
       </div>
     </main>
   );
