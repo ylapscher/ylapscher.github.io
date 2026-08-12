@@ -4,7 +4,7 @@ import type { Metadata } from 'next';
 export const metadata: Metadata = {
   title: 'Hobbies',
   description:
-    'Rock climbing, hot yoga, jazz piano, improv comedy and cutting hair — what Joe Lapscher does outside of work.',
+    'Outside of work: rock climbing, hot yoga, jazz piano, and improv comedy with Joe Lapscher.',
   alternates: { canonical: '/hobbies' },
 };
 

@@ -3,6 +3,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
+import { motion, useReducedMotion, AnimatePresence } from 'framer-motion';
 import CollapsibleSection from './components/CollapsibleSection';
 import { textStyles, monoStyles } from './lib/typography';
 
@@ -113,86 +114,297 @@ function SkillBadge({ skill }: { skill: Skill }) {
   );
 }
 
-function ExperienceTimeline({ experiences }: { experiences: Experience[] }) {
+/** Shared card markup for one experience entry, used by both the animated
+ *  and reduced-motion renderings of the timeline. */
+function ExperienceCard({ experience }: { experience: Experience }) {
+  const isClickable = Boolean(experience.link);
+  const ContentWrapper = isClickable ? 'a' : 'div';
+  const contentProps = isClickable
+    ? { href: experience.link, target: '_blank', rel: 'noopener noreferrer', className: 'block' }
+    : {};
+
   return (
-    <div className="relative">
-      {/* Vertical Timeline Line */}
-      <div className="absolute left-4 md:left-1/2 transform md:-translate-x-1/2 h-full w-0.5 bg-signal" />
-      
-      <div className="space-y-4">
+    <ContentWrapper {...contentProps}>
+      <div
+        className={`bg-white dark:bg-gray-800 p-6 sm:p-8 rounded-lg shadow-xl border border-gray-200 dark:border-gray-700 transition-all duration-300 ${
+          isClickable ? 'hover:-translate-y-1 hover:shadow-2xl hover:border-signal cursor-pointer group' : ''
+        }`}
+      >
+        <div className="flex flex-col gap-4">
+          <div className="flex items-center gap-4">
+            {experience.image && (
+              <div className="flex-shrink-0 w-12 h-12">
+                <Image
+                  src={experience.image.src}
+                  alt={experience.image.alt}
+                  width={48}
+                  height={48}
+                  className="rounded object-cover"
+                />
+              </div>
+            )}
+            <div>
+              <p className={`${monoStyles.eyebrow} mb-1`}>{experience.duration}</p>
+              <h3
+                className={`font-bold text-lg mb-1 text-gray-900 dark:text-white ${
+                  isClickable ? 'group-hover:text-signal transition-colors' : ''
+                }`}
+              >
+                {experience.role}
+              </h3>
+              <p className="text-gray-700 dark:text-gray-400 text-sm">{experience.company}</p>
+            </div>
+          </div>
+          <div className="text-gray-700 dark:text-gray-400 text-sm leading-relaxed">
+            {experience.achievements[0]}
+          </div>
+        </div>
+      </div>
+    </ContentWrapper>
+  );
+}
+
+/** One pinned "slide" of the scroll-stack: sticks in place while its own tall
+ *  wrapper scrolls past, so the next card in document order slides up and
+ *  visually replaces it. Fades in once (never back out, so it can't end up
+ *  transparent while pinned) and reports first entry so the year spine can
+ *  track progress down the list. */
+function TimelineSlide({
+  experience,
+  index,
+  onActive,
+}: {
+  experience: Experience;
+  index: number;
+  onActive: (index: number) => void;
+}) {
+  return (
+    <div className="h-[62vh] sm:h-[68vh] md:h-[72vh] sticky top-16 sm:top-20 flex items-center">
+      <motion.div
+        initial={{ opacity: 0, y: 32 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.3 }}
+        onViewportEnter={() => onActive(index)}
+        transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+        className="w-full"
+      >
+        <ExperienceCard experience={experience} />
+      </motion.div>
+    </div>
+  );
+}
+
+function ExperienceTimeline({ experiences }: { experiences: Experience[] }) {
+  const [activeIndex, setActiveIndex] = useState(0);
+  const prefersReducedMotion = useReducedMotion();
+
+  // Motion/scroll-jacking off by request or preference: fall back to a
+  // plain stacked list so the section stays fully readable and navigable.
+  if (prefersReducedMotion) {
+    return (
+      <div className="space-y-6">
+        {experiences.map((experience, index) => (
+          <ExperienceCard key={index} experience={experience} />
+        ))}
+      </div>
+    );
+  }
+
+  return (
+    <div className="relative md:grid md:grid-cols-[auto_1fr] md:gap-10">
+      {/* Year spine: tracks which card is currently pinned in the stack. */}
+      <div className="hidden md:flex flex-col items-center sticky top-16 self-start h-[72vh] justify-center gap-1 py-4">
+        <div className="absolute left-1/2 -translate-x-1/2 top-0 bottom-0 w-px bg-rule" aria-hidden="true" />
         {experiences.map((experience, index) => {
-          const isClickable = experience.link;
-          const ContentWrapper = isClickable ? 'a' : 'div';
-          const contentProps = isClickable ? {
-            href: experience.link,
-            target: "_blank",
-            rel: "noopener noreferrer",
-            className: "block"
-          } : {};
-          
+          const isActive = index === activeIndex;
           return (
-            <div 
-              key={index}
-              className={`relative flex items-center ${
-                index % 2 === 1 ? 'md:justify-end' : 'justify-start'
+            <span
+              key={experience.duration + experience.company}
+              className={`relative z-[1] ${monoStyles.data} block text-center px-3 py-1.5 rounded-full transition-all duration-300 ${
+                isActive
+                  ? 'text-signal-ink bg-signal text-sm font-bold scale-110'
+                  : 'text-muted bg-paper text-xs'
               }`}
             >
-              {/* Year as Marker */}
-              <div className="absolute left-4 md:left-1/2 transform md:-translate-x-1/2 flex items-center justify-center z-[1]">
-                <div className="bg-signal rounded-full flex items-center">
-                  {/* bg-paper, not bg-gray-50: the old value had no dark
-                      variant, so the pill stayed light-grey in dark mode. */}
-                  <span className="text-base font-extrabold text-signal bg-paper mx-[1px] my-[1px] px-3 py-0.5 rounded-full">
-                    {experience.duration.split(' - ')[0]}
-                  </span>
-                </div>
-              </div>
-              
-              {/* Content Box */}
-              <div className={`w-full md:w-[48%] pl-16 md:pl-10 pr-4 md:pr-10 ${
-                index % 2 === 1 ? 'md:pl-0' : ''
-              }`}>
-                <ContentWrapper {...contentProps}>
-                  <div className={`bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 transition-all duration-300 ${
-                    isClickable 
-                      ? 'hover:-translate-y-1 hover:shadow-xl hover:border-signal cursor-pointer group' 
-                      : ''
-                  }`}>
-                    <div className="flex flex-col gap-4">
-                      <div className="flex items-center gap-4">
-                        {experience.image && (
-                          <div className="flex-shrink-0 w-12 h-12">
-                            <Image
-                              src={experience.image.src}
-                              alt={experience.image.alt}
-                              width={48}
-                              height={48}
-                              className="rounded object-cover"
-                            />
-                          </div>
-                        )}
-                        <div>
-                          <h3 className={`font-bold text-lg mb-1 text-gray-900 dark:text-white ${
-                            isClickable ? 'group-hover:text-signal transition-colors' : ''
-                          }`}>
-                            {experience.role}
-                          </h3>
-                          <p className="text-gray-700 dark:text-gray-400 text-sm">
-                            {experience.company}
-                          </p>
-                        </div>
-                      </div>
-                      <div className="text-gray-700 dark:text-gray-400 text-sm leading-relaxed">
-                        {experience.achievements[0]}
-                      </div>
-                    </div>
-                  </div>
-                </ContentWrapper>
-              </div>
-            </div>
+              {experience.duration.split(' - ')[0]}
+            </span>
           );
         })}
       </div>
+
+      {/* Mobile year marker for the active card, since the spine is hidden. */}
+      <div className="md:hidden sticky top-16 z-[2] flex justify-center pb-3">
+        <span className={`${monoStyles.data} text-sm font-bold text-signal-ink bg-signal px-3 py-1 rounded-full shadow`}>
+          {experiences[activeIndex]?.duration}
+        </span>
+      </div>
+
+      <div>
+        {experiences.map((experience, index) => (
+          <TimelineSlide key={index} experience={experience} index={index} onActive={setActiveIndex} />
+        ))}
+      </div>
+    </div>
+  );
+}
+
+type NotebookTabId = 'volunteering' | 'education' | 'skills';
+
+const notebookTabs: ReadonlyArray<{ id: NotebookTabId; label: string }> = [
+  { id: 'volunteering', label: 'Volunteering' },
+  { id: 'education', label: 'Education' },
+  { id: 'skills', label: 'Skills' },
+];
+
+/**
+ * The old layout stacked three accordions -- Volunteering, Education,
+ * Skills -- collapsed by default, so a visitor saw three empty-looking
+ * grey bars. A tab bar surfaces one section at a time with actual content
+ * visible immediately, styled off the same mono-label / signal-underline
+ * language as the nav's active link.
+ */
+function NotebookTabs({ initiatives, skills }: { initiatives: Initiative[]; skills: Skill[] }) {
+  const [activeTab, setActiveTab] = useState<NotebookTabId>('volunteering');
+
+  const skillsByCategory = Object.entries(
+    skills.reduce(
+      (acc, skill) => ({
+        ...acc,
+        [skill.category]: [...(acc[skill.category] || []), skill].sort((a, b) => b.level - a.level),
+      }),
+      {} as Record<string, Skill[]>
+    )
+  );
+
+  return (
+    <div>
+      <div role="tablist" aria-label="Volunteering, education, and skills" className="flex gap-6 sm:gap-8 border-b border-rule mb-8 sm:mb-10 overflow-x-auto">
+        {notebookTabs.map((tab) => {
+          const isActive = tab.id === activeTab;
+          return (
+            <button
+              key={tab.id}
+              id={`notebook-tab-${tab.id}`}
+              role="tab"
+              type="button"
+              aria-selected={isActive}
+              aria-controls={`notebook-panel-${tab.id}`}
+              onClick={() => setActiveTab(tab.id)}
+              className={`relative shrink-0 pb-3 ${monoStyles.label} transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-signal ${
+                isActive ? 'text-ink' : 'text-muted hover:text-ink'
+              }`}
+            >
+              {tab.label}
+              {isActive && (
+                <motion.span
+                  layoutId="notebook-tab-underline"
+                  className="absolute left-0 right-0 -bottom-px h-0.5 bg-signal"
+                  transition={{ type: 'spring', stiffness: 420, damping: 34 }}
+                />
+              )}
+            </button>
+          );
+        })}
+      </div>
+
+      <AnimatePresence initial={false}>
+        <motion.div
+          key={activeTab}
+          id={`notebook-panel-${activeTab}`}
+          role="tabpanel"
+          aria-labelledby={`notebook-tab-${activeTab}`}
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -10 }}
+          transition={{ duration: 0.25, ease: 'easeOut' }}
+        >
+          {activeTab === 'volunteering' && (
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+              {initiatives.map((initiative, index) => (
+                <a
+                  key={index}
+                  href={initiative.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 overflow-hidden flex flex-col h-full transform transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:border-signal"
+                >
+                  {initiative.image && (
+                    <div className="h-32 sm:h-40 relative">
+                      <Image
+                        src={initiative.image.src}
+                        alt={initiative.image.alt}
+                        fill
+                        className="object-cover transition-transform duration-300 group-hover:scale-105"
+                      />
+                    </div>
+                  )}
+                  <div className="p-4 sm:p-6 flex flex-col flex-grow">
+                    <h3 className="text-lg font-bold mb-2 text-gray-900 dark:text-white group-hover:text-signal transition-colors">
+                      {initiative.title}
+                    </h3>
+                    <p className="text-gray-700 dark:text-gray-400 text-sm leading-relaxed">
+                      {initiative.description}
+                    </p>
+                  </div>
+                </a>
+              ))}
+            </div>
+          )}
+
+          {activeTab === 'education' && (
+            <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 p-6 max-w-2xl">
+              <div className="flex items-start gap-4 mb-6">
+                <div className="flex-shrink-0 w-16 h-16">
+                  <Image
+                    src="/images/companies/uf.png"
+                    alt="University of Florida Logo"
+                    width={64}
+                    height={64}
+                    className="rounded object-cover"
+                  />
+                </div>
+                <div>
+                  <h3 className="text-xl font-bold text-gray-900 dark:text-white">University of Florida</h3>
+                  <p className="text-gray-700 dark:text-gray-400 text-sm">Gainesville, FL</p>
+                </div>
+              </div>
+
+              <div className="space-y-4">
+                <div>
+                  <h4 className="font-semibold text-gray-900 dark:text-white">MS, Information Systems & Operations Mgmt</h4>
+                  <div className="mt-2">
+                    <CollapsibleSection title="Teaching Assistant" size="small" defaultOpen={false}>
+                      <ul className="text-gray-700 dark:text-gray-400 text-sm mt-1 space-y-1">
+                        <li>• Managerial Quantitative Analysis I & II</li>
+                        <li>• Retail Consulting</li>
+                        <li>• Intro to Managerial Statistics</li>
+                      </ul>
+                    </CollapsibleSection>
+                  </div>
+                </div>
+
+                <div>
+                  <h4 className="font-semibold text-gray-900 dark:text-white">BS, Industrial & Systems Engineering</h4>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {activeTab === 'skills' && (
+            <div className="space-y-8">
+              {skillsByCategory.map(([category, categorySkills]) => (
+                <CollapsibleSection key={category} title={category} size="medium" defaultOpen={false}>
+                  <div className="flex flex-wrap gap-2">
+                    {categorySkills.map((skill) => (
+                      <SkillBadge key={skill.name} skill={skill} />
+                    ))}
+                  </div>
+                </CollapsibleSection>
+              ))}
+            </div>
+          )}
+        </motion.div>
+      </AnimatePresence>
     </div>
   );
 }
@@ -459,7 +671,7 @@ export default function Home() {
               <p className={`${monoStyles.eyebrow} mt-3 leading-loose`}>
                 <span className="text-ink">Joe Lapscher</span>
                 <br />
-                Engineer &middot; operator &middot; cuts his own hair
+                Cost Reduction Specialist | Engineer | Amateur Barber
               </p>
             </div>
           </div>
@@ -509,107 +721,8 @@ export default function Home() {
           <ExperienceTimeline experiences={experiences} />
         </section>
 
-        <section id="volunteering-education" className="scroll-mt-20">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            {/* Volunteering Section */}
-            <div className="flex flex-col">
-              <CollapsibleSection title="Volunteering" defaultOpen={false}>
-                <div className="flex-1">
-                  {initiatives.map((initiative, index) => (
-                    <a
-                      key={index}
-                      href={initiative.link}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="group bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 overflow-hidden flex flex-col h-full transform transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:border-signal"
-                    >
-                      {initiative.image && (
-                        <div className="h-32 sm:h-40 relative">
-                          <Image
-                            src={initiative.image.src}
-                            alt={initiative.image.alt}
-                            fill
-                            className="object-cover transition-transform duration-300 group-hover:scale-105"
-                          />
-                        </div>
-                      )}
-                      <div className="p-4 sm:p-6 flex flex-col flex-grow">
-                        <h3 className="text-lg font-bold mb-2 text-gray-900 dark:text-white group-hover:text-signal transition-colors">
-                          {initiative.title}
-                        </h3>
-                        <p className="text-gray-700 dark:text-gray-400 text-sm leading-relaxed">
-                          {initiative.description}
-                        </p>
-                      </div>
-                    </a>
-                  ))}
-                </div>
-              </CollapsibleSection>
-            </div>
-
-            {/* Education Section */}
-            <div className="flex flex-col">
-              <CollapsibleSection title="Education" defaultOpen={false}>
-                <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 p-6 flex-1">
-                  <div className="flex items-start gap-4 mb-6">
-                    <div className="flex-shrink-0 w-16 h-16">
-                      <Image
-                        src="/images/companies/uf.png"
-                        alt="University of Florida Logo"
-                        width={64}
-                        height={64}
-                        className="rounded object-cover"
-                      />
-                    </div>
-                    <div>
-                      <h3 className="text-xl font-bold text-gray-900 dark:text-white">University of Florida</h3>
-                      <p className="text-gray-700 dark:text-gray-400 text-sm">Gainesville, FL</p>
-                    </div>
-                  </div>
-                  
-                  <div className="space-y-4">
-                    <div>
-                      <h4 className="font-semibold text-gray-900 dark:text-white">MS, Information Systems & Operations Mgmt</h4>
-                      <div className="mt-2">
-                        <CollapsibleSection title="Teaching Assistant" size="small" defaultOpen={false}>
-                          <ul className="text-gray-700 dark:text-gray-400 text-sm mt-1 space-y-1">
-                            <li>• Managerial Quantitative Analysis I & II</li>
-                            <li>• Retail Consulting</li>
-                            <li>• Intro to Managerial Statistics</li>
-                          </ul>
-                        </CollapsibleSection>
-                      </div>
-                    </div>
-                    
-                    <div>
-                      <h4 className="font-semibold text-gray-900 dark:text-white">BS, Industrial & Systems Engineering</h4>
-                    </div>
-                  </div>
-                </div>
-              </CollapsibleSection>
-            </div>
-          </div>
-        </section>
-
-        <section id="skills" className="mt-16 sm:mt-20 mb-16 sm:mb-20 scroll-mt-20">
-          <CollapsibleSection title="Skills" defaultOpen={false}>
-            <div className="space-y-8">
-              {Object.entries(
-                skills.reduce((acc, skill) => ({
-                  ...acc,
-                  [skill.category]: [...(acc[skill.category] || []), skill].sort((a, b) => b.level - a.level),
-                }), {} as Record<string, typeof skills>)
-              ).map(([category, skills]) => (
-                <CollapsibleSection key={category} title={category} size="medium" defaultOpen={false}>
-                  <div className="flex flex-wrap gap-2">
-                    {skills.map((skill) => (
-                      <SkillBadge key={skill.name} skill={skill} />
-                    ))}
-                  </div>
-                </CollapsibleSection>
-              ))}
-            </div>
-          </CollapsibleSection>
+        <section id="volunteering-education" className="mt-16 sm:mt-20 mb-16 sm:mb-20 scroll-mt-20">
+          <NotebookTabs initiatives={initiatives} skills={skills} />
         </section>
       </main>
     </>
