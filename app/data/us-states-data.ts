@@ -8,7 +8,7 @@ export const visitedStates: StateRecord = {
   "California": true,
   "Colorado": true,
   "Connecticut": true,
-  "Delaware": false,
+  "Delaware": true,
   "District of Columbia": false,
   "Florida": true,
   "Georgia": true,

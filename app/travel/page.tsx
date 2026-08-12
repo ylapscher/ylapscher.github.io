@@ -184,6 +184,12 @@ export default function Travel() {
     .sort((a, b) => (displayNames[a] ?? a).localeCompare(displayNames[b] ?? b))
     .map((name) => ({ name, hasLived: livedRecord[name] === true }));
 
+  /** The other side of the same record: everywhere still marked `false`. */
+  const stillToVisit = Object.entries(visitedRecord)
+    .filter(([name, isVisited]) => isVisited === false && !nonStateEntities.includes(name))
+    .map(([name]) => name)
+    .sort((a, b) => (displayNames[a] ?? a).localeCompare(displayNames[b] ?? b));
+
   /**
    * The geographies arrive via fetch, so only the map itself waits on them.
    * Everything else -- headings, counts, the place list -- renders on the
@@ -363,6 +369,29 @@ export default function Travel() {
                   Lived
                 </span>
               )}
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <div className="mt-8 sm:mt-12 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 p-4 sm:p-6">
+        <h2 className="text-xl sm:text-2xl font-bold mb-2 text-gray-900 dark:text-white">
+          Still to Visit
+        </h2>
+        <p className="text-sm text-gray-700 dark:text-gray-400 mb-4 sm:mb-6">
+          {stillToVisit.length} {showUSMap ? 'states' : 'countries'} left on the list.
+        </p>
+        <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-4 text-sm sm:text-base">
+          {stillToVisit.map((name) => (
+            <li
+              key={name}
+              className="flex items-center gap-2 p-2 rounded-lg text-gray-500 dark:text-gray-500"
+            >
+              <span
+                aria-hidden="true"
+                className="w-3.5 h-3.5 rounded-[3px] border-2 border-gray-300 dark:border-gray-600 flex-shrink-0"
+              />
+              <span>{displayNames[name] ?? name}</span>
             </li>
           ))}
         </ul>

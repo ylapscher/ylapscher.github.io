@@ -16,10 +16,10 @@ const FloatingBadge = () => (
     target="_blank"
     rel="noopener noreferrer"
     className="fixed bottom-5 left-5 z-[1000] inline-block bg-signal text-signal-ink
-               px-4 py-3 text-sm font-semibold shadow-lg
-               hover:scale-105 motion-reduce:hover:scale-100
+               px-5 py-3 text-sm font-semibold rounded-full shadow-md
+               hover:scale-105 hover:shadow-lg motion-reduce:hover:scale-100
                focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2
-               focus-visible:outline-signal transition-transform"
+               focus-visible:outline-signal transition-all"
   >
     Order Baby Book!
   </a>
