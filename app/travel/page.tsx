@@ -25,7 +25,7 @@ type CountryName = {
  * still appear in the list below.
  *
  * This is the full canonical set (193 UN member states, plus Vatican City,
- * Palestine, Taiwan and Kosovo -- the usual travel-tracker count of ~197),
+ * Taiwan and Kosovo -- the usual travel-tracker count of ~196),
  * not just the places visited: the `false` entries are what power "Still to
  * Visit" below. Everything not personally verified stays `false`.
  */
@@ -165,7 +165,6 @@ const visitedCountries: CountryName = {
   "Oman": false,
   "Pakistan": false,
   "Palau": false,
-  "Palestine": false,
   "Panama": false,
   "Papua New Guinea": false,
   "Paraguay": false,
