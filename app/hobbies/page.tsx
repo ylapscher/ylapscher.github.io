@@ -1,58 +1,10 @@
-'use client'
-
-import { 
-  UserGroupIcon, // for improv comedy
-  MusicalNoteIcon, // for piano
-  FireIcon, // for hot yoga
-} from '@heroicons/react/24/outline';
-import ImageGallery from '../components/ImageGallery';
 import Image from 'next/image';
+import ImageGallery from '../components/ImageGallery';
+import HobbiesGrid from './HobbiesGrid';
+import { getReadingList } from '../lib/reading-list';
 
-const hobbies = [
-  {
-    title: "Rock Climbing",
-    description: "I love sport climbing outdoors and bouldering indoors. It's a great way to stay active and challenge myself.",
-    icon: (
-      <svg 
-        viewBox="0 0 24 24" 
-        fill="none" 
-        className="w-8 h-8 text-signal"
-        stroke="currentColor" 
-        strokeWidth="1.5"
-      >
-        <path 
-          d="M5 19L4 12L7 8L10 7L14 4L18 5L20 9L19 14L17 17L13 19L9 19L5 19Z" 
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          fill="none"
-        />
-      </svg>
-    ),
-  },
-  {
-    title: "Hot Yoga",
-    description: "Practice hot yoga to maintain flexibility and mental clarity. The heat adds an extra challenge and helps deepen the practice.",
-    icon: <FireIcon className="w-8 h-8 text-signal" />,
-  },
-  {
-    title: "Piano",
-    description: "I'm a pianist with a love for jazz music. Music provides a creative outlet and a way to express my artistic side.",
-    icon: <MusicalNoteIcon className="w-8 h-8 text-signal" />,
-    link: "https://soundcloud.com/ylapscher/tracks"
-  },
-  {
-    title: "Improv Comedy",
-    description: "I enjoy performing with improv groups, where I've honed my quick thinking and public speaking skills through the joy and creativity of improvcomedy.",
-    icon: <UserGroupIcon className="w-8 h-8 text-signal" />,
-  },
-];
-
-export default function Hobbies() {
-  const handleHobbyClick = (link?: string) => {
-    if (link) {
-      window.open(link, '_blank', 'noopener,noreferrer');
-    }
-  };
+export default async function Hobbies() {
+  const books = await getReadingList();
 
   return (
     <main className="container mx-auto px-4 sm:px-6 py-12 max-w-4xl">
@@ -63,44 +15,7 @@ export default function Hobbies() {
         </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 mb-12 sm:mb-16">
-        {hobbies.map((hobby, index) => (
-          <div
-            key={index}
-            className={`bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 
-              ${hobby.link ? 'transition-transform hover:scale-105 cursor-pointer' : ''}`}
-            onClick={() => handleHobbyClick(hobby.link)}
-            role={hobby.link ? 'button' : undefined}
-            tabIndex={hobby.link ? 0 : undefined}
-            onKeyDown={(e) => {
-              if (hobby.link && (e.key === 'Enter' || e.key === ' ')) {
-                e.preventDefault();
-                handleHobbyClick(hobby.link);
-              }
-            }}
-          >
-            <div className="flex items-start gap-4">
-              <div className="flex-shrink-0">
-                {hobby.icon}
-              </div>
-              <div>
-                <h3 className={`text-xl font-bold mb-2 text-gray-900 dark:text-white 
-                  ${hobby.link ? 'hover:text-signal' : ''}`}>
-                  {hobby.title}
-                  {hobby.link && (
-                    <span className="ml-2 text-sm text-signal">
-                      ↗
-                    </span>
-                  )}
-                </h3>
-                <p className="text-gray-700 dark:text-gray-400">
-                  {hobby.description}
-                </p>
-              </div>
-            </div>
-          </div>
-        ))}
-      </div>
+      <HobbiesGrid />
 
       <hr className="my-16 border-rule" />
 
@@ -123,27 +38,70 @@ export default function Hobbies() {
 
       <div id="reading" className="mb-16 scroll-mt-20">
         <h2 className="text-3xl font-bold mb-6 text-gray-900 dark:text-white">Reading List</h2>
-        <div className="flex items-center gap-4">
-          <p className="text-lg text-gray-700 dark:text-gray-400">
-            You can see some books I've been reading here:
-          </p>
-          <a 
-            href="https://www.goodreads.com/review/list/37296901?shelf=read" 
-            target="_blank"
-            rel="noopener noreferrer"
-            className="hover:opacity-90 transition-opacity"
-            title="Joe's book recommendations on Goodreads"
-          >
-            <Image 
-              src="/images/goodreads-badge.jpg"
-              alt="Goodreads reading list" 
-              className="rounded-lg shadow-md h-8 w-auto object-contain"
-              width={100}
-              height={32}
-            />
-          </a>
-        </div>
+
+        {books.length > 0 ? (
+          <>
+            <p className="text-lg text-gray-700 dark:text-gray-400 mb-6">
+              A few of the books I've read recently:
+            </p>
+            <div className="flex gap-4 sm:gap-6 overflow-x-auto pb-4 -mx-4 px-4 sm:mx-0 sm:px-0">
+              {books.slice(0, 12).map((book) => (
+                <a
+                  key={book.link || book.title}
+                  href={book.link || 'https://www.goodreads.com/review/list/37296901?shelf=read'}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group flex-shrink-0 w-28 sm:w-32 transition-transform hover:scale-105"
+                  title={`${book.title}${book.author ? ` by ${book.author}` : ''}`}
+                >
+                  <div className="relative w-full aspect-[2/3] rounded-lg shadow-lg overflow-hidden border border-gray-200 dark:border-gray-700 bg-gray-100 dark:bg-gray-800">
+                    <Image
+                      src={book.coverUrl}
+                      alt={`Cover of ${book.title}`}
+                      fill
+                      sizes="128px"
+                      className="object-cover"
+                      unoptimized
+                    />
+                  </div>
+                  <p className="mt-2 text-xs font-medium text-gray-900 dark:text-white line-clamp-2 group-hover:text-signal transition-colors">
+                    {book.title}
+                  </p>
+                </a>
+              ))}
+            </div>
+            <a
+              href="https://www.goodreads.com/review/list/37296901?shelf=read"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-4 inline-block text-signal hover:brightness-110 text-sm underline"
+            >
+              See the full list on Goodreads &rarr;
+            </a>
+          </>
+        ) : (
+          <div className="flex items-center gap-4">
+            <p className="text-lg text-gray-700 dark:text-gray-400">
+              You can see some books I've been reading here:
+            </p>
+            <a
+              href="https://www.goodreads.com/review/list/37296901?shelf=read"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:opacity-90 transition-opacity"
+              title="Joe's book recommendations on Goodreads"
+            >
+              <Image
+                src="/images/goodreads-badge.jpg"
+                alt="Goodreads reading list"
+                className="rounded-lg shadow-md h-8 w-auto object-contain"
+                width={100}
+                height={32}
+              />
+            </a>
+          </div>
+        )}
       </div>
     </main>
   );
-} 
+}

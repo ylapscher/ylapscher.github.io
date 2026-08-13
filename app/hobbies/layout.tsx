@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 
-/** app/hobbies/page.tsx is a client component, so metadata lives here. */
+/** app/hobbies/page.tsx renders client subcomponents, so metadata lives here. */
 export const metadata: Metadata = {
   title: 'Hobbies',
   description:
