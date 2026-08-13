@@ -65,50 +65,23 @@ type Skill = {
   category: 'Product Management' | 'Leadership & Collaboration' | 'Technical Skills' | 'Languages';
 };
 
+/** Proficiency shows as a 4-segment bar next to the name, always visible --
+ *  the old version only revealed the level on hover, which meant nothing
+ *  was legible on touch devices and the whole grid read as identical pills. */
 function SkillBadge({ skill }: { skill: Skill }) {
-  const getHarveyBall = (level: number) => {
-    switch (level) {
-      case 4:
-        return (
-          <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
-            <circle cx="12" cy="12" r="10" className="text-signal" />
-          </svg>
-        );
-      case 3:
-        return (
-          <svg className="w-4 h-4" viewBox="0 0 24 24">
-            {/* Background Stroke */}
-            <circle cx="12" cy="12" r="10" className="fill-none stroke-signal stroke-2" />
-            {/* Filled 3/4 Pie Slice Path (Top-Right, Bottom-Right, Bottom-Left quadrants) */}
-            <path d="M 12 2 A 10 10 0 1 1 2 12 L 12 12 Z" fill="currentColor" className="text-signal" />
-          </svg>
-        );
-      case 2:
-        return (
-          <svg className="w-4 h-4" viewBox="0 0 24 24">
-            <circle cx="12" cy="12" r="10" className="fill-none stroke-signal stroke-2" />
-            <path d="M12 22a10 10 0 0 1 0-20" fill="currentColor" className="text-signal" />
-          </svg>
-        );
-      default: // level 1
-        return (
-          <svg className="w-4 h-4" viewBox="0 0 24 24">
-            <circle cx="12" cy="12" r="10" className="fill-none stroke-signal stroke-2" />
-            <path d="M12 22a10 10 0 0 1 0-10" fill="currentColor" className="text-signal" />
-          </svg>
-        );
-    }
-  };
-
   return (
-    <div className="relative group">
-      <span className="bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-100 px-3 py-1 rounded-full text-sm font-medium inline-flex items-center gap-2">
-        {skill.name}
-        {getHarveyBall(skill.level)}
-      </span>
-      
-      <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 text-xs text-gray-900 dark:text-white bg-gray-100 dark:bg-gray-800 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap">
-        Proficiency: {skill.level}/4
+    <div className="flex items-center justify-between gap-3 bg-gray-100 dark:bg-gray-800 rounded-lg px-3 py-2">
+      <span className="text-sm font-medium text-gray-900 dark:text-gray-100">{skill.name}</span>
+      <div className="flex items-center gap-1 shrink-0" role="img" aria-label={`Proficiency: ${skill.level} of 4`}>
+        {[1, 2, 3, 4].map((segment) => (
+          <span
+            key={segment}
+            aria-hidden="true"
+            className={`h-1.5 w-4 rounded-full ${
+              segment <= skill.level ? 'bg-signal' : 'bg-gray-300 dark:bg-gray-600'
+            }`}
+          />
+        ))}
       </div>
     </div>
   );
@@ -126,7 +99,7 @@ function ExperienceCard({ experience }: { experience: Experience }) {
   return (
     <ContentWrapper {...contentProps}>
       <div
-        className={`bg-white dark:bg-gray-800 p-6 sm:p-8 rounded-lg shadow-xl border border-gray-200 dark:border-gray-700 transition-all duration-300 ${
+        className={`min-h-[280px] sm:min-h-[260px] flex flex-col justify-center bg-white dark:bg-gray-800 p-6 sm:p-8 rounded-lg shadow-xl border border-gray-200 dark:border-gray-700 transition-all duration-300 ${
           isClickable ? 'hover:-translate-y-1 hover:shadow-2xl hover:border-signal cursor-pointer group' : ''
         }`}
       >
@@ -155,7 +128,7 @@ function ExperienceCard({ experience }: { experience: Experience }) {
               <p className="text-gray-700 dark:text-gray-400 text-sm">{experience.company}</p>
             </div>
           </div>
-          <div className="text-gray-700 dark:text-gray-400 text-sm leading-relaxed">
+          <div className="text-gray-700 dark:text-gray-400 text-sm leading-relaxed line-clamp-4">
             {experience.achievements[0]}
           </div>
         </div>
@@ -391,15 +364,19 @@ function NotebookTabs({ initiatives, skills }: { initiatives: Initiative[]; skil
           )}
 
           {activeTab === 'skills' && (
-            <div className="space-y-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               {skillsByCategory.map(([category, categorySkills]) => (
-                <CollapsibleSection key={category} title={category} size="medium" defaultOpen={false}>
-                  <div className="flex flex-wrap gap-2">
+                <div
+                  key={category}
+                  className="bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 p-4 sm:p-6"
+                >
+                  <h3 className={`${textStyles.sectionHeading} mb-4 text-gray-900 dark:text-white`}>{category}</h3>
+                  <div className="flex flex-col gap-2">
                     {categorySkills.map((skill) => (
                       <SkillBadge key={skill.name} skill={skill} />
                     ))}
                   </div>
-                </CollapsibleSection>
+                </div>
               ))}
             </div>
           )}
