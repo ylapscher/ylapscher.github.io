@@ -6,7 +6,10 @@ export const metadata: Metadata = {
   title: 'Guidance',
   description:
     'Resume and interview prep, product coaching and mentorship, and hands-on help getting productive with AI tools like Cursor.',
-  alternates: { canonical: '/services/guidance' },
+  alternates: {
+    canonical: '/services/guidance',
+    types: { 'text/markdown': '/services/guidance.md' },
+  },
 };
 
 const services = [

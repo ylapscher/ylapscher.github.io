@@ -4,10 +4,14 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "prebuild": "tsx scripts/write-agent-files.ts",
     "build": "next build",
     "start": "npx serve@latest out",
     "lint": "next lint",
-    "clean": "rm -rf .next out"
+    "clean": "rm -rf .next out",
+    "agent-files": "tsx scripts/write-agent-files.ts",
+    "test": "tsx scripts/write-agent-files.ts && node --experimental-strip-types --test app/lib/accept.test.ts && tsx --test app/lib/structured-data.test.ts && node --test scripts/agent-files.test.mjs",
+    "test:export": "node --test scripts/verify-agent-export.mjs"
   },
   "dependencies": {
     "@calcom/embed-react": "^1.5.1",
@@ -29,9 +33,11 @@
     "@types/react-dom": "^19.1.6",
     "autoprefixer": "^10.4.21",
     "eslint": "^9.39.5",
+    "@netlify/edge-functions": "^2.19.0",
     "eslint-config-next": "^15.3.4",
     "postcss": "^8.5.23",
     "tailwindcss": "^3.4.17",
+    "tsx": "^4.21.0",
     "typescript": "^5"
   },
   "overrides": {

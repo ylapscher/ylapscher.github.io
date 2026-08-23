@@ -6,7 +6,10 @@ export const metadata: Metadata = {
   title: 'Services',
   description:
     'Fractional product leadership, freelance website development, and PM mentoring and interview prep. Book time with Joe Lapscher.',
-  alternates: { canonical: '/services' },
+  alternates: {
+    canonical: '/services',
+    types: { 'text/markdown': '/services.md' },
+  },
 };
 
 const services = [

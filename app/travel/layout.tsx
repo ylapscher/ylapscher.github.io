@@ -9,7 +9,10 @@ export const metadata: Metadata = {
   title: 'Travel map',
   description:
     "An interactive map of the countries and US states Joe Lapscher has visited and lived in, from Venezuela to New Jersey.",
-  alternates: { canonical: '/travel' },
+  alternates: {
+    canonical: '/travel',
+    types: { 'text/markdown': '/travel.md' },
+  },
 };
 
 const structuredData = {

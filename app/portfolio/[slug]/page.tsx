@@ -29,7 +29,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     // The root layout's title template appends the wordmark.
     title: project.title,
     description: truncate(project.description),
-    alternates: { canonical: `/portfolio/${project.slug}` },
+    alternates: {
+      canonical: `/portfolio/${project.slug}`,
+      types: { 'text/markdown': `/portfolio/${project.slug}.md` },
+    },
     openGraph: {
       title: `${project.title} — Joe Lapscher`,
       description: truncate(project.description),
