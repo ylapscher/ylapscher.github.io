@@ -5,8 +5,11 @@ import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import GoogleAnalytics from './components/GoogleAnalytics';
 import ChatWidget from './components/ChatWidget';
+import JsonLd from './components/JsonLd';
 import { PostHogProvider } from './components/PostHogProvider';
 import FloatingBadge from './components/FloatingBadge';
+import { SITE_URL } from './lib/site';
+import { organizationSchema, websiteSchema } from './lib/structured-data';
 import { textStyles } from './lib/typography';
 
 const geistSans = localFont({
@@ -43,7 +46,12 @@ export const metadata: Metadata = {
   keywords:
     "Joe Lapscher, Yoel Lapscher, Expense Reduction Coaching, cost reduction, operational savings, product leader, chief product officer, fintech, payments, working capital",
   authors: [{ name: "Joe Lapscher" }],
-  alternates: { canonical: "/" },
+  alternates: {
+    canonical: "/",
+    types: {
+      "text/markdown": "/index.md",
+    },
+  },
   robots: {
     index: true,
     follow: true,
@@ -110,11 +118,14 @@ export default function RootLayout({
         {/* Must stay before any paint -- see THEME_SCRIPT above. */}
         <script dangerouslySetInnerHTML={{ __html: THEME_SCRIPT }} />
         <GoogleAnalytics />
+        <link rel="describedby" href={`${SITE_URL}/llms.txt`} />
         {/* theme-color, favicons and the manifest now come from the
             Metadata/Viewport exports above -- declaring them twice made the
             App Router emit duplicate <link rel="icon"> tags. */}
       </head>
       <body suppressHydrationWarning className="antialiased font-sans bg-paper text-ink">
+        <JsonLd data={organizationSchema} />
+        <JsonLd data={websiteSchema} />
         <PostHogProvider>
           <Navbar />
           {children}

@@ -5,7 +5,10 @@ export const metadata: Metadata = {
   title: 'Hobbies',
   description:
     'Outside of work: rock climbing, hot yoga, jazz piano, and improv comedy with Joe Lapscher.',
-  alternates: { canonical: '/hobbies' },
+  alternates: {
+    canonical: '/hobbies',
+    types: { 'text/markdown': '/hobbies.md' },
+  },
 };
 
 export default function HobbiesLayout({

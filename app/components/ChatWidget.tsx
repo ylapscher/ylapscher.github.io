@@ -1,7 +1,8 @@
 'use client';
 
 import { useState, FormEvent } from 'react';
-import { ChatBubbleOvalLeftIcon, XMarkIcon, CheckCircleIcon, ExclamationTriangleIcon } from '@heroicons/react/24/outline';
+import { ChatBubbleOvalLeftIcon, XMarkIcon } from '@heroicons/react/24/outline';
+import { FORMSPREE_ENDPOINT } from '../lib/site';
 
 type FormData = {
   name: string;
@@ -9,7 +10,7 @@ type FormData = {
   message: string;
 };
 
-const FORM_ENDPOINT = "https://formspree.io/f/xwpkjbzj";
+const FORM_ENDPOINT = FORMSPREE_ENDPOINT;
 
 export default function ChatWidget() {
   const [isOpen, setIsOpen] = useState(false);

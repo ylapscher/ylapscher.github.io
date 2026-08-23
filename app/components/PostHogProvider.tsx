@@ -2,8 +2,8 @@
 
 import posthog from "posthog-js"
 import { PostHogProvider as PHProvider, usePostHog } from "posthog-js/react"
-import { Suspense, useEffect } from "react"
-import { usePathname, useSearchParams } from "next/navigation"
+import { useEffect } from "react"
+import { usePathname } from "next/navigation"
 import "posthog-js/dist/web-vitals"
 
 // Type guard to check for web vitals methods
@@ -40,7 +40,7 @@ export function PostHogProvider({ children }: { children: React.ReactNode }) {
 
   return (
     <PHProvider client={posthog}>
-      <SuspendedPostHogPageView />
+      <PostHogPageView />
       {children}
     </PHProvider>
   )
@@ -48,32 +48,21 @@ export function PostHogProvider({ children }: { children: React.ReactNode }) {
 
 function PostHogPageView() {
   const pathname = usePathname()
-  const searchParams = useSearchParams()
   const posthog = usePostHog()
 
   useEffect(() => {
-    // Don't track on 404 pages
+    // Don't track on 404 pages. Query string is read from window so this
+    // component never calls useSearchParams(), which bailed the static HTML
+    // out to a client-only shell for agents.
     if (pathname && posthog && !pathname.includes('/_not-found') && typeof window !== 'undefined') {
       try {
-        let url = window.origin + pathname
-        const search = searchParams.toString()
-        if (search) {
-          url += "?" + search
-        }
+        const url = window.origin + pathname + window.location.search
         posthog.capture("$pageview", { "$current_url": url })
       } catch (e) {
         // Silently fail if PostHog capture fails
       }
     }
-  }, [pathname, searchParams, posthog])
+  }, [pathname, posthog])
 
   return null
-}
-
-function SuspendedPostHogPageView() {
-  return (
-    <Suspense fallback={null}>
-      <PostHogPageView />
-    </Suspense>
-  )
 }

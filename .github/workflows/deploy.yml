@@ -48,11 +48,17 @@ jobs:
       - name: Audit all dependencies (advisory)
         run: npm audit || true
 
+      - name: Test
+        run: npm test
+
       - name: Build with Next.js
         env:
           NEXT_PUBLIC_POSTHOG_KEY: ${{ secrets.NEXT_PUBLIC_POSTHOG_KEY }}
           NEXT_PUBLIC_POSTHOG_HOST: ${{ secrets.NEXT_PUBLIC_POSTHOG_HOST }}
         run: npm run build
+
+      - name: Verify agent-readable export
+        run: npm run test:export
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
