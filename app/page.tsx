@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import ExperienceTimeline from './components/ExperienceTimeline';
-import NotebookTabs from './components/NotebookTabs';
+import FieldNotes from './components/FieldNotes';
 import JsonLd from './components/JsonLd';
 import { career, experiences, initiatives, skills } from './data/home-data';
 import { BOOKING_URL, CONTACT_EMAIL, RESUME_URL, SITE_NAME } from './lib/site';
@@ -145,7 +145,7 @@ export default function Home() {
         </section>
 
         <section id="volunteering-education" className="mt-16 sm:mt-20 mb-16 sm:mb-20 scroll-mt-20">
-          <NotebookTabs initiatives={initiatives} skills={skills} />
+          <FieldNotes initiatives={initiatives} skills={skills} />
         </section>
       </main>
     </>
