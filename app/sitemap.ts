@@ -16,8 +16,11 @@ const routes: ReadonlyArray<{
   changeFrequency: MetadataRoute.Sitemap[number]['changeFrequency'];
 }> = [
   { path: '/', priority: 1, changeFrequency: 'monthly' },
+  { path: '/about', priority: 0.9, changeFrequency: 'yearly' },
   { path: '/services', priority: 0.9, changeFrequency: 'monthly' },
+  { path: '/contact', priority: 0.8, changeFrequency: 'yearly' },
   { path: '/portfolio', priority: 0.8, changeFrequency: 'monthly' },
+  { path: '/privacy', priority: 0.7, changeFrequency: 'yearly' },
   { path: '/services/guidance', priority: 0.6, changeFrequency: 'yearly' },
   { path: '/hobbies', priority: 0.5, changeFrequency: 'yearly' },
   { path: '/travel', priority: 0.5, changeFrequency: 'yearly' },

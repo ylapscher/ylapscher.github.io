@@ -6,7 +6,10 @@ export const metadata: Metadata = {
   // The root layout's title template appends the wordmark.
   title: 'Portfolio',
   description: "Web projects I've built to solve real problems and craft engaging experiences.",
-  alternates: { canonical: '/portfolio' },
+  alternates: {
+    canonical: '/portfolio',
+    types: { 'text/markdown': '/portfolio.md' },
+  },
 };
 
 export default function Portfolio() {
