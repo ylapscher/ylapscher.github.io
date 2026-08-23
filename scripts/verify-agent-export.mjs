@@ -9,14 +9,52 @@ function read(rel) {
   return readFileSync(join(out, rel), 'utf8');
 }
 
+/**
+ * Count readable characters the way a no-JS crawler does: drop comments and
+ * the contents of script/style elements, then strip remaining tags.
+ * Implemented as a scan so we do not use an HTML-filter regexp (CodeQL
+ * js/bad-tag-filter).
+ */
 function visibleText(html) {
-  return html
-    .replace(/<script[^>]*>[\s\S]*?<\/script>/gi, ' ')
-    .replace(/<style[^>]*>[\s\S]*?<\/style>/gi, ' ')
-    .replace(/<[^>]+>/g, ' ')
-    .replace(/\s+/g, ' ')
-    .trim();
+  let out = '';
+  let i = 0;
+  while (i < html.length) {
+    if (html.startsWith('<!--', i)) {
+      const end = html.indexOf('-->', i + 4);
+      i = end === -1 ? html.length : end + 3;
+      continue;
+    }
+    if (html[i] !== '<') {
+      out += html[i];
+      i += 1;
+      continue;
+    }
+    out += ' ';
+    const close = html.indexOf('>', i + 1);
+    if (close === -1) break;
+    const rawName = html.slice(i + 1, close).trim().split(/\s/, 1)[0] ?? '';
+    const name = rawName.replace(/^\//, '').toLowerCase();
+    i = close + 1;
+    if (name !== 'script' && name !== 'style') continue;
+    const needle = `</${name}`;
+    const rest = html.slice(i).toLowerCase();
+    const found = rest.indexOf(needle);
+    if (found === -1) {
+      i = html.length;
+      continue;
+    }
+    const after = html.indexOf('>', i + found + needle.length);
+    i = after === -1 ? html.length : after + 1;
+  }
+  return out.replace(/\s+/g, ' ').trim();
 }
+
+describe('visibleText', () => {
+  it('drops script and style bodies, including spaced end tags', () => {
+    const html = '<h1>Hello</h1><script>alert(1)</script ><style>h1{color:red}</style ><p>World</p>';
+    assert.equal(visibleText(html), 'Hello World');
+  });
+});
 
 describe('static export is agent-readable', () => {
   it('builds into out/', () => {
