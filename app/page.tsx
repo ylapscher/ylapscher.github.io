@@ -3,8 +3,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
-import { motion, useReducedMotion, AnimatePresence } from 'framer-motion';
-import CollapsibleSection from './components/CollapsibleSection';
+import { motion, useReducedMotion } from 'framer-motion';
 import { textStyles, monoStyles } from './lib/typography';
 
 /** Also opened by the Navbar's Résumé button. */
@@ -65,20 +64,19 @@ type Skill = {
   category: 'Product Management' | 'Leadership & Collaboration' | 'Technical Skills' | 'Languages';
 };
 
-/** Proficiency shows as a 4-segment bar next to the name, always visible --
- *  the old version only revealed the level on hover, which meant nothing
- *  was legible on touch devices and the whole grid read as identical pills. */
-function SkillBadge({ skill }: { skill: Skill }) {
+/** Proficiency as a 4-segment mark next to the name -- always visible, so
+ *  it stays legible on touch. Hard-edged ticks, same language as the hero rail. */
+function SkillRow({ skill }: { skill: Skill }) {
   return (
-    <div className="flex items-center justify-between gap-3 bg-gray-100 dark:bg-gray-800 rounded-lg px-3 py-2">
-      <span className="text-sm font-medium text-gray-900 dark:text-gray-100">{skill.name}</span>
-      <div className="flex items-center gap-1 shrink-0" role="img" aria-label={`Proficiency: ${skill.level} of 4`}>
+    <div className="flex items-center justify-between gap-3 py-1.5">
+      <span className="text-sm text-ink leading-snug">{skill.name}</span>
+      <div className="flex items-center gap-0.5 shrink-0" role="img" aria-label={`Proficiency: ${skill.level} of 4`}>
         {[1, 2, 3, 4].map((segment) => (
           <span
             key={segment}
             aria-hidden="true"
-            className={`h-1.5 w-4 rounded-full ${
-              segment <= skill.level ? 'bg-signal' : 'bg-gray-300 dark:bg-gray-600'
+            className={`h-1 w-3.5 ${
+              segment <= skill.level ? 'bg-signal' : 'bg-rule-hi'
             }`}
           />
         ))}
@@ -221,23 +219,40 @@ function ExperienceTimeline({ experiences }: { experiences: Experience[] }) {
   );
 }
 
-type NotebookTabId = 'volunteering' | 'education' | 'skills';
-
-const notebookTabs: ReadonlyArray<{ id: NotebookTabId; label: string }> = [
-  { id: 'volunteering', label: 'Volunteering' },
-  { id: 'education', label: 'Education' },
-  { id: 'skills', label: 'Skills' },
-];
+/**
+ * Education reads as a title-block on an engineering drawing -- school in
+ * the left cell, each degree in its own ruled column -- so it can sit
+ * full-width under the volunteering plate instead of floating as a card.
+ */
+const education = {
+  school: 'University of Florida',
+  location: 'Gainesville, FL',
+  logo: {
+    src: '/images/companies/uf.png',
+    alt: 'University of Florida',
+  },
+  degrees: [
+    {
+      credential: 'Master of Science',
+      field: 'Information Systems & Operations Mgmt',
+      detail:
+        'Teaching assistant — Managerial Quantitative Analysis I & II, Retail Consulting, Intro to Managerial Statistics',
+    },
+    {
+      credential: 'Bachelor of Science',
+      field: 'Industrial & Systems Engineering',
+    },
+  ],
+} as const;
 
 /**
- * The old layout stacked three accordions -- Volunteering, Education,
- * Skills -- collapsed by default, so a visitor saw three empty-looking
- * grey bars. A tab bar surfaces one section at a time with actual content
- * visible immediately, styled off the same mono-label / signal-underline
- * language as the nav's active link.
+ * Tabs and collapsed accordions both hid this content. The page already
+ * speaks in plates and measurement rails, so this section is a third spread
+ * of the same notebook: one full-bleed figure for volunteering, a title-block
+ * for school, and a spec sheet for skills. Everything is visible at once.
  */
-function NotebookTabs({ initiatives, skills }: { initiatives: Initiative[]; skills: Skill[] }) {
-  const [activeTab, setActiveTab] = useState<NotebookTabId>('volunteering');
+function FieldNotes({ initiatives, skills }: { initiatives: Initiative[]; skills: Skill[] }) {
+  const [featured, ...rest] = initiatives;
 
   const skillsByCategory = Object.entries(
     skills.reduce(
@@ -249,139 +264,156 @@ function NotebookTabs({ initiatives, skills }: { initiatives: Initiative[]; skil
     )
   );
 
+  const languageSkills = skillsByCategory.find(([category]) => category === 'Languages');
+  const coreSkills = skillsByCategory.filter(([category]) => category !== 'Languages');
+
   return (
     <div>
-      <div role="tablist" aria-label="Volunteering, education, and skills" className="flex gap-6 sm:gap-8 border-b border-rule mb-8 sm:mb-10 overflow-x-auto">
-        {notebookTabs.map((tab) => {
-          const isActive = tab.id === activeTab;
-          return (
-            <button
-              key={tab.id}
-              id={`notebook-tab-${tab.id}`}
-              role="tab"
-              type="button"
-              aria-selected={isActive}
-              aria-controls={`notebook-panel-${tab.id}`}
-              onClick={() => setActiveTab(tab.id)}
-              className={`relative shrink-0 pb-3 ${monoStyles.label} transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-signal ${
-                isActive ? 'text-ink' : 'text-muted hover:text-ink'
-              }`}
-            >
-              {tab.label}
-              {isActive && (
-                <motion.span
-                  layoutId="notebook-tab-underline"
-                  className="absolute left-0 right-0 -bottom-px h-0.5 bg-signal"
-                  transition={{ type: 'spring', stiffness: 420, damping: 34 }}
+      <h2 className={`${textStyles.h2} text-ink`}>Field notes</h2>
+      <p className="mt-3 max-w-[46ch] text-muted text-base leading-relaxed">
+        The jobs are the long column. Climbing, school, and the tools underneath are the rest.
+      </p>
+
+      {featured && (
+        <a
+          href={featured.link}
+          target="_blank"
+          rel="noopener noreferrer"
+          id="volunteering"
+          className="group mt-10 block scroll-mt-20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-signal"
+        >
+          <figure>
+            {featured.image && (
+              <div className="relative aspect-[4/3] sm:aspect-[16/9] overflow-hidden ring-1 ring-rule-hi bg-ink/5">
+                <Image
+                  src={featured.image.src}
+                  alt={featured.image.alt}
+                  fill
+                  sizes="(max-width: 896px) 100vw, 896px"
+                  className="object-cover object-center transition-transform duration-700 ease-out motion-safe:group-hover:scale-[1.03]"
                 />
-              )}
-            </button>
-          );
-        })}
+                <span
+                  className={`absolute left-0 bottom-0 ${monoStyles.eyebrow} bg-paper text-ink px-2.5 py-1.5 ring-1 ring-rule-hi`}
+                >
+                  Fig. 01
+                </span>
+              </div>
+            )}
+            <figcaption className="mt-5 grid gap-3 sm:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] sm:gap-8 sm:items-start border-t border-rule pt-5">
+              <div>
+                <p className={monoStyles.eyebrow}>01 — Volunteering</p>
+                <h3 className="mt-2 font-bold text-xl sm:text-2xl text-ink tracking-claim group-hover:text-signal transition-colors">
+                  {featured.title}{' '}
+                  <span aria-hidden="true" className="text-signal">
+                    &#8599;
+                  </span>
+                </h3>
+              </div>
+              <p className="text-muted text-sm sm:text-[0.95rem] leading-relaxed sm:pt-7">
+                {featured.description}
+              </p>
+            </figcaption>
+          </figure>
+        </a>
+      )}
+
+      {rest.length > 0 && (
+        <ul className="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-6">
+          {rest.map((initiative) => (
+            <li key={initiative.title}>
+              <a
+                href={initiative.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group block focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-signal"
+              >
+                {initiative.image && (
+                  <div className="relative aspect-[16/10] overflow-hidden ring-1 ring-rule-hi bg-ink/5">
+                    <Image
+                      src={initiative.image.src}
+                      alt={initiative.image.alt}
+                      fill
+                      sizes="(max-width: 640px) 100vw, 448px"
+                      className="object-cover transition-transform duration-500 motion-safe:group-hover:scale-[1.03]"
+                    />
+                  </div>
+                )}
+                <h3 className="mt-3 font-bold text-ink group-hover:text-signal transition-colors">
+                  {initiative.title}{' '}
+                  <span aria-hidden="true" className="text-signal">
+                    &#8599;
+                  </span>
+                </h3>
+                <p className="mt-1 text-sm text-muted leading-relaxed">{initiative.description}</p>
+              </a>
+            </li>
+          ))}
+        </ul>
+      )}
+
+      <div id="education" className="mt-14 sm:mt-16 border-t border-rule scroll-mt-20">
+        <p className={`${monoStyles.eyebrow} pt-5`}>02 — Education</p>
+        <div className="mt-5 flex flex-col md:flex-row md:items-stretch">
+          <div className="flex items-start gap-3 pb-6 md:pb-0 md:pr-8 md:w-56 shrink-0">
+            <div className="relative w-11 h-11 shrink-0 ring-1 ring-rule-hi overflow-hidden bg-paper">
+              <Image
+                src={education.logo.src}
+                alt={education.logo.alt}
+                width={44}
+                height={44}
+                className="object-cover"
+              />
+            </div>
+            <div>
+              <h3 className="font-bold text-ink leading-tight">{education.school}</h3>
+              <p className={`${monoStyles.eyebrow} mt-1`}>{education.location}</p>
+            </div>
+          </div>
+
+          <div className="flex-1 grid grid-cols-1 sm:grid-cols-2 border-t md:border-t-0 md:border-l border-rule">
+            {education.degrees.map((degree) => (
+              <div
+                key={degree.credential}
+                className="py-5 md:py-0 sm:px-6 md:pl-8 border-t border-rule first:border-t-0 sm:border-t-0 sm:border-l sm:first:border-l-0 sm:first:pl-0 md:first:pl-8"
+              >
+                <p className={monoStyles.eyebrow}>{degree.credential}</p>
+                <p className="mt-2 font-medium text-ink leading-snug">{degree.field}</p>
+                {'detail' in degree && degree.detail && (
+                  <p className="mt-2 text-sm text-muted leading-relaxed">{degree.detail}</p>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
 
-      <AnimatePresence initial={false}>
-        <motion.div
-          key={activeTab}
-          id={`notebook-panel-${activeTab}`}
-          role="tabpanel"
-          aria-labelledby={`notebook-tab-${activeTab}`}
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -10 }}
-          transition={{ duration: 0.25, ease: 'easeOut' }}
-        >
-          {activeTab === 'volunteering' && (
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-              {initiatives.map((initiative, index) => (
-                <a
-                  key={index}
-                  href={initiative.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 overflow-hidden flex flex-col h-full transform transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:border-signal"
-                >
-                  {initiative.image && (
-                    <div className="h-32 sm:h-40 relative">
-                      <Image
-                        src={initiative.image.src}
-                        alt={initiative.image.alt}
-                        fill
-                        className="object-cover transition-transform duration-300 group-hover:scale-105"
-                      />
-                    </div>
-                  )}
-                  <div className="p-4 sm:p-6 flex flex-col flex-grow">
-                    <h3 className="text-lg font-bold mb-2 text-gray-900 dark:text-white group-hover:text-signal transition-colors">
-                      {initiative.title}
-                    </h3>
-                    <p className="text-gray-700 dark:text-gray-400 text-sm leading-relaxed">
-                      {initiative.description}
-                    </p>
-                  </div>
-                </a>
-              ))}
-            </div>
-          )}
-
-          {activeTab === 'education' && (
-            <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 p-6 max-w-2xl">
-              <div className="flex items-start gap-4 mb-6">
-                <div className="flex-shrink-0 w-16 h-16">
-                  <Image
-                    src="/images/companies/uf.png"
-                    alt="University of Florida Logo"
-                    width={64}
-                    height={64}
-                    className="rounded object-cover"
-                  />
-                </div>
-                <div>
-                  <h3 className="text-xl font-bold text-gray-900 dark:text-white">University of Florida</h3>
-                  <p className="text-gray-700 dark:text-gray-400 text-sm">Gainesville, FL</p>
-                </div>
-              </div>
-
-              <div className="space-y-4">
-                <div>
-                  <h4 className="font-semibold text-gray-900 dark:text-white">MS, Information Systems & Operations Mgmt</h4>
-                  <div className="mt-2">
-                    <CollapsibleSection title="Teaching Assistant" size="small" defaultOpen={false}>
-                      <ul className="text-gray-700 dark:text-gray-400 text-sm mt-1 space-y-1">
-                        <li>• Managerial Quantitative Analysis I & II</li>
-                        <li>• Retail Consulting</li>
-                        <li>• Intro to Managerial Statistics</li>
-                      </ul>
-                    </CollapsibleSection>
-                  </div>
-                </div>
-
-                <div>
-                  <h4 className="font-semibold text-gray-900 dark:text-white">BS, Industrial & Systems Engineering</h4>
-                </div>
+      <div id="skills" className="mt-12 sm:mt-14 border-t border-rule pt-5 scroll-mt-20">
+        <p className={monoStyles.eyebrow}>03 — Skills</p>
+        <div className="mt-6 grid grid-cols-1 sm:grid-cols-3 gap-8 sm:gap-6">
+          {coreSkills.map(([category, categorySkills]) => (
+            <div key={category}>
+              <h3 className={`${monoStyles.label} text-ink pb-2 border-b border-rule`}>{category}</h3>
+              <div className="mt-1">
+                {categorySkills.map((skill) => (
+                  <SkillRow key={skill.name} skill={skill} />
+                ))}
               </div>
             </div>
-          )}
-
-          {activeTab === 'skills' && (
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-              {skillsByCategory.map(([category, categorySkills]) => (
-                <div
-                  key={category}
-                  className="bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 p-4 sm:p-6"
-                >
-                  <h3 className={`${textStyles.sectionHeading} mb-4 text-gray-900 dark:text-white`}>{category}</h3>
-                  <div className="flex flex-col gap-2">
-                    {categorySkills.map((skill) => (
-                      <SkillBadge key={skill.name} skill={skill} />
-                    ))}
-                  </div>
+          ))}
+        </div>
+        {languageSkills && (
+          <div className="mt-8 pt-5 border-t border-rule flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-8">
+            <h3 className={`${monoStyles.label} text-ink shrink-0`}>{languageSkills[0]}</h3>
+            <div className="flex flex-wrap gap-x-8 gap-y-1 flex-1">
+              {languageSkills[1].map((skill) => (
+                <div key={skill.name} className="min-w-[10rem] flex-1">
+                  <SkillRow skill={skill} />
                 </div>
               ))}
             </div>
-          )}
-        </motion.div>
-      </AnimatePresence>
+          </div>
+        )}
+      </div>
     </div>
   );
 }
@@ -699,7 +731,7 @@ export default function Home() {
         </section>
 
         <section id="volunteering-education" className="mt-16 sm:mt-20 mb-16 sm:mb-20 scroll-mt-20">
-          <NotebookTabs initiatives={initiatives} skills={skills} />
+          <FieldNotes initiatives={initiatives} skills={skills} />
         </section>
       </main>
     </>
