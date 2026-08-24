@@ -1,13 +1,13 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { projects, getProjectBySlug, getNextProject, getPreviousProject } from '../../data/projects-data';
+import { SITE_URL } from '../../lib/site';
 import ProjectContent from './ProjectContent';
 
 type Props = {
   params: Promise<{ slug: string }>;
 };
 
-/** Trim to the last whole word inside `max` so SERP snippets read cleanly. */
 function truncate(text: string, max = 155): string {
   if (text.length <= max) return text;
   const cut = text.slice(0, max);
@@ -25,8 +25,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     };
   }
 
+  const ogImage = `${SITE_URL}${project.heroImage}`;
+
   return {
-    // The root layout's title template appends the wordmark.
     title: project.title,
     description: truncate(project.description),
     alternates: {
@@ -38,6 +39,20 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       description: truncate(project.description),
       url: `/portfolio/${project.slug}`,
       type: 'article',
+      images: [
+        {
+          url: ogImage,
+          width: 1440,
+          height: 900,
+          alt: `${project.title} preview`,
+        },
+      ],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: `${project.title} — Joe Lapscher`,
+      description: truncate(project.description),
+      images: [ogImage],
     },
   };
 }
@@ -60,10 +75,10 @@ export default async function ProjectPage({ params }: Props) {
   const previousProject = getPreviousProject(slug);
 
   return (
-    <ProjectContent 
-      project={project} 
-      nextProject={nextProject} 
-      previousProject={previousProject} 
+    <ProjectContent
+      project={project}
+      nextProject={nextProject}
+      previousProject={previousProject}
     />
   );
 }

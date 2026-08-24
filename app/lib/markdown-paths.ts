@@ -3,7 +3,9 @@
  * Used by the Netlify edge negotiator and by tests.
  */
 
-export const MARKDOWN_PAGES: Readonly<Record<string, string>> = {
+import { projects } from '../data/projects-data';
+
+const STATIC_MARKDOWN_PAGES: Readonly<Record<string, string>> = {
   '/': '/index.md',
   '/about': '/about.md',
   '/contact': '/contact.md',
@@ -11,12 +13,17 @@ export const MARKDOWN_PAGES: Readonly<Record<string, string>> = {
   '/services': '/services.md',
   '/services/guidance': '/services/guidance.md',
   '/portfolio': '/portfolio.md',
-  '/portfolio/sam-storybook': '/portfolio/sam-storybook.md',
-  '/portfolio/knock-on-block': '/portfolio/knock-on-block.md',
-  '/portfolio/yoga-studio': '/portfolio/yoga-studio.md',
-  '/portfolio/harbor-parking': '/portfolio/harbor-parking.md',
   '/hobbies': '/hobbies.md',
   '/travel': '/travel.md',
+};
+
+const PROJECT_MARKDOWN_PAGES = Object.fromEntries(
+  projects.map((project) => [`/portfolio/${project.slug}`, `/portfolio/${project.slug}.md`])
+) as Readonly<Record<string, string>>;
+
+export const MARKDOWN_PAGES: Readonly<Record<string, string>> = {
+  ...STATIC_MARKDOWN_PAGES,
+  ...PROJECT_MARKDOWN_PAGES,
 };
 
 export const AGENT_INDEX_PATHS = ['/llms.txt', '/sitemap.xml'] as const;
