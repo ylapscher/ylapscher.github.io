@@ -27,7 +27,7 @@
     "react-simple-maps": "^4.0.0-beta.6"
   },
   "devDependencies": {
-    "@netlify/edge-functions": "^2.19.0",
+    "@netlify/edge-functions": "^4.0.0",
     "@types/d3-scale": "^4.0.8",
     "@types/node": "^26.1.2",
     "@types/react": "^19.1.8",
