@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="900" viewBox="0 0 1440 900">
+    <rect width="1440" height="900" fill="#dfe6ee"/>
+    <rect x="80" y="80" width="1280" height="740" fill="#fff" stroke="#ccc" stroke-width="2"/>
+    <text x="720" y="420" text-anchor="middle" font-family="monospace" font-size="42" fill="#5b6874">No web presence</text>
+    <text x="720" y="480" text-anchor="middle" font-family="monospace" font-size="24" fill="#8b98a4">Word-of-mouth referrals only</text>
+  </svg>

@@ -1,71 +1,14 @@
 'use client';
 
-import { useState } from 'react';
 import Link from 'next/link';
-import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/24/outline';
+import BeforeAfterSlider from '../../components/BeforeAfterSlider';
+import BrowserFrame from '../../components/BrowserFrame';
+import ImageGallery from '../../components/ImageGallery';
+import ProjectMetaChips from '../../components/ProjectMetaChips';
+import ProjectMetricsStrip from '../../components/ProjectMetricsStrip';
+import ProjectStoryTimeline from '../../components/ProjectStoryTimeline';
 import type { Project } from '../../data/projects-data';
-
-type SectionKey = 
-  | 'contextAndProblem'
-  | 'constraintsAndStakes'
-  | 'discoveryAndInsight'
-  | 'optionsTradeoffsAndDecisions'
-  | 'solutionAndExecution'
-  | 'outcomesMetricsAndEvidence'
-  | 'reflectionAndLessonsLearned';
-
-const sections: { key: SectionKey; label: string }[] = [
-  { key: 'contextAndProblem', label: 'Context & Problem' },
-  { key: 'constraintsAndStakes', label: 'Constraints & Stakes' },
-  { key: 'discoveryAndInsight', label: 'Discovery & Insight' },
-  { key: 'optionsTradeoffsAndDecisions', label: 'Options, Tradeoffs, and Decisions' },
-  { key: 'solutionAndExecution', label: 'Solution & Execution' },
-  { key: 'outcomesMetricsAndEvidence', label: 'Outcomes, Metrics, and Evidence' },
-  { key: 'reflectionAndLessonsLearned', label: 'Reflection & Lessons Learned' },
-];
-
-function CollapsibleSection({ 
-  title, 
-  content, 
-  isOpen, 
-  onToggle 
-}: { 
-  title: string; 
-  content: string; 
-  isOpen: boolean; 
-  onToggle: () => void;
-}) {
-  return (
-    <div className="border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden">
-      <button
-        onClick={onToggle}
-        className="w-full px-6 py-4 flex items-center justify-between bg-gray-50 dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-750 transition-colors text-left"
-        aria-expanded={isOpen}
-      >
-        <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
-          {title}
-        </h3>
-        {isOpen ? (
-          <ChevronUpIcon className="w-5 h-5 text-gray-500 dark:text-gray-400 flex-shrink-0" />
-        ) : (
-          <ChevronDownIcon className="w-5 h-5 text-gray-500 dark:text-gray-400 flex-shrink-0" />
-        )}
-      </button>
-      <div
-        className={`overflow-hidden transition-all duration-300 ease-in-out ${
-          // Match shared CollapsibleSection behavior to avoid truncating long content.
-          isOpen ? 'max-h-[5000px] opacity-100' : 'max-h-0 opacity-0'
-        }`}
-      >
-        <div className="px-6 py-4 bg-white dark:bg-gray-900">
-          <p className="text-gray-700 dark:text-gray-400 leading-relaxed">
-            {content}
-          </p>
-        </div>
-      </div>
-    </div>
-  );
-}
+import { monoStyles } from '../../lib/typography';
 
 type ProjectContentProps = {
   project: Project;
@@ -74,23 +17,8 @@ type ProjectContentProps = {
 };
 
 export default function ProjectContent({ project, nextProject, previousProject }: ProjectContentProps) {
-  const [openSections, setOpenSections] = useState<Set<SectionKey>>(new Set(['contextAndProblem']));
-
-  const toggleSection = (key: SectionKey) => {
-    setOpenSections(prev => {
-      const newSet = new Set(prev);
-      if (newSet.has(key)) {
-        newSet.delete(key);
-      } else {
-        newSet.add(key);
-      }
-      return newSet;
-    });
-  };
-
   return (
     <main className="container mx-auto px-4 sm:px-6 py-12 max-w-4xl">
-      {/* Back to Portfolio Link */}
       <Link
         href="/portfolio"
         className="inline-flex items-center text-signal hover:brightness-110 mb-8 transition-colors"
@@ -101,51 +29,88 @@ export default function ProjectContent({ project, nextProject, previousProject }
         Back to Portfolio
       </Link>
 
-      {/* Project Header */}
-      <div className="mb-12">
-        <div className={`w-full h-48 ${project.color} rounded-xl flex items-center justify-center mb-8`}>
-          <span className="text-8xl opacity-90">{project.icon}</span>
+      <div className="mb-10">
+        <BrowserFrame
+          src={project.heroImage}
+          alt={`${project.title} homepage`}
+          url={project.url}
+          color={project.color}
+          icon={project.icon}
+          size="hero"
+        />
+
+        <h1 className="text-4xl font-bold mt-8 mb-3 text-gray-900 dark:text-white">{project.title}</h1>
+        <p className={`${monoStyles.eyebrow} text-signal mb-4`}>{project.outcomeHook}</p>
+        <p className="text-lg text-gray-700 dark:text-gray-400 mb-6 leading-relaxed">{project.description}</p>
+
+        <ProjectMetaChips project={project} />
+
+        {project.metrics && <ProjectMetricsStrip metrics={project.metrics} />}
+
+        <div className="flex flex-wrap gap-4">
+          <a
+            href={project.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center bg-signal text-signal-ink font-semibold py-3 px-6 hover:brightness-110 transition-colors"
+          >
+            Visit Site
+            <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+            </svg>
+          </a>
         </div>
-        
-        <h1 className="text-4xl font-bold mb-4 text-gray-900 dark:text-white">
-          {project.title}
-        </h1>
-        
-        <p className="text-lg text-gray-700 dark:text-gray-400 mb-6 leading-relaxed">
-          {project.description}
-        </p>
-
-        {/* Visit Site Button */}
-        <a
-          href={project.url}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex items-center bg-signal text-white font-semibold py-3 px-6 rounded-lg hover:brightness-110 transition-colors"
-        >
-          Visit Site
-          <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-          </svg>
-        </a>
       </div>
 
-      {/* Collapsible Sections */}
-      <div className="space-y-4 mb-12">
-        {sections.map(({ key, label }) => (
-          <CollapsibleSection
-            key={key}
-            title={label}
-            content={project[key]}
-            isOpen={openSections.has(key)}
-            onToggle={() => toggleSection(key)}
+      {project.beforeAfter && (
+        <section className="mb-14">
+          <h2 className="text-2xl font-bold mb-2 text-gray-900 dark:text-white">Transformation</h2>
+          <p className={`${monoStyles.eyebrow} mb-6`}>Before and after</p>
+          <BeforeAfterSlider
+            before={project.beforeAfter.before}
+            after={project.beforeAfter.after}
+            beforeLabel={project.beforeAfter.beforeLabel}
+            afterLabel={project.beforeAfter.afterLabel}
+            alt={`${project.title} before and after comparison`}
           />
-        ))}
-      </div>
+        </section>
+      )}
 
-      {/* Navigation */}
+      {project.gallery && project.gallery.length > 0 && (
+        <section className="mb-14">
+          <h2 className="text-2xl font-bold mb-2 text-gray-900 dark:text-white">Screens</h2>
+          <p className={`${monoStyles.eyebrow} mb-6`}>Desktop and mobile views</p>
+          <ImageGallery images={project.gallery} showDeviceToggle autoAdvanceMs={0} />
+        </section>
+      )}
+
+      {project.embedUrl && (
+        <section className="mb-14">
+          <h2 className="text-2xl font-bold mb-2 text-gray-900 dark:text-white">Try it live</h2>
+          <p className={`${monoStyles.eyebrow} mb-6`}>Interactive preview</p>
+          <div className="ring-1 ring-rule-hi overflow-hidden bg-white dark:bg-gray-900">
+            <div className="flex items-center gap-2 px-3 py-2 border-b border-rule bg-paper dark:bg-gray-800">
+              <span className={`${monoStyles.label} text-muted truncate`}>{project.embedUrl}</span>
+            </div>
+            <iframe
+              src={project.embedUrl}
+              title={`${project.title} live demo`}
+              className="w-full aspect-[16/10] border-0 bg-gray-100"
+              loading="lazy"
+              sandbox="allow-scripts allow-same-origin allow-forms allow-popups"
+            />
+          </div>
+        </section>
+      )}
+
+      <section className="mb-14">
+        <h2 className="text-2xl font-bold mb-2 text-gray-900 dark:text-white">Case study</h2>
+        <p className={`${monoStyles.eyebrow} mb-8`}>Scroll through the story</p>
+        <ProjectStoryTimeline project={project} />
+      </section>
+
       <div className="border-t border-gray-200 dark:border-gray-700 pt-8">
         <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
-          {/* Previous Project */}
           {previousProject && (
             <Link
               href={`/portfolio/${previousProject.slug}`}
@@ -161,15 +126,13 @@ export default function ProjectContent({ project, nextProject, previousProject }
             </Link>
           )}
 
-          {/* Back to Portfolio (center) */}
           <Link
             href="/portfolio"
-            className="inline-flex items-center justify-center px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-700 dark:text-gray-300 hover:border-signal hover:text-signal transition-colors"
+            className="inline-flex items-center justify-center px-4 py-2 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:border-signal hover:text-signal transition-colors"
           >
             View All Projects
           </Link>
 
-          {/* Next Project */}
           {nextProject && (
             <Link
               href={`/portfolio/${nextProject.slug}`}
@@ -189,4 +152,3 @@ export default function ProjectContent({ project, nextProject, previousProject }
     </main>
   );
 }
-

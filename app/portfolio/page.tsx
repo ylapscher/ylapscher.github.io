@@ -1,9 +1,10 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import BrowserFrame from '../components/BrowserFrame';
 import { projects } from '../data/projects-data';
+import { monoStyles } from '../lib/typography';
 
 export const metadata: Metadata = {
-  // The root layout's title template appends the wordmark.
   title: 'Portfolio',
   description: "Web projects I've built to solve real problems and craft engaging experiences.",
   alternates: {
@@ -18,7 +19,7 @@ export default function Portfolio() {
       <div className="text-center mb-12">
         <h1 className="text-4xl font-bold mb-4 text-gray-900 dark:text-white">Portfolio</h1>
         <p className="text-lg text-gray-700 dark:text-gray-400 max-w-2xl mx-auto">
-          Here are some websites I've built to solve real problems and create engaging user experiences:
+          Here are some websites I&apos;ve built to solve real problems and create engaging user experiences:
         </p>
       </div>
 
@@ -28,28 +29,47 @@ export default function Portfolio() {
             key={project.title}
             href={`/portfolio/${project.slug}`}
             aria-label={`View ${project.title} project details`}
-            className="group bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 overflow-hidden transform transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:border-signal"
+            className="group block ring-1 ring-rule-hi bg-white dark:bg-gray-800 overflow-hidden transform transition-all duration-300 hover:-translate-y-1 hover:ring-signal"
           >
-            <div className="aspect-video relative overflow-hidden">
-              <div className={`w-full h-full ${project.color} flex items-center justify-center transition-transform duration-300 group-hover:scale-105`}>
-                <span className="text-6xl opacity-80 group-hover:opacity-100 transition-opacity">
-                  {project.icon}
-                </span>
-              </div>
-              <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-10 transition-all duration-300" />
-            </div>
+            <BrowserFrame
+              src={project.thumbnail}
+              alt={`${project.title} preview`}
+              url={project.url}
+              color={project.color}
+              icon={project.icon}
+              hoverScroll
+            />
             <div className="p-6">
-              <div className="flex items-center justify-between mb-3">
+              <div className="flex flex-wrap items-center gap-2 mb-2">
+                {project.category && (
+                  <span className={monoStyles.eyebrow}>{project.category}</span>
+                )}
+                {project.timeline && (
+                  <span className={`${monoStyles.data} text-xs text-muted`}>{project.timeline}</span>
+                )}
+              </div>
+              <div className="flex items-center justify-between mb-2">
                 <h3 className="text-xl font-bold text-gray-900 dark:text-white group-hover:text-signal transition-colors">
                   {project.title}
                 </h3>
-                <span className="text-signal text-sm font-medium">
-                  →
-                </span>
+                <span className="text-signal text-sm font-medium">→</span>
               </div>
-              <p className="text-gray-700 dark:text-gray-400 text-sm leading-relaxed">
+              <p className="text-sm font-mono text-signal mb-3">{project.outcomeHook}</p>
+              <p className="text-gray-700 dark:text-gray-400 text-sm leading-relaxed line-clamp-3 mb-4">
                 {project.description}
               </p>
+              {project.stack && (
+                <div className="flex flex-wrap gap-1.5">
+                  {project.stack.map((tech) => (
+                    <span
+                      key={tech}
+                      className={`${monoStyles.label} text-muted border border-rule px-1.5 py-0.5`}
+                    >
+                      {tech}
+                    </span>
+                  ))}
+                </div>
+              )}
             </div>
           </Link>
         ))}
@@ -63,4 +83,3 @@ export default function Portfolio() {
     </main>
   );
 }
-
