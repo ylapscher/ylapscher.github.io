@@ -1,18 +1,14 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import ExperienceTimeline from './components/ExperienceTimeline';
-import FeaturedBuilds from './components/FeaturedBuilds';
 import FieldNotes from './components/FieldNotes';
 import JsonLd from './components/JsonLd';
 import { career, experiences, initiatives, skills } from './data/home-data';
-import { getFeaturedProjects } from './data/projects-data';
 import { BOOKING_URL, CONTACT_EMAIL, RESUME_URL, SITE_NAME } from './lib/site';
 import { personSchema } from './lib/structured-data';
 import { textStyles, monoStyles } from './lib/typography';
 
 export default function Home() {
-  const featuredProjects = getFeaturedProjects();
-
   return (
     <>
       <JsonLd data={personSchema} />
@@ -139,10 +135,6 @@ export default function Home() {
             is cost reduction, fractional product leadership, a website, or PM mentoring.
           </p>
         </section>
-
-        <hr className="my-8 border-rule" />
-
-        <FeaturedBuilds projects={featuredProjects} />
 
         <hr className="my-8 border-rule" />
 
