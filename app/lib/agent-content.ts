@@ -77,9 +77,7 @@ export function buildHomeMarkdown(): string {
 
 Ten years finding money that's stuck.
 
-${SITE_NAME} (also ${SITE_ALTERNATE_NAME}) is an industrial engineer turned software engineer turned chief product officer. He now finds operational cost savings as a partner at Expense Reduction Coaching, based in ${NAP.addressLocality}, ${NAP.addressRegion}.
-
-He works with CEOs and CFOs of $10M–$100M manufacturers, hospitality groups, and 3PLs on indirect spend. The engagement is contingency-priced: no savings, no fee. He also takes fractional product leadership, freelance website development, and PM mentoring.
+${SITE_NAME} (also ${SITE_ALTERNATE_NAME}) is a partner at Expense Reduction Coaching in ${NAP.addressLocality}, ${NAP.addressRegion}. He helps CEOs and CFOs of $10M–$100M manufacturers, hospitality groups, and 3PLs cut indirect spend (telecom, merchant processing, supplies, payroll, insurance, utilities) on a no-savings, no-fee basis. Earlier: software engineer at GE, product manager at Citrix, Raistone, and Transcard, then chief product officer at Tienda Pago.
 
 **Book:** ${BOOKING_URL}
 **Email:** ${CONTACT_EMAIL}

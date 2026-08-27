@@ -4,7 +4,7 @@ import ExperienceTimeline from './components/ExperienceTimeline';
 import FieldNotes from './components/FieldNotes';
 import JsonLd from './components/JsonLd';
 import { career, experiences, skills } from './data/home-data';
-import { BOOKING_URL, CONTACT_EMAIL, RESUME_URL, SITE_NAME } from './lib/site';
+import { BOOKING_URL, RESUME_URL, SITE_NAME } from './lib/site';
 import { personSchema } from './lib/structured-data';
 import { textStyles, monoStyles } from './lib/typography';
 
@@ -127,12 +127,10 @@ export default function Home() {
           <p className="text-muted text-base leading-relaxed">
             {SITE_NAME} (also Yoel Lapscher) is a partner at Expense Reduction Coaching
             in Hoboken, New Jersey. He helps CEOs and CFOs of $10M–$100M manufacturers,
-            hospitality groups, and 3PLs cut indirect spend — telecom, merchant
-            processing, supplies, payroll, insurance, utilities — on a no-savings,
-            no-fee basis. Before consulting he was a software engineer at GE, a product
-            manager at Citrix, Raistone, and Transcard, and chief product officer at
-            Tienda Pago. Email {CONTACT_EMAIL} or book a 15-minute intro when the job
-            is cost reduction, fractional product leadership, a website, or PM mentoring.
+            hospitality groups, and 3PLs cut indirect spend (telecom, merchant
+            processing, supplies, payroll, insurance, utilities) on a no-savings,
+            no-fee basis. Earlier: software engineer at GE, product manager at Citrix,
+            Raistone, and Transcard, then chief product officer at Tienda Pago.
           </p>
         </section>
 
