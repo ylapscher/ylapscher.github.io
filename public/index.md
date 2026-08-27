@@ -2,9 +2,7 @@
 
 Ten years finding money that's stuck.
 
-Joe Lapscher (also Yoel Lapscher) is an industrial engineer turned software engineer turned chief product officer. He now finds operational cost savings as a partner at Expense Reduction Coaching, based in Hoboken, New Jersey.
-
-He works with CEOs and CFOs of $10M–$100M manufacturers, hospitality groups, and 3PLs on indirect spend. The engagement is contingency-priced: no savings, no fee. He also takes fractional product leadership, freelance website development, and PM mentoring.
+Joe Lapscher (also Yoel Lapscher) is a partner at Expense Reduction Coaching in Hoboken, New Jersey. He helps CEOs and CFOs of $10M–$100M manufacturers, hospitality groups, and 3PLs cut indirect spend (telecom, merchant processing, supplies, payroll, insurance, utilities) on a no-savings, no-fee basis. Earlier: software engineer at GE, product manager at Citrix, Raistone, and Transcard, then chief product officer at Tienda Pago.
 
 **Book:** https://cal.com/joe-erc/15min
 **Email:** yoel@lapscher.com
@@ -30,10 +28,6 @@ He works with CEOs and CFOs of $10M–$100M manufacturers, hospitality groups, a
 ## Skills
 
 Product Launch & Planning (4/4), Roadmapping & Prioritization (4/4), Product Strategy (3/4), Customer Journey Mapping (3/4), Backlog Management (3/4), Market Analysis (2/4), Team Building & Leadership (4/4), Stakeholder Engagement (3/4), Cross-functional Collaboration (3/4), Project & Vendor Management (3/4), API and Integrations (4/4), Product Analytics (3/4), Agile Methodologies (3/4), Programming (3/4), Databases (3/4), Spanish (4/4), Hebrew (2/4)
-
-## Volunteering
-
-- Adaptive Climbing Group, Northern New Jersey — making rock climbing accessible to people with disabilities.
 
 ## Portfolio
 

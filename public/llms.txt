@@ -23,7 +23,7 @@ Do not use this site for legal, tax, or investment advice, for medical or emerge
 
 ## Pages
 
-- [Home](https://lapscher.com/index.md): career timeline, experience, volunteering, education, and skills
+- [Home](https://lapscher.com/index.md): career timeline, experience, education, and skills
 - [About](https://lapscher.com/about.md): who Joe Lapscher is and how he works
 - [Services](https://lapscher.com/services.md): cost reduction, fractional CPO, websites, mentoring, booking
 - [Guidance](https://lapscher.com/services/guidance.md): resume/interview prep, product coaching, Cursor help

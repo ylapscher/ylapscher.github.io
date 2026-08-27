@@ -57,7 +57,13 @@ const education = {
  * including to no-JS crawlers, which is why this is a server component
  * rather than a tab bar with hidden panels.
  */
-export default function FieldNotes({ initiatives, skills }: { initiatives: Initiative[]; skills: Skill[] }) {
+export default function FieldNotes({
+  initiatives = [],
+  skills,
+}: {
+  initiatives?: Initiative[];
+  skills: Skill[];
+}) {
   const [featured, ...rest] = initiatives;
 
   const skillsByCategory = Object.entries(
@@ -77,7 +83,7 @@ export default function FieldNotes({ initiatives, skills }: { initiatives: Initi
     <div>
       <h2 className={`${textStyles.h2} text-ink`}>Field notes</h2>
       <p className="mt-3 max-w-[46ch] text-muted text-base leading-relaxed">
-        The jobs are the long column. Climbing, school, and the tools underneath are the rest.
+        The jobs are the long column. School and the tools underneath are the rest.
       </p>
 
       {featured && (

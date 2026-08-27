@@ -1,18 +1,14 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import ExperienceTimeline from './components/ExperienceTimeline';
-import FeaturedBuilds from './components/FeaturedBuilds';
 import FieldNotes from './components/FieldNotes';
 import JsonLd from './components/JsonLd';
-import { career, experiences, initiatives, skills } from './data/home-data';
-import { getFeaturedProjects } from './data/projects-data';
-import { BOOKING_URL, CONTACT_EMAIL, RESUME_URL, SITE_NAME } from './lib/site';
+import { career, experiences, skills } from './data/home-data';
+import { BOOKING_URL, RESUME_URL, SITE_NAME } from './lib/site';
 import { personSchema } from './lib/structured-data';
 import { textStyles, monoStyles } from './lib/typography';
 
 export default function Home() {
-  const featuredProjects = getFeaturedProjects();
-
   return (
     <>
       <JsonLd data={personSchema} />
@@ -131,18 +127,12 @@ export default function Home() {
           <p className="text-muted text-base leading-relaxed">
             {SITE_NAME} (also Yoel Lapscher) is a partner at Expense Reduction Coaching
             in Hoboken, New Jersey. He helps CEOs and CFOs of $10M–$100M manufacturers,
-            hospitality groups, and 3PLs cut indirect spend — telecom, merchant
-            processing, supplies, payroll, insurance, utilities — on a no-savings,
-            no-fee basis. Before consulting he was a software engineer at GE, a product
-            manager at Citrix, Raistone, and Transcard, and chief product officer at
-            Tienda Pago. Email {CONTACT_EMAIL} or book a 15-minute intro when the job
-            is cost reduction, fractional product leadership, a website, or PM mentoring.
+            hospitality groups, and 3PLs cut indirect spend (telecom, merchant
+            processing, supplies, payroll, insurance, utilities) on a no-savings,
+            no-fee basis. Earlier: software engineer at GE, product manager at Citrix,
+            Raistone, and Transcard, then chief product officer at Tienda Pago.
           </p>
         </section>
-
-        <hr className="my-8 border-rule" />
-
-        <FeaturedBuilds projects={featuredProjects} />
 
         <hr className="my-8 border-rule" />
 
@@ -152,8 +142,8 @@ export default function Home() {
           <ExperienceTimeline experiences={experiences} />
         </section>
 
-        <section id="volunteering-education" className="mt-16 sm:mt-20 mb-16 sm:mb-20 scroll-mt-20">
-          <FieldNotes initiatives={initiatives} skills={skills} />
+        <section id="education-skills" className="mt-16 sm:mt-20 mb-16 sm:mb-20 scroll-mt-20">
+          <FieldNotes skills={skills} />
         </section>
       </main>
     </>
