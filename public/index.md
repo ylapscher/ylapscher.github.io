@@ -31,10 +31,6 @@ He works with CEOs and CFOs of $10M–$100M manufacturers, hospitality groups, a
 
 Product Launch & Planning (4/4), Roadmapping & Prioritization (4/4), Product Strategy (3/4), Customer Journey Mapping (3/4), Backlog Management (3/4), Market Analysis (2/4), Team Building & Leadership (4/4), Stakeholder Engagement (3/4), Cross-functional Collaboration (3/4), Project & Vendor Management (3/4), API and Integrations (4/4), Product Analytics (3/4), Agile Methodologies (3/4), Programming (3/4), Databases (3/4), Spanish (4/4), Hebrew (2/4)
 
-## Volunteering
-
-- Adaptive Climbing Group, Northern New Jersey — making rock climbing accessible to people with disabilities.
-
 ## Portfolio
 
 - [Sam Storybook](https://lapscher.com/portfolio/sam-storybook.md): Offers a personalized book for families to create and share a custom storybook, preserving cherished memories with photos and narratives. The website provides user-friendly experience to order the book with a Stripe integration for payment processing.

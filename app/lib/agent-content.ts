@@ -55,7 +55,7 @@ Do not use this site for legal, tax, or investment advice, for medical or emerge
 
 ## Pages
 
-- [Home](${SITE_URL}/index.md): career timeline, experience, volunteering, education, and skills
+- [Home](${SITE_URL}/index.md): career timeline, experience, education, and skills
 - [About](${SITE_URL}/about.md): who ${SITE_NAME} is and how he works
 - [Services](${SITE_URL}/services.md): cost reduction, fractional CPO, websites, mentoring, booking
 - [Guidance](${SITE_URL}/services/guidance.md): resume/interview prep, product coaching, Cursor help
@@ -98,10 +98,6 @@ ${experienceLines}
 ## Skills
 
 ${skillLine}
-
-## Volunteering
-
-- Adaptive Climbing Group, Northern New Jersey — making rock climbing accessible to people with disabilities.
 
 ## Portfolio
 
@@ -264,7 +260,7 @@ ${project.reflectionAndLessonsLearned}
 export function buildHobbiesMarkdown(): string {
   return `# Hobbies — ${SITE_NAME}
 
-When ${SITE_NAME} is not on a cost-reduction or product engagement he climbs, practices hot yoga, plays jazz piano, studies improv, cuts hair, and reads. The Adaptive Climbing Group chapter in Northern New Jersey is the volunteering thread that also appears on the homepage.
+When ${SITE_NAME} is not on a cost-reduction or product engagement he climbs, practices hot yoga, plays jazz piano, studies improv, cuts hair, and reads.
 
 Barber booking and the reading list live on ${SITE_URL}/hobbies.
 `;

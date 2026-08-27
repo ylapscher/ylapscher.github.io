@@ -43,8 +43,7 @@ export default function AboutPage() {
           He still takes a small number of product and build engagements: fractional
           CPO / product leadership for early-to-growth startups, freelance websites,
           and mentoring for aspiring or junior product managers. Spanish is a working
-          language. He volunteers with the Adaptive Climbing Group in Northern New
-          Jersey.
+          language.
         </p>
         <p>
           Education: BS in Industrial &amp; Systems Engineering and MS in Information

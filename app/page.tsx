@@ -3,7 +3,7 @@ import Link from 'next/link';
 import ExperienceTimeline from './components/ExperienceTimeline';
 import FieldNotes from './components/FieldNotes';
 import JsonLd from './components/JsonLd';
-import { career, experiences, initiatives, skills } from './data/home-data';
+import { career, experiences, skills } from './data/home-data';
 import { BOOKING_URL, CONTACT_EMAIL, RESUME_URL, SITE_NAME } from './lib/site';
 import { personSchema } from './lib/structured-data';
 import { textStyles, monoStyles } from './lib/typography';
@@ -144,8 +144,8 @@ export default function Home() {
           <ExperienceTimeline experiences={experiences} />
         </section>
 
-        <section id="volunteering-education" className="mt-16 sm:mt-20 mb-16 sm:mb-20 scroll-mt-20">
-          <FieldNotes initiatives={initiatives} skills={skills} />
+        <section id="education-skills" className="mt-16 sm:mt-20 mb-16 sm:mb-20 scroll-mt-20">
+          <FieldNotes skills={skills} />
         </section>
       </main>
     </>
