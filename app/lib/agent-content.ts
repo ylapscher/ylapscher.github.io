@@ -58,7 +58,7 @@ Do not use this site for legal, tax, or investment advice, for medical or emerge
 - [Home](${SITE_URL}/index.md): career timeline, experience, education, and skills
 - [About](${SITE_URL}/about.md): who ${SITE_NAME} is and how he works
 - [Services](${SITE_URL}/services.md): cost reduction, fractional CPO, websites, mentoring, booking
-- [Guidance](${SITE_URL}/services/guidance.md): resume/interview prep, product coaching, Cursor help
+- [Guidance](${SITE_URL}/services/guidance.md): resume/interview prep, product coaching, AI coding tools
 - [Portfolio](${SITE_URL}/portfolio.md): shipped websites and product case studies
 - [Contact](${SITE_URL}/contact.md): email, form, LinkedIn, and booking
 - [Privacy](${SITE_URL}/privacy.md): analytics and form data practices
@@ -168,7 +168,7 @@ Last updated: August 2026. Location of the operator: ${NAP.addressLocality}, ${N
 export function buildServicesMarkdown(): string {
   return `# Services — ${SITE_NAME}
 
-${SITE_NAME} is a partner at Expense Reduction Coaching and also takes a small number of product and build engagements.
+${SITE_NAME} is a partner at Expense Reduction Coaching by day and also takes a small number of product, web, and mentoring engagements.
 
 ## Operational cost reduction
 
@@ -193,13 +193,26 @@ Guidance-only page: ${SITE_URL}/services/guidance.md
 }
 
 export function buildGuidanceMarkdown(): string {
-  return `# Guidance — ${SITE_NAME}
+  return `# Guidance for product people
 
-Focused help from ${SITE_NAME}: resume and interview prep, product coaching and mentorship, and hands-on help getting productive with AI tools such as Cursor.
+One-off sessions, not retainers: resume and interview prep, PM coaching, and getting productive with AI coding tools (Cursor, Claude Code).
 
-Book a session: ${BOOKING_URL}
+## Resume & interview prep
+
+Personalized resume review and interview coaching for the next role.
+
+## Product coaching / mentorship
+
+Product management fundamentals, strategy, and career growth.
+
+## AI coding tools (Cursor, Claude Code)
+
+Hands-on help getting productive with AI coding tools.
+
+Looking for cost reduction, a website, or fractional product work? See [Services](${SITE_URL}/services.md).
+
+Book a 15-minute intro: ${BOOKING_URL}
 Email: ${CONTACT_EMAIL}
-Full services list: ${SITE_URL}/services.md
 `;
 }
 
@@ -260,7 +273,7 @@ export function buildHobbiesMarkdown(): string {
 
 When ${SITE_NAME} is not on a cost-reduction or product engagement he climbs, practices hot yoga, plays jazz piano, studies improv, cuts hair, and reads.
 
-Barber booking and the reading list live on ${SITE_URL}/hobbies.
+Barber photos and the reading list live on ${SITE_URL}/hobbies.
 `;
 }
 

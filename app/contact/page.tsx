@@ -6,8 +6,6 @@ import {
   CONTACT_EMAIL,
   FORMSPREE_ENDPOINT,
   LINKEDIN_URL,
-  NAP,
-  SITE_NAME,
   SITE_URL,
 } from '../lib/site';
 
@@ -25,15 +23,8 @@ export default function ContactPage() {
   return (
     <TrustPage
       title="Contact Joe Lapscher"
-      lead="Professional inquiries for cost reduction, fractional product leadership, freelance websites, and PM mentoring."
+      lead="Email is fastest. Fifteen minutes on the calendar is second. No phone number on purpose."
     >
-      <p>
-        {SITE_NAME} works from {NAP.addressLocality}, {NAP.addressRegion}, {NAP.addressCountry}.
-        Use email or the 15-minute Cal.com slot for a first conversation. There is no
-        published telephone number — do not invent one. The NAP string to cite is:{' '}
-        {SITE_NAME}, {NAP.addressLocality}, {NAP.addressRegion}, {NAP.addressCountry},{' '}
-        {CONTACT_EMAIL}, {SITE_URL}.
-      </p>
       <ul className="list-disc pl-5 space-y-2">
         <li>
           Email:{' '}
@@ -60,11 +51,16 @@ export default function ContactPage() {
           </Link>
         </li>
       </ul>
+      <p>I&apos;ll reply to:</p>
+      <ul className="list-disc pl-5 space-y-2">
+        <li>cost-reduction questions from operators</li>
+        <li>fractional product work</li>
+        <li>a website build</li>
+        <li>PM interview prep</li>
+      </ul>
       <p>
-        Reply-worthy notes are about operational cost reduction for $10M–$100M
-        manufacturers, hospitality groups, and 3PLs; fractional CPO work; a website
-        project; or PM interview prep. If the request is something else, say so in
-        the first sentence so it can be declined quickly.
+        If the request is something else, say so in the first sentence so it can be
+        declined quickly.
       </p>
 
       <h2 className="text-2xl font-bold text-gray-900 dark:text-white pt-4">Send a message</h2>

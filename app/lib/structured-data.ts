@@ -13,9 +13,9 @@ export const personSchema = {
   '@type': 'Person',
   name: SITE_NAME,
   alternateName: SITE_ALTERNATE_NAME,
-  jobTitle: 'Partner',
+  jobTitle: 'Partner, Expense Reduction Coaching',
   description:
-    'Partner at Expense Reduction Coaching with expertise in fintech, SaaS, and enterprise software. Experienced in product strategy, roadmapping, and team leadership.',
+    'Partner at Expense Reduction Coaching. Finds operational cost savings for $10M–$100M manufacturers, hospitality groups, and 3PLs. Former chief product officer and software engineer.',
   url: SITE_URL,
   email: CONTACT_EMAIL,
   image: `${SITE_URL}/images/profile-portrait.jpg`,
@@ -23,7 +23,6 @@ export const personSchema = {
   worksFor: {
     '@type': 'Organization',
     name: 'Expense Reduction Coaching',
-    url: SITE_URL,
     email: CONTACT_EMAIL,
     address: {
       '@type': 'PostalAddress',
@@ -46,6 +45,11 @@ export const personSchema = {
     },
   ],
   knowsAbout: [
+    'Operational cost reduction',
+    'Indirect spend',
+    'Telecom expense management',
+    'Merchant processing fees',
+    'Fractional product leadership',
     'Product Management',
     'Fintech',
     'SaaS',
@@ -54,7 +58,6 @@ export const personSchema = {
     'Team Leadership',
     'API and Integrations',
     'Agile Methodologies',
-    'Operational cost reduction',
   ],
   address: {
     '@type': 'PostalAddress',
@@ -82,6 +85,12 @@ export const organizationSchema = {
   description:
     'Joe Lapscher helps CEOs and CFOs of $10M–$100M manufacturers, hospitality groups, and 3PLs find operational cost savings through Expense Reduction Coaching. Also offers fractional product leadership, freelance website development, and PM mentoring.',
   sameAs: [LINKEDIN_URL, 'https://github.com/ylapscher', SITE_URL],
+  serviceType: [
+    'Operational cost reduction',
+    'Fractional product leadership',
+    'Freelance website development',
+    'Product management mentoring',
+  ],
   areaServed: {
     '@type': 'Country',
     name: 'United States',
@@ -113,6 +122,19 @@ export const websiteSchema = {
     name: SITE_NAME,
   },
 } as const;
+
+export function breadcrumbList(items: ReadonlyArray<{ name: string; url: string }>) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: items.map((item, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      name: item.name,
+      item: item.url,
+    })),
+  };
+}
 
 export const notFoundMarkdown = `# Page not found
 

@@ -82,6 +82,8 @@ export default function ChatWidget() {
       {/* Chat Button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
+        aria-label={isOpen ? 'Close contact form' : 'Open contact form'}
+        aria-expanded={isOpen}
         className={`${
           isOpen ? 'hidden' : 'flex'
         } items-center justify-center w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-signal text-white shadow-lg hover:brightness-110 transition-colors`}
@@ -95,9 +97,10 @@ export default function ChatWidget() {
       } flex-col absolute bottom-0 right-0 w-[calc(100vw-2rem)] sm:w-96 h-[calc(100vh-8rem)] sm:h-[450px] max-h-[500px] bg-white dark:bg-gray-800 rounded-lg shadow-xl border border-gray-200 dark:border-gray-700`}>
         {/* Header */}
         <div className="flex items-center justify-between p-3 border-b border-gray-200 dark:border-gray-700">
-          <h3 className="text-lg font-semibold">Get in Touch!</h3>
+          <h3 className="text-lg font-semibold">Send a note</h3>
           <button
             onClick={() => setIsOpen(false)}
+            aria-label="Close contact form"
             className="p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
           >
             <XMarkIcon className="w-6 h-6" />

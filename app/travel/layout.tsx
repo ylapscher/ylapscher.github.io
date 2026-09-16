@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
-import { SITE_URL } from '../lib/site';
+import { SITE_NAME, SITE_URL } from '../lib/site';
+import { breadcrumbList } from '../lib/structured-data';
 
 /**
  * app/travel/page.tsx is a client component (react-simple-maps needs the
@@ -15,24 +16,10 @@ export const metadata: Metadata = {
   },
 };
 
-const structuredData = {
-  '@context': 'https://schema.org',
-  '@type': 'BreadcrumbList',
-  itemListElement: [
-    {
-      '@type': 'ListItem',
-      position: 1,
-      name: 'Joe Lapscher',
-      item: SITE_URL,
-    },
-    {
-      '@type': 'ListItem',
-      position: 2,
-      name: 'Travel map',
-      item: `${SITE_URL}/travel`,
-    },
-  ],
-};
+const structuredData = breadcrumbList([
+  { name: SITE_NAME, url: SITE_URL },
+  { name: 'Travel map', url: `${SITE_URL}/travel` },
+]);
 
 export default function TravelLayout({
   children,

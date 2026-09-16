@@ -12,6 +12,9 @@ export const CONTACT_PATH = '/contact';
 
 export const BOOKING_URL = 'https://cal.com/joe-erc/15min';
 
+/** Cal.com event path, derived so the embed cannot drift from BOOKING_URL. */
+export const BOOKING_CAL_LINK = BOOKING_URL.replace(/^https?:\/\/(?:www\.)?cal\.com\//, '');
+
 export const RESUME_URL =
   'https://drive.google.com/file/d/1EqxPiOXn3-ao_I5GsP--dh6qYyzUFGsG/view';
 

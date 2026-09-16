@@ -1,15 +1,10 @@
 /**
  * Single source of truth for the type scale.
  *
- * This replaces four divergent copies that had drifted apart:
- *   app/page.tsx                        (5 keys)
- *   app/components/Navbar.tsx           (2 keys)
- *   app/components/CollapsibleSection.tsx (3 keys, different names AND sizes)
- *   app/layout.tsx                      (an inline literal passed to Footer)
- *
- * The copies disagreed about `small`: page/Navbar used `text-sm`, while
- * CollapsibleSection used `text-base font-medium`. Both are kept below under
- * distinct names (`small` vs `sectionLabel`) so nothing silently changes size.
+ * Historically this replaced four divergent copies (homepage, Navbar,
+ * a since-removed collapsible section, and an inline Footer literal).
+ * The copies disagreed about `small`; both sizes are kept below as
+ * `small` vs `sectionLabel` so nothing silently changes size.
  *
  * None of these carry `font-geist-sans` any more. That class never generated
  * any CSS; Geist now arrives via `font-sans` on <body>, mapped in
@@ -22,7 +17,7 @@ export const textStyles = {
   body: "text-base text-muted",
   small: "text-sm",
 
-  /** CollapsibleSection's heading scale (was `large` / `medium` / `small`). */
+  /** Heading scale used by section titles. */
   sectionTitle: "text-2xl sm:text-3xl font-bold",
   sectionHeading: "text-lg sm:text-xl font-semibold",
   sectionLabel: "text-base font-medium",

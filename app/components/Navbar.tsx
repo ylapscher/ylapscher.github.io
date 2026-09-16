@@ -4,10 +4,8 @@ import { useState, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 import { SunIcon, MoonIcon } from '@heroicons/react/24/outline';
+import { LINKEDIN_URL, RESUME_URL } from '../lib/site';
 import { monoStyles } from '../lib/typography';
-
-const RESUME_URL =
-  'https://drive.google.com/file/d/1EqxPiOXn3-ao_I5GsP--dh6qYyzUFGsG/view?usp=sharing';
 
 /** Normalises a path so "/", "" and "/foo/" compare correctly. */
 const normalize = (p?: string) => (!p || p === '/' ? '/' : p.replace(/\/$/, ''));
@@ -16,7 +14,7 @@ const normalize = (p?: string) => (!p || p === '/' ? '/' : p.replace(/\/$/, ''))
 function LinkedInLink({ onClick }: { onClick?: () => void }) {
   return (
     <a
-      href="https://www.linkedin.com/in/ylapscher/"
+      href={LINKEDIN_URL}
       target="_blank"
       rel="noopener noreferrer"
       onClick={onClick}
@@ -108,11 +106,6 @@ export default function Navbar() {
     return () => observer.disconnect();
   }, []);
 
-  const handleResumeClick = (e: React.MouseEvent) => {
-    e.preventDefault();
-    window.open('https://drive.google.com/file/d/1EqxPiOXn3-ao_I5GsP--dh6qYyzUFGsG/view?usp=sharing', '_blank');
-  };
-
   return (
     <>
       <nav className="sticky top-0 z-10 bg-paper/85 backdrop-blur-sm border-b border-rule">
@@ -152,12 +145,14 @@ export default function Navbar() {
 
               {/* Resume, LinkedIn, and Dark Mode Toggle */}
               <div className="flex items-center gap-4">
-                <button
-                  onClick={handleResumeClick}
+                <a
+                  href={RESUME_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className={`${monoStyles.label} text-muted hover:text-signal transition-colors`}
                 >
                   Resume
-                </button>
+                </a>
                 <LinkedInLink />
                 {renderDarkModeToggle()}
               </div>
@@ -224,12 +219,15 @@ export default function Navbar() {
                   );
                 })}
                 <div className="flex items-center gap-4 px-2 py-1">
-                  <button
-                    onClick={handleResumeClick}
+                  <a
+                    href={RESUME_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => setIsMenuOpen(false)}
                     className={`${monoStyles.label} text-muted hover:text-signal transition-colors`}
                   >
                     Resume
-                  </button>
+                  </a>
                   <LinkedInLink onClick={() => setIsMenuOpen(false)} />
                 </div>
               </div>

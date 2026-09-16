@@ -69,13 +69,13 @@ describe('static export is agent-readable', () => {
     assert.ok(visibleText(html).length >= 500);
   });
 
-  it('404.html is a real recovery page with markdown body', () => {
+  it('404.html is a real recovery page', () => {
     const html = read('404.html');
     assert.match(html, /<h1[\s>]/i);
     assert.match(html, /llms\.txt/);
     assert.match(html, /sitemap\.xml/);
-    assert.match(html, /\[llms\.txt\]\(https:\/\/lapscher\.com\/llms\.txt\)/);
-    assert.match(html, /\[Sitemap\]\(https:\/\/lapscher\.com\/sitemap\.xml\)/);
+    assert.match(html, /Page not found/);
+    assert.doesNotMatch(html, /\[llms\.txt\]\(https:\/\/lapscher\.com\/llms\.txt\)/);
   });
 
   it('trust pages each have an H1 and 500+ characters', () => {

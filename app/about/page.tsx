@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import TrustPage from '../components/TrustPage';
 import JsonLd from '../components/JsonLd';
-import { BOOKING_URL, CONTACT_EMAIL, LINKEDIN_URL, NAP, SITE_NAME, SITE_URL } from '../lib/site';
+import { BOOKING_URL, CONTACT_EMAIL, LINKEDIN_URL } from '../lib/site';
 import { personSchema } from '../lib/structured-data';
 
 export const metadata: Metadata = {
@@ -24,20 +24,18 @@ export default function AboutPage() {
         lead="Also Yoel Lapscher. Partner at Expense Reduction Coaching, working from Hoboken, New Jersey in the New York City metro area."
       >
         <p>
-          This page is the identity document for lapscher.com. Joe Lapscher finds
-          operational cost savings for CEOs and CFOs of roughly $10M–$100M
-          manufacturers, hospitality groups, and third-party logistics firms. The
-          work looks at indirect spend — telecommunications, merchant processing,
-          office supplies, payroll services, insurance, utilities, and similar
-          categories — and is priced on contingency: no savings, no fee.
+          Joe Lapscher finds operational cost savings for CEOs and CFOs of roughly
+          $10M–$100M manufacturers, hospitality groups, and third-party logistics
+          firms. The work looks at indirect spend — telecommunications, merchant
+          processing, office supplies, payroll services, insurance, utilities, and
+          similar categories — and is priced on contingency: no savings, no fee.
         </p>
         <p>
           Before consulting he spent a decade in product and engineering: internships
           at Procter &amp; Gamble, a technical consulting practice he founded and sold
           (Macro Excellence), GE&apos;s IT Leadership Program, product management at
           Citrix, Raistone, and Transcard, and chief product officer at Tienda Pago,
-          a LATAM fintech. That path is why the homepage headline is about money
-          that is stuck, not a generic coaching pitch.
+          a LATAM fintech.
         </p>
         <p>
           He still takes a small number of product and build engagements: fractional
@@ -52,21 +50,19 @@ export default function AboutPage() {
           Managerial Statistics as a teaching assistant.
         </p>
         <p>
-          Canonical name: {SITE_NAME}. Alternate name: Yoel Lapscher. Canonical
-          domain: {SITE_URL}. Email:{' '}
+          Where to find me:{' '}
           <a href={`mailto:${CONTACT_EMAIL}`} className="text-signal underline">
             {CONTACT_EMAIL}
           </a>
-          . LinkedIn:{' '}
+          ,{' '}
           <a href={LINKEDIN_URL} className="text-signal underline">
-            {LINKEDIN_URL}
+            LinkedIn
           </a>
-          . Book a 15-minute intro:{' '}
+          ,{' '}
           <a href={BOOKING_URL} className="text-signal underline">
-            {BOOKING_URL}
+            book 15 minutes
           </a>
-          . Location: {NAP.addressLocality}, {NAP.addressRegion}, {NAP.addressCountry}.
-          There is no published phone number.
+          . Hoboken, New Jersey.
         </p>
         <p>
           To verify this is a real practice, also read the{' '}

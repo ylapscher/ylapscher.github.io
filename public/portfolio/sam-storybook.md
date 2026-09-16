@@ -1,6 +1,6 @@
 # Sam Storybook
 
-Offers a personalized book for families to create and share a custom storybook, preserving cherished memories with photos and narratives. The website provides user-friendly experience to order the book with a Stripe integration for payment processing.
+Families order a personalized photo storybook online. Stripe checkout, then a printed book in the mail.
 
 - Live site: https://www.samstorybook.com/
 - Author: Joe Lapscher

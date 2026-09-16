@@ -6,7 +6,7 @@ import { monoStyles } from '../lib/typography';
 
 export const metadata: Metadata = {
   title: 'Portfolio',
-  description: "Web projects I've built to solve real problems and craft engaging experiences.",
+  description: "Websites I've shipped for real people with real deadlines.",
   alternates: {
     canonical: '/portfolio',
     types: { 'text/markdown': '/portfolio.md' },
@@ -19,11 +19,13 @@ export default function Portfolio() {
       <div className="text-center mb-12">
         <h1 className="text-4xl font-bold mb-4 text-gray-900 dark:text-white">Portfolio</h1>
         <p className="text-lg text-gray-700 dark:text-gray-400 max-w-2xl mx-auto">
-          Here are some websites I&apos;ve built to solve real problems and create engaging user experiences:
+          Websites I&apos;ve shipped for real people with real deadlines.
         </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+      <section>
+        <h2 className="sr-only">Shipped websites</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
         {projects.map((project) => (
           <Link
             key={project.title}
@@ -74,12 +76,7 @@ export default function Portfolio() {
           </Link>
         ))}
       </div>
-
-      <div className="text-center">
-        <p className="text-gray-600 dark:text-gray-500 text-sm">
-          Each project was built with a focus on user experience, performance, and solving real-world problems.
-        </p>
-      </div>
+      </section>
     </main>
   );
 }

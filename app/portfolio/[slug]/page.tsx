@@ -1,7 +1,9 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { projects, getProjectBySlug, getNextProject, getPreviousProject } from '../../data/projects-data';
-import { SITE_URL } from '../../lib/site';
+import JsonLd from '../../components/JsonLd';
+import { SITE_NAME, SITE_URL } from '../../lib/site';
+import { breadcrumbList } from '../../lib/structured-data';
 import ProjectContent from './ProjectContent';
 
 type Props = {
@@ -75,10 +77,19 @@ export default async function ProjectPage({ params }: Props) {
   const previousProject = getPreviousProject(slug);
 
   return (
-    <ProjectContent
-      project={project}
-      nextProject={nextProject}
-      previousProject={previousProject}
-    />
+    <>
+      <JsonLd
+        data={breadcrumbList([
+          { name: SITE_NAME, url: SITE_URL },
+          { name: 'Portfolio', url: `${SITE_URL}/portfolio` },
+          { name: project.title, url: `${SITE_URL}/portfolio/${project.slug}` },
+        ])}
+      />
+      <ProjectContent
+        project={project}
+        nextProject={nextProject}
+        previousProject={previousProject}
+      />
+    </>
   );
 }

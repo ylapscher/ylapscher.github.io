@@ -7,7 +7,6 @@ import GoogleAnalytics from './components/GoogleAnalytics';
 import ChatWidget from './components/ChatWidget';
 import JsonLd from './components/JsonLd';
 import { PostHogProvider } from './components/PostHogProvider';
-import FloatingBadge from './components/FloatingBadge';
 import { SITE_URL } from './lib/site';
 import { organizationSchema, websiteSchema } from './lib/structured-data';
 import { textStyles } from './lib/typography';
@@ -43,8 +42,6 @@ export const metadata: Metadata = {
     template: "%s · Joe Lapscher",
   },
   description: SITE_DESCRIPTION,
-  keywords:
-    "Joe Lapscher, Yoel Lapscher, Expense Reduction Coaching, cost reduction, operational savings, product leader, chief product officer, fintech, payments, working capital",
   authors: [{ name: "Joe Lapscher" }],
   alternates: {
     canonical: "/",
@@ -80,7 +77,7 @@ export const metadata: Metadata = {
         url: "/images/og-card.png",
         width: 1200,
         height: 630,
-        alt: "Joe Lapscher — ten years finding money that's stuck",
+                alt: "Joe Lapscher. Cost Reduction Specialist | Engineer | Amateur Barber",
       },
     ],
     locale: "en_US",
@@ -131,7 +128,6 @@ export default function RootLayout({
           {children}
           <ChatWidget />
           <Footer textStyles={{ small: textStyles.small }} />
-          <FloatingBadge />
         </PostHogProvider>
       </body>
     </html>

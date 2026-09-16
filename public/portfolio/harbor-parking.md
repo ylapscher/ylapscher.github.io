@@ -1,6 +1,6 @@
 # Harbor Parking
 
-Streamlines parking access and management by offering tools for finding, reserving, and tracking parking spaces. Dedicated to convenience, the site helps users minimize stress and replace the current process of communicating available parking spots via a WhatsApp group.
+Replaced a building's WhatsApp parking thread with a live availability board and reservations.
 
 - Live site: https://parking.lapscher.com/
 - Author: Joe Lapscher

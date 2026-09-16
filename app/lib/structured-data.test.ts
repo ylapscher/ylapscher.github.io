@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import { describe, it } from 'node:test';
 
+import { BOOKING_CAL_LINK } from './site';
 import { organizationSchema, personSchema, notFoundMarkdown } from './structured-data';
 
 describe('Organization schema completeness', () => {
@@ -28,5 +29,25 @@ describe('Organization schema completeness', () => {
   it('404 markdown points at sitemap and llms.txt', () => {
     assert.match(notFoundMarkdown, /llms\.txt/);
     assert.match(notFoundMarkdown, /sitemap\.xml/);
+  });
+
+  it('Person schema leads with ERC and cost reduction', () => {
+    assert.equal(personSchema.jobTitle, 'Partner, Expense Reduction Coaching');
+    assert.match(personSchema.description, /operational cost savings/);
+    assert.equal(personSchema.knowsAbout[0], 'Operational cost reduction');
+    assert.equal('url' in personSchema.worksFor, false);
+  });
+
+  it('Organization schema lists the four offerings', () => {
+    assert.deepEqual(organizationSchema.serviceType, [
+      'Operational cost reduction',
+      'Fractional product leadership',
+      'Freelance website development',
+      'Product management mentoring',
+    ]);
+  });
+
+  it('booking cal link is derived from the ERC 15-minute URL', () => {
+    assert.equal(BOOKING_CAL_LINK, 'joe-erc/15min');
   });
 });
