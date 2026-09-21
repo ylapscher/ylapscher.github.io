@@ -65,6 +65,8 @@ export default function FieldNotes({
   skills: Skill[];
 }) {
   const [featured, ...rest] = initiatives;
+  const educationFig = featured ? '02' : '01';
+  const skillsFig = featured ? '03' : '02';
 
   const skillsByCategory = Object.entries(
     skills.reduce(
@@ -164,7 +166,7 @@ export default function FieldNotes({
       )}
 
       <div id="education" className="mt-14 sm:mt-16 border-t border-rule scroll-mt-20">
-        <p className={`${monoStyles.eyebrow} pt-5`}>02 — Education</p>
+        <p className={`${monoStyles.eyebrow} pt-5`}>{educationFig} — Education</p>
         <div className="mt-5 flex flex-col md:flex-row md:items-stretch">
           <div className="flex items-start gap-3 pb-6 md:pb-0 md:pr-8 md:w-56 shrink-0">
             <div className="relative w-11 h-11 shrink-0 ring-1 ring-rule-hi overflow-hidden bg-paper">
@@ -200,7 +202,7 @@ export default function FieldNotes({
       </div>
 
       <div id="skills" className="mt-12 sm:mt-14 border-t border-rule pt-5 scroll-mt-20">
-        <p className={monoStyles.eyebrow}>03 — Skills</p>
+        <p className={monoStyles.eyebrow}>{skillsFig} — Skills</p>
         <div className="mt-6 grid grid-cols-1 sm:grid-cols-3 gap-8 sm:gap-6">
           {coreSkills.map(([category, categorySkills]) => (
             <div key={category}>

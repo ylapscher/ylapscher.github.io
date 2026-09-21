@@ -26,7 +26,7 @@ Do not use this site for legal, tax, or investment advice, for medical or emerge
 - [Home](https://lapscher.com/index.md): career timeline, experience, education, and skills
 - [About](https://lapscher.com/about.md): who Joe Lapscher is and how he works
 - [Services](https://lapscher.com/services.md): cost reduction, fractional CPO, websites, mentoring, booking
-- [Guidance](https://lapscher.com/services/guidance.md): resume/interview prep, product coaching, Cursor help
+- [Guidance](https://lapscher.com/services/guidance.md): resume/interview prep, product coaching, AI coding tools
 - [Portfolio](https://lapscher.com/portfolio.md): shipped websites and product case studies
 - [Contact](https://lapscher.com/contact.md): email, form, LinkedIn, and booking
 - [Privacy](https://lapscher.com/privacy.md): analytics and form data practices

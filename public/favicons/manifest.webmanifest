@@ -1,5 +1,5 @@
 {
-  "name": "Joe Lapscher | Product Leader",
+  "name": "Joe Lapscher — finding money that's stuck",
   "short_name": "Joe Lapscher",
   "start_url": "/",
   "icons": [
@@ -16,6 +16,6 @@
     }
   ],
   "theme_color": "#E04E0F",
-  "background_color": "#ffffff",
+  "background_color": "#f1f3ee",
   "display": "standalone"
 }

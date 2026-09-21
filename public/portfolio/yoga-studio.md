@@ -1,6 +1,6 @@
 # Yoga Studio
 
-Provides accessible resources for yoga enthusiasts, including guided sessions and wellness tips to enhance mindful living. The website encourages users to deepen their practice in a supportive and intuitive yoga pose sequence generator and repository.
+A free pose library and sequence builder for home practice. Works offline as a PWA, no subscription.
 
 - Live site: https://yoga.lapscher.com/
 - Author: Joe Lapscher

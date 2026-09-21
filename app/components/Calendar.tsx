@@ -1,6 +1,7 @@
 'use client';
 
-import { useEffect } from "react";
+import { useEffect } from 'react';
+import { BOOKING_CAL_LINK } from '../lib/site';
 
 declare global {
   interface Window {
@@ -12,6 +13,8 @@ interface CalApi {
   q: any[];
   push: (arg: any) => void;
 }
+
+const CAL_NAMESPACE = BOOKING_CAL_LINK.split('/').pop() ?? '15min';
 
 export default function Calendar() {
   useEffect(() => {
@@ -44,23 +47,22 @@ export default function Calendar() {
       };
     })(window, "https://app.cal.com/embed/embed.js", "init");
 
-    // Configure Cal
-    (window.Cal as any)("init", "30min", {origin:"https://cal.com"});
-    (window.Cal as any).ns["30min"]("inline", {
+    (window.Cal as any)("init", CAL_NAMESPACE, {origin:"https://cal.com"});
+    (window.Cal as any).ns[CAL_NAMESPACE]("inline", {
       elementOrSelector:"#my-cal-inline",
       config: {"layout":"month_view"},
-      calLink: "lapscher/30min",
+      calLink: BOOKING_CAL_LINK,
     });
-    (window.Cal as any).ns["30min"]("ui", {"hideEventTypeDetails":false,"layout":"month_view"});
+    (window.Cal as any).ns[CAL_NAMESPACE]("ui", {"hideEventTypeDetails":false,"layout":"month_view"});
   }, []);
 
   return (
     <div className="relative h-[600px] bg-white dark:bg-gray-800 rounded-lg">
-      <div 
-        id="my-cal-inline" 
+      <div
+        id="my-cal-inline"
         className="absolute inset-0"
-        style={{ width: '100%', height: '100%', overflow: 'auto' }} 
+        style={{ width: '100%', height: '100%', overflow: 'auto' }}
       />
     </div>
   );
-} 
+}

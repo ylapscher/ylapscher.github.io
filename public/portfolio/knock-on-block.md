@@ -1,6 +1,6 @@
 # Knock on Block
 
-Handyman services website with a simple user interface highlighting services offered, work examples, and reviews. Integration with Resend sends email notifications to the owner when a quote is requested via a form.
+A local handyman's site: services, work photos, and a quote form that emails the owner the moment someone asks.
 
 - Live site: https://www.knockonblock.com/
 - Author: Joe Lapscher

@@ -55,7 +55,7 @@ export const experiences: Experience[] = [
     company: 'Expense Reduction Coaching',
     duration: '2026 - Present',
     achievements: [
-      'Evolved from the product world to consulting, where I help companies find operational cost savings',
+      'Partner. Finds savings in telecom, payments, payroll, insurance, and utilities for $10M–$100M operators. No savings, no fee.',
     ],
     image: {
       src: '/images/companies/erc.png',
@@ -67,7 +67,7 @@ export const experiences: Experience[] = [
     company: 'Tienda Pago',
     duration: '2025',
     achievements: [
-      'I launched my career into Product leadership and owned Product, Growth, and Marketing at a LATAM Fintech that provided microloans to bodegas',
+      'Owned product, growth, and marketing for a LATAM fintech lending to bodegas.',
     ],
     image: {
       src: '/images/companies/tp.png',
@@ -79,7 +79,7 @@ export const experiences: Experience[] = [
     company: 'Transcard',
     duration: '2024 - 2025',
     achievements: [
-      'I doubled down in the fintech world, focusing on payments, and driving the launch of a new platform that streamlines how businesses transact without relying on checks',
+      'Led the launch of a payments platform that moves businesses off paper checks.',
     ],
     image: {
       src: '/images/companies/transcard.png',
@@ -91,7 +91,7 @@ export const experiences: Experience[] = [
     company: 'Raistone',
     duration: '2022 - 2024',
     achievements: [
-      'As the 2nd product hire at Raistone, I jumped into the fintech scene with enthusiasm, leveraging my Fortune 500 experience to thrive in this dynamic environment and drive impactful changes in working capital solutions',
+      'Second product hire. Shipped working-capital products from zero to customers.',
     ],
     image: {
       src: '/images/companies/raistone.png',
@@ -103,7 +103,7 @@ export const experiences: Experience[] = [
     company: 'Citrix',
     duration: '2020 - 2022',
     achievements: [
-      "After hanging up my software engineering 'cleats,' I dove headfirst into product management at Citrix, where I learned about prioritization & roadmapping, stakeholder management, and remote desktops",
+      'First PM role. Prioritization, roadmaps, stakeholders, and a lot of remote desktops.',
     ],
     image: {
       src: '/images/companies/citrix.png',
@@ -116,7 +116,7 @@ export const experiences: Experience[] = [
     company: 'General Electric',
     duration: '2018 - 2020',
     achievements: [
-      "I kicked off my career with GE's IT Leadership Program, where I embraced diverse roles across NY, Maine, NOLA, and Atlanta, gaining hands-on experience in software engineering and product management in a global industrial powerhouse",
+      'IT Leadership Program: four rotations across NY, Maine, New Orleans, and Atlanta.',
     ],
     image: {
       src: '/images/companies/ge.png',
@@ -129,7 +129,7 @@ export const experiences: Experience[] = [
     company: 'Macro Excellence',
     duration: '2017 - 2018',
     achievements: [
-      'Founded, managed, and sold a technical consulting practice specializing in building custom software solutions that make business processes more efficient',
+      'Founded, ran, and sold a consulting shop that automated business processes.',
     ],
     image: {
       src: '/images/initiatives/macro.png',
@@ -142,7 +142,7 @@ export const experiences: Experience[] = [
     company: 'Procter & Gamble',
     duration: '2015 - 2017',
     achievements: [
-      'During my 4 internships at P&G, I worked on process improvement by finding ways to cut costs in market research and created some handy Excel VBA tools to automate reporting',
+      'Four internships cutting market-research costs and automating reporting in Excel VBA.',
     ],
     image: {
       src: '/images/companies/pg.png',
@@ -157,7 +157,7 @@ export const initiatives: Initiative[] = [
     description:
       'Started a new chapter with the Adaptive Climbing Group focusing on making rock climbing accessible to people with disabilities',
     image: {
-      src: '/images/initiatives/climbing.png',
+      src: '/images/initiatives/climbing.webp',
       alt: 'Adaptive Climbing',
     },
     link: 'https://www.adaptiveclimbinggroup.org/northern-new-jersey',
@@ -170,7 +170,6 @@ export const skills: Skill[] = [
   { name: 'Product Strategy', level: 3, category: 'Product Management' },
   { name: 'Customer Journey Mapping', level: 3, category: 'Product Management' },
   { name: 'Backlog Management', level: 3, category: 'Product Management' },
-  { name: 'Market Analysis', level: 2, category: 'Product Management' },
   { name: 'Team Building & Leadership', level: 4, category: 'Leadership & Collaboration' },
   { name: 'Stakeholder Engagement', level: 3, category: 'Leadership & Collaboration' },
   { name: 'Cross-functional Collaboration', level: 3, category: 'Leadership & Collaboration' },
@@ -181,5 +180,4 @@ export const skills: Skill[] = [
   { name: 'Programming', level: 3, category: 'Technical Skills' },
   { name: 'Databases', level: 3, category: 'Technical Skills' },
   { name: 'Spanish', level: 4, category: 'Languages' },
-  { name: 'Hebrew', level: 2, category: 'Languages' },
 ];

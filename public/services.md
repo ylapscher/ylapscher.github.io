@@ -1,6 +1,6 @@
 # Services — Joe Lapscher
 
-Joe Lapscher is a partner at Expense Reduction Coaching and also takes a small number of product and build engagements.
+Joe Lapscher is a partner at Expense Reduction Coaching by day and also takes a small number of product, web, and mentoring engagements.
 
 ## Operational cost reduction
 

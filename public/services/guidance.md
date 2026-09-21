@@ -1,7 +1,20 @@
-# Guidance — Joe Lapscher
+# Guidance for product people
 
-Focused help from Joe Lapscher: resume and interview prep, product coaching and mentorship, and hands-on help getting productive with AI tools such as Cursor.
+One-off sessions, not retainers: resume and interview prep, PM coaching, and getting productive with AI coding tools (Cursor, Claude Code).
 
-Book a session: https://cal.com/joe-erc/15min
+## Resume & interview prep
+
+Personalized resume review and interview coaching for the next role.
+
+## Product coaching / mentorship
+
+Product management fundamentals, strategy, and career growth.
+
+## AI coding tools (Cursor, Claude Code)
+
+Hands-on help getting productive with AI coding tools.
+
+Looking for cost reduction, a website, or fractional product work? See [Services](https://lapscher.com/services.md).
+
+Book a 15-minute intro: https://cal.com/joe-erc/15min
 Email: yoel@lapscher.com
-Full services list: https://lapscher.com/services.md

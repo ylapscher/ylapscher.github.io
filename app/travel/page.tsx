@@ -369,7 +369,7 @@ export default function Travel() {
     <main className="container mx-auto px-4 sm:px-6 py-8 max-w-6xl">
       <div className="text-center mb-8 sm:mb-12">
         <h1 className="text-3xl sm:text-4xl font-bold mb-3 sm:mb-4 text-gray-900 dark:text-white">
-          Travel Map
+          Where I&apos;ve been
         </h1>
         <p className="text-base sm:text-lg text-gray-700 dark:text-gray-400 max-w-2xl mx-auto mb-6">
           Places I've visited and lived around the {showUSMap ? 'United States' : 'world'}

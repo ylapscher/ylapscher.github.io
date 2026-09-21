@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import ImageGallery from '../components/ImageGallery';
 import HobbiesGrid from './HobbiesGrid';
+import { CONTACT_EMAIL } from '../lib/site';
 import { getReadingList } from '../lib/reading-list';
 
 export default async function Hobbies() {
@@ -11,7 +12,7 @@ export default async function Hobbies() {
       <div className="text-center mb-12">
         <h1 className="text-4xl font-bold mb-4 text-gray-900 dark:text-white">Hobbies</h1>
         <p className="text-lg text-gray-700 dark:text-gray-400 max-w-2xl mx-auto">
-          When I'm not building products, you can find me pursuing these passions:
+          Off the clock: climbing, hot yoga, jazz piano, improv, and cutting hair.
         </p>
       </div>
 
@@ -22,14 +23,14 @@ export default async function Hobbies() {
       <div id="barber" className="mb-16 scroll-mt-20">
         <h2 className="text-3xl font-bold mb-6 text-gray-900 dark:text-white">Barber Portfolio</h2>
         <p className="text-lg text-gray-700 dark:text-gray-400 mb-8">
-          If you like my work below, schedule your appointment{' '}
-          <a 
-            href="/services#book" 
-            className="text-signal hover:brightness-110 text-signal hover:brightness-110 underline"
+          If you like my work below,{' '}
+          <a
+            href={`mailto:${CONTACT_EMAIL}`}
+            className="text-signal hover:brightness-110 underline"
           >
-            here
-          </a>
-          !
+            email me
+          </a>{' '}
+          for a cut.
         </p>
         <ImageGallery />
       </div>

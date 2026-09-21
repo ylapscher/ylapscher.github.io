@@ -4,7 +4,7 @@ import type { Metadata } from 'next';
 export const metadata: Metadata = {
   title: 'Hobbies',
   description:
-    'Outside of work: rock climbing, hot yoga, jazz piano, and improv comedy with Joe Lapscher.',
+    'Off the clock: climbing, hot yoga, jazz piano, improv, and cutting hair.',
   alternates: {
     canonical: '/hobbies',
     types: { 'text/markdown': '/hobbies.md' },
