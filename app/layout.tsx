@@ -11,17 +11,17 @@ import { SITE_URL } from './lib/site';
 import { organizationSchema, websiteSchema } from './lib/structured-data';
 import { textStyles } from './lib/typography';
 
-const geistSans = localFont({
-  src: "./fonts/GeistVF.woff",
-  variable: "--font-geist-sans",
-  weight: "100 900",
-  display: 'swap',
+const calSans = localFont({
+  src: "../node_modules/cal-sans/fonts/calsans-var-full/CalSansVF.woff2",
+  variable: "--font-cal-sans",
+  weight: "400 700",
+  display: "swap",
 });
 const geistMono = localFont({
   src: "./fonts/GeistMonoVF.woff",
   variable: "--font-geist-mono",
   weight: "100 900",
-  display: 'swap',
+  display: "swap",
 });
 
 const SITE_TITLE = "Joe Lapscher — finding money that's stuck";
@@ -110,7 +110,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" suppressHydrationWarning className={`${geistSans.variable} ${geistMono.variable}`}>
+    <html lang="en" suppressHydrationWarning className={`${calSans.variable} ${geistMono.variable}`}>
       <head>
         {/* Must stay before any paint -- see THEME_SCRIPT above. */}
         <script dangerouslySetInnerHTML={{ __html: THEME_SCRIPT }} />
@@ -120,7 +120,7 @@ export default function RootLayout({
             Metadata/Viewport exports above -- declaring them twice made the
             App Router emit duplicate <link rel="icon"> tags. */}
       </head>
-      <body suppressHydrationWarning className="antialiased font-sans bg-paper text-ink">
+      <body suppressHydrationWarning className="antialiased font-sans bg-paper text-ink [font-optical-sizing:auto]">
         <JsonLd data={organizationSchema} />
         <JsonLd data={websiteSchema} />
         <PostHogProvider>

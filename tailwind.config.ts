@@ -7,14 +7,13 @@ export default {
   darkMode: "class",
   theme: {
     extend: {
-      // The Geist variables are set on <html> by next/font/local in
-      // app/layout.tsx. Without this mapping they were never referenced by any
-      // utility, so both webfonts downloaded on every visit and neither ever
-      // rendered. <body> already carries `font-sans`, so mapping it here is
-      // what actually turns Geist on across the site.
+      // Font CSS variables are set on <html> by next/font/local in
+      // app/layout.tsx. <body> carries `font-sans`, so mapping it here is
+      // what actually turns Cal Sans on across the site. Geist Mono stays
+      // for eyebrows, labels, and tabular data.
       fontFamily: {
         sans: [
-          "var(--font-geist-sans)",
+          "var(--font-cal-sans)",
           "ui-sans-serif",
           "system-ui",
           "-apple-system",

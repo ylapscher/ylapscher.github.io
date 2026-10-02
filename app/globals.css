@@ -45,7 +45,7 @@ body {
   background: var(--background);
   /* The old `font-family: Arial, Helvetica, sans-serif` rule lived here and
      was already dead -- the `font-sans` class on <body> out-specifies an
-     element selector. Geist now comes from that class via tailwind.config.ts. */
+     element selector. Cal Sans comes from that class via tailwind.config.ts. */
 }
 
 /* Graph-paper ground for the hero. Pure CSS, zero bytes over the wire. */

@@ -6,9 +6,8 @@
  * The copies disagreed about `small`; both sizes are kept below as
  * `small` vs `sectionLabel` so nothing silently changes size.
  *
- * None of these carry `font-geist-sans` any more. That class never generated
- * any CSS; Geist now arrives via `font-sans` on <body>, mapped in
- * tailwind.config.ts.
+ * None of these carry a font-family class. Cal Sans arrives via `font-sans`
+ * on <body>, mapped in tailwind.config.ts.
  */
 export const textStyles = {
   h1: "text-4xl sm:text-5xl font-bold",
