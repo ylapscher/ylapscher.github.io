@@ -23,7 +23,7 @@ function ExperienceRow({ experience, current }: { experience: Experience; curren
     <li className="group relative border-t border-rule first:border-t-0">
       <Wrapper
         {...wrapperProps}
-        className={`grid grid-cols-1 sm:grid-cols-[11rem_1fr] gap-x-8 gap-y-3 py-7 sm:py-8 ${
+        className={`grid grid-cols-1 sm:grid-cols-[9.5rem_1fr] gap-x-8 gap-y-3 py-7 sm:py-8 ${
           isClickable
             ? 'focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-signal'
             : ''
