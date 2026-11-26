@@ -39,9 +39,9 @@ export const career: ReadonlyArray<{
   company: string;
   current?: boolean;
 }> = [
-  { year: '2015', company: 'P&G' },
-  { year: '2017', company: 'Macro' },
-  { year: '2018', company: 'GE' },
+  { year: '2013', company: 'P&G' },
+  { year: '2015', company: 'Macro' },
+  { year: '2016', company: 'GE' },
   { year: '2020', company: 'Citrix' },
   { year: '2022', company: 'Raistone' },
   { year: '2024', company: 'Transcard' },
@@ -53,7 +53,7 @@ export const experiences: Experience[] = [
   {
     role: 'Partner',
     company: 'Expense Reduction Coaching',
-    duration: '2026 - Present',
+    duration: '2026 – Present',
     achievements: [
       'Finds savings in telecom, payments, payroll, insurance, and utilities for $10M–$100M operators. No savings, no fee.',
     ],
@@ -65,7 +65,7 @@ export const experiences: Experience[] = [
   {
     role: 'Chief Product Officer',
     company: 'Tienda Pago',
-    duration: '2025 - 2026',
+    duration: '2025 – 2026',
     achievements: [
       'Owned product, growth, and marketing for a LATAM fintech lending to bodegas.',
     ],
@@ -77,7 +77,7 @@ export const experiences: Experience[] = [
   {
     role: 'Senior Product Manager',
     company: 'Transcard',
-    duration: '2024 - 2025',
+    duration: '2024 – 2025',
     achievements: [
       'Led the launch of a payments platform that moves businesses off paper checks.',
     ],
@@ -89,7 +89,7 @@ export const experiences: Experience[] = [
   {
     role: 'Senior Product Manager',
     company: 'Raistone',
-    duration: '2022 - 2024',
+    duration: '2022 – 2024',
     achievements: [
       'Second product hire. Shipped working-capital products from zero to customers.',
     ],
@@ -101,7 +101,7 @@ export const experiences: Experience[] = [
   {
     role: 'Product Manager',
     company: 'Citrix',
-    duration: '2020 - 2022',
+    duration: '2020 – 2021',
     achievements: [
       'First PM role. Prioritization, roadmaps, stakeholders, and a lot of remote desktops.',
     ],
@@ -114,7 +114,7 @@ export const experiences: Experience[] = [
   {
     role: 'Software Engineer',
     company: 'General Electric',
-    duration: '2018 - 2020',
+    duration: '2016 – 2020',
     achievements: [
       'IT Leadership Program: four rotations across NY, Maine, New Orleans, and Atlanta.',
     ],
@@ -127,7 +127,7 @@ export const experiences: Experience[] = [
   {
     role: 'Founder',
     company: 'Macro Excellence',
-    duration: '2017 - 2018',
+    duration: '2015',
     achievements: [
       'Founded, ran, and sold a consulting shop that automated business processes.',
     ],
@@ -140,7 +140,7 @@ export const experiences: Experience[] = [
   {
     role: 'Intern',
     company: 'Procter & Gamble',
-    duration: '2015 - 2017',
+    duration: '2013 – 2015',
     achievements: [
       'Four internships cutting market-research costs and automating reporting in Excel VBA.',
     ],

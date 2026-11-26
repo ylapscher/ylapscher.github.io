@@ -34,7 +34,7 @@ function ExperienceRow({ experience, current }: { experience: Experience; curren
             aria-hidden="true"
             className={`hidden sm:block h-0.5 w-6 ${current ? 'bg-signal' : 'bg-tick'}`}
           />
-          <span className={`${monoStyles.data} text-[11px] uppercase tracking-util ${current ? 'text-signal' : 'text-muted'}`}>
+          <span className={`${monoStyles.data} text-[11px] uppercase tracking-util whitespace-nowrap ${current ? 'text-signal' : 'text-muted'}`}>
             {experience.duration}
           </span>
         </div>
