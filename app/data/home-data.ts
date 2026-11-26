@@ -65,7 +65,7 @@ export const experiences: Experience[] = [
   {
     role: 'Chief Product Officer',
     company: 'Tienda Pago',
-    duration: '2025',
+    duration: '2025 - 2026',
     achievements: [
       'Owned product, growth, and marketing for a LATAM fintech lending to bodegas.',
     ],
