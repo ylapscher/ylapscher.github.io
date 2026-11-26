@@ -13,7 +13,7 @@ export default function ProjectMetricsStrip({ metrics }: ProjectMetricsStripProp
       {metrics.map((metric) => (
         <div
           key={metric.label}
-          className="text-center py-4 px-3 ring-1 ring-rule-hi bg-white dark:bg-gray-800"
+          className="text-center py-4 px-3 ring-1 ring-rule-hi bg-paper"
         >
           <p className="text-3xl sm:text-4xl font-bold text-signal font-mono tabular-nums">
             {metric.value}

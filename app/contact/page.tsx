@@ -63,7 +63,7 @@ export default function ContactPage() {
         declined quickly.
       </p>
 
-      <h2 className="text-2xl font-bold text-gray-900 dark:text-white pt-4">Send a message</h2>
+      <h2 className="text-2xl font-bold text-ink pt-4">Send a message</h2>
       <p>
         This form works without JavaScript. It posts to Formspree and is delivered
         to {CONTACT_EMAIL}. Do not send secrets, health information, or payment
@@ -84,7 +84,7 @@ export default function ContactPage() {
             type="text"
             required
             autoComplete="name"
-            className="w-full px-3 py-2 rounded border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 focus:ring-2 focus:ring-signal outline-none"
+            className="w-full px-3 py-2 border border-rule-hi bg-paper focus:ring-2 focus:ring-signal outline-none"
           />
         </div>
         <div>
@@ -97,7 +97,7 @@ export default function ContactPage() {
             type="email"
             required
             autoComplete="email"
-            className="w-full px-3 py-2 rounded border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 focus:ring-2 focus:ring-signal outline-none"
+            className="w-full px-3 py-2 border border-rule-hi bg-paper focus:ring-2 focus:ring-signal outline-none"
           />
         </div>
         <div>
@@ -109,7 +109,7 @@ export default function ContactPage() {
             name="message"
             required
             rows={6}
-            className="w-full px-3 py-2 rounded border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 focus:ring-2 focus:ring-signal outline-none resize-y"
+            className="w-full px-3 py-2 border border-rule-hi bg-paper focus:ring-2 focus:ring-signal outline-none resize-y"
           />
         </div>
         <button

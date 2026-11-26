@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import BrowserFrame from '../components/BrowserFrame';
+import PageHeader from '../components/PageHeader';
 import { projects } from '../data/projects-data';
 import { monoStyles } from '../lib/typography';
 
@@ -16,12 +17,9 @@ export const metadata: Metadata = {
 export default function Portfolio() {
   return (
     <main className="container mx-auto px-4 sm:px-6 py-12 max-w-4xl">
-      <div className="text-center mb-12">
-        <h1 className="text-4xl font-bold mb-4 text-gray-900 dark:text-white">Portfolio</h1>
-        <p className="text-lg text-gray-700 dark:text-gray-400 max-w-2xl mx-auto">
-          Websites I&apos;ve shipped for real people with real deadlines.
-        </p>
-      </div>
+      <PageHeader eyebrow="§ Shipped work" title="Portfolio">
+        Websites I&apos;ve shipped for real people with real deadlines.
+      </PageHeader>
 
       <section>
         <h2 className="sr-only">Shipped websites</h2>
@@ -31,7 +29,7 @@ export default function Portfolio() {
             key={project.title}
             href={`/portfolio/${project.slug}`}
             aria-label={`View ${project.title} project details`}
-            className="group block ring-1 ring-rule-hi bg-white dark:bg-gray-800 overflow-hidden transform transition-all duration-300 hover:-translate-y-1 hover:ring-signal"
+            className="group block ring-1 ring-rule-hi bg-paper overflow-hidden transform transition-all duration-300 hover:-translate-y-1 hover:ring-signal"
           >
             <BrowserFrame
               src={project.thumbnail}
@@ -51,13 +49,13 @@ export default function Portfolio() {
                 )}
               </div>
               <div className="flex items-center justify-between mb-2">
-                <h3 className="text-xl font-bold text-gray-900 dark:text-white group-hover:text-signal transition-colors">
+                <h3 className="text-xl font-bold text-ink group-hover:text-signal transition-colors">
                   {project.title}
                 </h3>
                 <span className="text-signal text-sm font-medium">→</span>
               </div>
               <p className="text-sm font-mono text-signal mb-3">{project.outcomeHook}</p>
-              <p className="text-gray-700 dark:text-gray-400 text-sm leading-relaxed line-clamp-3 mb-4">
+              <p className="text-muted text-sm leading-relaxed line-clamp-3 mb-4">
                 {project.description}
               </p>
               {project.stack && (

@@ -55,7 +55,7 @@ export default function BeforeAfterSlider({
     <div className="relative max-w-3xl mx-auto">
       <div
         ref={containerRef}
-        className="relative aspect-video ring-1 ring-rule-hi overflow-hidden cursor-col-resize select-none bg-gray-100 dark:bg-gray-800"
+        className="relative aspect-video ring-1 ring-rule-hi overflow-hidden cursor-col-resize select-none bg-ink/5"
         onMouseDown={(e) => {
           setIsDragging(true);
           updatePosition(e.clientX);
@@ -89,10 +89,10 @@ export default function BeforeAfterSlider({
         </div>
 
         {/* Labels */}
-        <span className="absolute top-3 left-3 z-20 font-mono text-[10px] uppercase tracking-util bg-paper/90 dark:bg-gray-900/90 px-2 py-1 text-muted">
+        <span className="absolute top-3 left-3 z-20 font-mono text-[10px] uppercase tracking-util bg-paper/90 px-2 py-1 text-muted">
           {beforeLabel}
         </span>
-        <span className="absolute top-3 right-3 z-20 font-mono text-[10px] uppercase tracking-util bg-paper/90 dark:bg-gray-900/90 px-2 py-1 text-muted">
+        <span className="absolute top-3 right-3 z-20 font-mono text-[10px] uppercase tracking-util bg-paper/90 px-2 py-1 text-muted">
           {afterLabel}
         </span>
       </div>

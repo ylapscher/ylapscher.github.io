@@ -30,7 +30,7 @@ export class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoun
     if (this.state.hasError) {
       return this.props.fallback || (
         <div className="text-center p-8">
-          <p className="text-gray-600 dark:text-gray-400">Unable to load interactive map. Please refresh the page.</p>
+          <p className="text-muted">Unable to load interactive map. Please refresh the page.</p>
         </div>
       );
     }

@@ -57,7 +57,15 @@ export default function Calendar() {
   }, []);
 
   return (
-    <div className="relative h-[600px] bg-white dark:bg-gray-800 rounded-lg">
+    <div className="relative h-[600px] border border-rule-hi bg-paper">
+      {/* Sits under the embed's iframe, so it shows only until Cal paints. */}
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 flex flex-col items-center justify-center gap-3 notebook-grid"
+      >
+        <span className="h-px w-10 bg-signal motion-safe:animate-pulse" />
+        <span className="font-mono text-[11px] uppercase tracking-util text-muted">Loading calendar…</span>
+      </div>
       <div
         id="my-cal-inline"
         className="absolute inset-0"

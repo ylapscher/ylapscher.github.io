@@ -1,4 +1,3 @@
-import type { ReactNode } from 'react';
 import {
   UserGroupIcon, // for improv comedy
   MusicalNoteIcon, // for piano
@@ -9,12 +8,12 @@ const hobbies = [
   {
     title: 'Rock Climbing',
     description:
-      "I love sport climbing outdoors and bouldering indoors. It's a great way to stay active and challenge myself.",
+      'Sport climbing outdoors, bouldering indoors. The best way I know to stay active and get pushed.',
     icon: (
       <svg
         viewBox="0 0 24 24"
         fill="none"
-        className="w-8 h-8 text-signal"
+        className="w-6 h-6 text-signal"
         stroke="currentColor"
         strokeWidth="1.5"
       >
@@ -30,83 +29,66 @@ const hobbies = [
   {
     title: 'Hot Yoga',
     description:
-      'Practice hot yoga to maintain flexibility and mental clarity. The heat adds an extra challenge and helps deepen the practice.',
-    icon: <FireIcon className="w-8 h-8 text-signal" />,
+      'For flexibility and a clear head. The heat adds challenge and deepens the practice.',
+    icon: <FireIcon className="w-6 h-6 text-signal" />,
   },
   {
     title: 'Piano',
     description:
-      "I'm a pianist with a love for jazz music. Music provides a creative outlet and a way to express my artistic side.",
-    icon: <MusicalNoteIcon className="w-8 h-8 text-signal" />,
+      'Jazz, mostly. My creative outlet. Recordings on SoundCloud.',
+    icon: <MusicalNoteIcon className="w-6 h-6 text-signal" />,
     link: 'https://soundcloud.com/ylapscher/tracks',
   },
   {
     title: 'Improv Comedy',
     description:
-      "I enjoy performing with improv groups, where I've honed my quick thinking and public speaking skills through the joy and creativity of improv comedy.",
-    icon: <UserGroupIcon className="w-8 h-8 text-signal" />,
+      'Performing with improv groups. Where I sharpened quick thinking and public speaking.',
+    icon: <UserGroupIcon className="w-6 h-6 text-signal" />,
   },
 ];
 
-function HobbyCard({
-  title,
-  description,
-  icon,
-}: {
-  title: string;
-  description: string;
-  icon: ReactNode;
-}) {
-  return (
-    <div className="flex items-start gap-4">
-      <div className="flex-shrink-0">{icon}</div>
-      <div>
-        <h3 className="text-xl font-bold mb-2 text-gray-900 dark:text-white">{title}</h3>
-        <p className="text-gray-700 dark:text-gray-400">{description}</p>
-      </div>
-    </div>
-  );
-}
-
 export default function HobbiesGrid() {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 mb-12 sm:mb-16">
-      {hobbies.map((hobby) => {
-        const className =
-          'bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700';
-        const body = (
-          <HobbyCard title={hobby.title} description={hobby.description} icon={hobby.icon} />
-        );
-
-        if (hobby.link) {
-          return (
-            <a
-              key={hobby.title}
-              href={hobby.link}
-              target="_blank"
-              rel="noopener noreferrer"
-              className={`${className} transition-transform hover:scale-105 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-signal`}
+    <ul className="grid grid-cols-1 md:grid-cols-2 border-t border-l border-rule-hi mb-12 sm:mb-16">
+      {hobbies.map((hobby, i) => {
+        const inner = (
+          <>
+            <div className="flex items-center justify-between mb-4">
+              <div>{hobby.icon}</div>
+              <span className="font-mono tabular-nums text-[11px] text-muted">
+                {String(i + 1).padStart(2, '0')}
+              </span>
+            </div>
+            <h3
+              className={`text-xl font-bold mb-2 text-ink ${
+                hobby.link ? 'group-hover:text-signal transition-colors' : ''
+              }`}
             >
-              <div className="flex items-start gap-4">
-                <div className="flex-shrink-0">{hobby.icon}</div>
-                <div>
-                  <h3 className="text-xl font-bold mb-2 text-gray-900 dark:text-white hover:text-signal">
-                    {hobby.title}
-                    <span className="ml-2 text-sm text-signal">↗</span>
-                  </h3>
-                  <p className="text-gray-700 dark:text-gray-400">{hobby.description}</p>
-                </div>
-              </div>
-            </a>
-          );
-        }
+              {hobby.title}
+              {hobby.link && <span className="ml-2 text-sm text-signal">&#8599;</span>}
+            </h3>
+            <p className="text-muted leading-relaxed">{hobby.description}</p>
+          </>
+        );
+        const cell = 'block h-full p-6 sm:p-7';
 
         return (
-          <div key={hobby.title} className={className}>
-            {body}
-          </div>
+          <li key={hobby.title} className="border-b border-r border-rule-hi">
+            {hobby.link ? (
+              <a
+                href={hobby.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`${cell} group transition-colors hover:bg-ink/[0.025] focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-signal`}
+              >
+                {inner}
+              </a>
+            ) : (
+              <div className={cell}>{inner}</div>
+            )}
+          </li>
         );
       })}
-    </div>
+    </ul>
   );
 }
