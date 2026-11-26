@@ -23,6 +23,10 @@
   --rule-hi: rgba(20, 26, 31, 0.3);
   --grid: rgba(23, 74, 94, 0.055); /* blueprint cyan, barely there */
   --tick: rgba(20, 26, 31, 0.26);
+  /* Travel map: visited is a steel tint of the ink, lived is the signal. */
+  --map-land: #dde1db;
+  --map-visited: #6f8796;
+  --map-lived: var(--signal);
 
   --background: var(--paper);
   --foreground: var(--ink);
@@ -38,6 +42,9 @@
   --rule-hi: rgba(231, 234, 229, 0.34);
   --grid: rgba(120, 200, 225, 0.06);
   --tick: rgba(231, 234, 229, 0.3);
+  --map-land: #1d262c;
+  --map-visited: #6e8a9b;
+  --map-lived: var(--signal);
 }
 
 body {

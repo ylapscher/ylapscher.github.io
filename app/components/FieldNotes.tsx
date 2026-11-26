@@ -1,6 +1,7 @@
 import Image from 'next/image';
+import PageHeader from './PageHeader';
 import type { Initiative, Skill } from '../data/home-data';
-import { textStyles, monoStyles } from '../lib/typography';
+import { monoStyles } from '../lib/typography';
 
 /** Proficiency as a 4-segment mark next to the name -- always visible, so
  *  it stays legible on touch. Hard-edged ticks, same language as the hero rail. */
@@ -83,10 +84,9 @@ export default function FieldNotes({
 
   return (
     <div>
-      <h2 className={`${textStyles.h2} text-ink`}>Field notes</h2>
-      <p className="mt-3 max-w-[46ch] text-muted text-base leading-relaxed">
+      <PageHeader as="h2" eyebrow="§ Volunteering, school, skills" title="Field notes">
         The jobs are the long column. School and the tools underneath are the rest.
-      </p>
+      </PageHeader>
 
       {featured && (
         <a
@@ -94,7 +94,7 @@ export default function FieldNotes({
           target="_blank"
           rel="noopener noreferrer"
           id="volunteering"
-          className="group mt-10 block scroll-mt-20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-signal"
+          className="group block scroll-mt-20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-signal"
         >
           <figure>
             {featured.image && (

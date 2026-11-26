@@ -35,10 +35,10 @@ export default function BrowserFrame({
 
   return (
     <div
-      className={`ring-1 ring-rule-hi bg-white dark:bg-gray-900 overflow-hidden ${className}`}
+      className={`ring-1 ring-rule-hi bg-paper overflow-hidden ${className}`}
     >
       {/* Chrome bar — hard-edged, notebook palette */}
-      <div className="flex items-center gap-2 px-3 py-2 border-b border-rule bg-paper dark:bg-gray-800">
+      <div className="flex items-center gap-2 px-3 py-2 border-b border-rule bg-paper">
         <div className="flex gap-1.5" aria-hidden="true">
           <span className="w-2 h-2 bg-rule-hi" />
           <span className="w-2 h-2 bg-rule-hi" />
@@ -53,7 +53,7 @@ export default function BrowserFrame({
 
       {/* Viewport */}
       <div
-        className={`relative overflow-hidden bg-gray-100 dark:bg-gray-800 ${
+        className={`relative overflow-hidden bg-ink/5 ${
           isHero ? 'aspect-[16/10]' : 'aspect-video'
         }`}
       >

@@ -9,6 +9,7 @@ import {
 } from 'react-simple-maps';
 import { visitedStates, livedStates } from '../data/us-states-data';
 import { ErrorBoundary } from '../components/ErrorBoundary';
+import PageHeader from '../components/PageHeader';
 
 const worldGeoUrl = "/data/world-geo.json";
 const usGeoUrl = "/data/us-states.json";
@@ -365,66 +366,79 @@ export default function Travel() {
    */
   const mapsReady = Boolean(worldData && usData);
 
+  const unitLabel = showUSMap ? 'States' : 'Countries';
+
   return (
-    <main className="container mx-auto px-4 sm:px-6 py-8 max-w-6xl">
-      <div className="text-center mb-8 sm:mb-12">
-        <h1 className="text-3xl sm:text-4xl font-bold mb-3 sm:mb-4 text-gray-900 dark:text-white">
-          Where I&apos;ve been
-        </h1>
-        <p className="text-base sm:text-lg text-gray-700 dark:text-gray-400 max-w-2xl mx-auto mb-6">
-          Places I've visited and lived around the {showUSMap ? 'United States' : 'world'}
-        </p>
-        <button
-          onClick={() => setShowUSMap(!showUSMap)}
-          className="mb-6 px-4 py-2 bg-signal text-white rounded hover:brightness-110 transition-colors"
-        >
-          Show {showUSMap ? 'World' : 'US'} Map
-        </button>
-        <div className="flex justify-center gap-8">
-          <div className="w-full max-w-xs">
-            <p className="text-xl sm:text-2xl font-semibold text-[#60A5FA] mb-2">
-              {visitedCount}
-            </p>
-            <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2.5 mb-2">
-              <div 
-                className="bg-[#60A5FA] h-2.5 rounded-full transition-all duration-300"
-                style={{ width: `${visitedPercentage}%` }}
-              ></div>
+    <main className="container mx-auto px-4 sm:px-6 py-12 max-w-6xl">
+      <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-x-8 mb-10">
+        <PageHeader eyebrow="§ Travel" title="Where I&apos;ve been">
+          Places I&apos;ve visited and lived around the {showUSMap ? 'United States' : 'world'}.
+        </PageHeader>
+
+        {/* Tally: same mono stat language as the project metrics strip. */}
+        <dl className="grid grid-cols-2 border-t border-l border-rule-hi shrink-0 md:w-[22rem] md:mb-12">
+          <div className="border-b border-r border-rule-hi px-4 py-3">
+            <dt className="font-mono text-[10.5px] uppercase tracking-label text-muted">{unitLabel} visited</dt>
+            <dd className="mt-1 font-mono tabular-nums text-3xl text-ink">{visitedCount}</dd>
+            <div className="mt-2 h-1 bg-rule" aria-hidden="true">
+              <div className="h-1 bg-[var(--map-visited)] transition-all duration-300" style={{ width: `${visitedPercentage}%` }} />
             </div>
-            <p className="text-sm text-gray-700 dark:text-gray-400">
-              {showUSMap ? 'States' : 'Countries'} Visited
-            </p>
           </div>
-          <div>
-            <p className="text-xl sm:text-2xl font-semibold text-[#2563EB]">
-              {livedCount}
-            </p>
-            <p className="text-sm text-gray-700 dark:text-gray-400">
-              {showUSMap ? 'States' : 'Countries'} Lived
-            </p>
+          <div className="border-b border-r border-rule-hi px-4 py-3">
+            <dt className="font-mono text-[10.5px] uppercase tracking-label text-muted">{unitLabel} lived</dt>
+            <dd className="mt-1 font-mono tabular-nums text-3xl text-signal">{livedCount}</dd>
           </div>
-        </div>
+        </dl>
       </div>
 
-      <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 p-3 sm:p-4">
-        <div className="h-[300px] sm:h-[400px] md:h-[500px] lg:h-[600px] relative">
+      <div className="border border-rule-hi">
+        <div className="flex flex-wrap items-center justify-between gap-3 border-b border-rule px-3 sm:px-4 py-2.5">
+          <div role="tablist" aria-label="Map" className="flex">
+            {(['World', 'US'] as const).map((label) => {
+              const active = (label === 'US') === showUSMap;
+              return (
+                <button
+                  key={label}
+                  role="tab"
+                  aria-selected={active}
+                  onClick={() => setShowUSMap(label === 'US')}
+                  className={`font-mono text-[11px] uppercase tracking-util px-3 py-1.5 border transition-colors -ml-px first:ml-0 ${
+                    active
+                      ? 'bg-ink text-paper border-ink'
+                      : 'border-rule-hi text-muted hover:text-signal hover:border-signal'
+                  }`}
+                >
+                  {label}
+                </button>
+              );
+            })}
+          </div>
+          <div className="flex items-center gap-4 font-mono text-[10.5px] uppercase tracking-label text-muted">
+            <span className="flex items-center gap-2">
+              <span className="w-3 h-3 bg-[var(--map-visited)]" aria-hidden="true" /> Visited
+            </span>
+            <span className="flex items-center gap-2">
+              <span className="w-3 h-3 bg-[var(--map-lived)]" aria-hidden="true" /> Lived
+            </span>
+          </div>
+        </div>
+
+        <div className="h-[300px] sm:h-[400px] md:h-[500px] lg:h-[600px] relative notebook-grid p-3 sm:p-4">
           {!mapsReady ? (
-            <div className="h-full flex items-center justify-center">
-              <div className="text-center">
-                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-signal mx-auto mb-4" />
-                <p className="text-gray-600 dark:text-gray-400">Loading interactive maps...</p>
-              </div>
+            <div className="h-full flex flex-col items-center justify-center gap-3">
+              <span className="h-px w-10 bg-signal motion-safe:animate-pulse" />
+              <p className="font-mono text-[11px] uppercase tracking-util text-muted">Loading map…</p>
             </div>
           ) : (
           <ErrorBoundary fallback={
             <div className="h-full flex items-center justify-center">
               <div className="text-center">
-                <p className="text-gray-600 dark:text-gray-400 mb-2">Map temporarily unavailable</p>
-                <button 
-                  onClick={() => window.location.reload()} 
-                  className="px-4 py-2 bg-signal text-white rounded hover:brightness-110 transition-colors"
+                <p className="text-muted mb-3">Map temporarily unavailable</p>
+                <button
+                  onClick={() => window.location.reload()}
+                  className="font-mono text-[11px] uppercase tracking-util px-4 py-2 bg-signal text-signal-ink hover:brightness-110 transition"
                 >
-                  Refresh Page
+                  Refresh page
                 </button>
               </div>
             </div>
@@ -467,15 +481,16 @@ export default function Travel() {
                           onMouseLeave={() => setTooltip(null)}
                           style={{
                             default: {
-                              fill: hasLived ? '#2563EB' : isVisited ? '#60A5FA' : '#E5E7EB',
-                              stroke: '#FFFFFF',
+                              fill: hasLived ? 'var(--map-lived)' : isVisited ? 'var(--map-visited)' : 'var(--map-land)',
+                              stroke: 'var(--paper)',
                               strokeWidth: 0.5,
                               outline: 'none',
                             },
                             hover: {
-                              fill: hasLived ? '#1D4ED8' : isVisited ? '#3B82F6' : '#D1D5DB',
-                              stroke: '#FFFFFF',
-                              strokeWidth: 0.5,
+                              fill: hasLived ? 'var(--map-lived)' : isVisited ? 'var(--map-visited)' : 'var(--map-land)',
+                              stroke: 'var(--ink)',
+                              strokeWidth: 0.75,
+                              opacity: 0.82,
                               outline: 'none',
                             }
                           }}
@@ -490,80 +505,59 @@ export default function Travel() {
           )}
 
           {tooltip && (
-            <div className="absolute top-2 sm:top-4 left-1/2 transform -translate-x-1/2 bg-white dark:bg-gray-800 px-3 py-1 sm:px-4 sm:py-2 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700">
-              <p className="text-xs sm:text-sm font-medium text-gray-900 dark:text-gray-100">{tooltip}</p>
+            <div className="absolute top-3 left-1/2 -translate-x-1/2 bg-paper px-3 py-1.5 border border-rule-hi">
+              <p className="font-mono text-[11px] uppercase tracking-util text-ink">{tooltip}</p>
             </div>
           )}
         </div>
-
-        <div className="mt-3 sm:mt-4 flex justify-center gap-4 sm:gap-6 text-xs sm:text-sm">
-          <div className="flex items-center gap-2">
-            <div className="w-3 h-3 sm:w-4 sm:h-4 bg-[#60A5FA] rounded"></div>
-            <span className="text-gray-900 dark:text-gray-400">Visited</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <div className="w-3 h-3 sm:w-4 sm:h-4 bg-[#2563EB] rounded"></div>
-            <span className="text-gray-900 dark:text-gray-400">Lived</span>
-          </div>
-        </div>
       </div>
 
-      <div className="mt-8 sm:mt-12 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 p-4 sm:p-6">
-        <h2 className="text-xl sm:text-2xl font-bold mb-2 text-gray-900 dark:text-white">
-          {showUSMap ? 'States' : 'Countries'} I&apos;ve Been
+      <section className="mt-14 border-t border-rule pt-10">
+        <p className="font-mono text-[10.5px] uppercase tracking-label text-muted">01 — Visited</p>
+        <h2 className="mt-2 text-2xl font-bold text-ink">
+          {unitLabel} I&apos;ve been
         </h2>
-        <p className="text-sm text-gray-700 dark:text-gray-400 mb-4 sm:mb-6">
-          {livedCount} of these are {showUSMap ? 'states' : 'countries'} I&apos;ve
-          lived in, marked below.
+        <p className="mt-2 text-sm text-muted mb-6">
+          {livedCount} of these are {showUSMap ? 'states' : 'countries'} I&apos;ve lived in, marked in orange.
         </p>
-        <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-4 text-sm sm:text-base">
+        <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-8 text-sm sm:text-base">
           {places.map(({ name, hasLived }) => (
             <li
               key={name}
-              className={`flex items-center gap-2 p-2 rounded-lg ${
-                hasLived
-                  ? 'bg-[#2563EB]/10 font-semibold text-[#2563EB] dark:text-[#93B4FB]'
-                  : 'text-gray-700 dark:text-gray-400'
+              className={`flex items-center gap-2.5 py-2 border-b border-rule ${
+                hasLived ? 'font-semibold text-ink' : 'text-muted'
               }`}
             >
               <span
                 aria-hidden="true"
-                className="w-2 h-2 rounded-full flex-shrink-0"
-                style={{ backgroundColor: hasLived ? '#2563EB' : '#60A5FA' }}
+                className={`w-2 h-2 flex-shrink-0 ${hasLived ? 'bg-[var(--map-lived)]' : 'bg-[var(--map-visited)]'}`}
               />
               <span>{displayNames[name] ?? name}</span>
               {hasLived && (
-                <span className="ml-auto text-[10px] font-mono uppercase tracking-widest">
+                <span className="ml-auto font-mono text-[10px] uppercase tracking-label text-signal">
                   Lived
                 </span>
               )}
             </li>
           ))}
         </ul>
-      </div>
+      </section>
 
-      <div className="mt-8 sm:mt-12 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 p-4 sm:p-6">
-        <h2 className="text-xl sm:text-2xl font-bold mb-2 text-gray-900 dark:text-white">
-          Still to Visit
-        </h2>
-        <p className="text-sm text-gray-700 dark:text-gray-400 mb-4 sm:mb-6">
+      <section className="mt-14 border-t border-rule pt-10">
+        <p className="font-mono text-[10.5px] uppercase tracking-label text-muted">02 — Unvisited</p>
+        <h2 className="mt-2 text-2xl font-bold text-ink">Still to visit</h2>
+        <p className="mt-2 text-sm text-muted mb-6">
           {stillToVisit.length} {showUSMap ? 'states' : 'countries'} left on the list.
         </p>
-        <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-4 text-sm sm:text-base">
+        <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-8 text-sm sm:text-base">
           {stillToVisit.map((name) => (
-            <li
-              key={name}
-              className="flex items-center gap-2 p-2 rounded-lg text-gray-500 dark:text-gray-500"
-            >
-              <span
-                aria-hidden="true"
-                className="w-3.5 h-3.5 rounded-[3px] border-2 border-gray-300 dark:border-gray-600 flex-shrink-0"
-              />
+            <li key={name} className="flex items-center gap-2.5 py-2 border-b border-rule text-muted/80">
+              <span aria-hidden="true" className="w-2 h-2 border border-rule-hi flex-shrink-0" />
               <span>{displayNames[name] ?? name}</span>
             </li>
           ))}
         </ul>
-      </div>
+      </section>
     </main>
   );
 }        

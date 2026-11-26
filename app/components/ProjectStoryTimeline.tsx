@@ -26,10 +26,10 @@ const sections: { key: SectionKey; label: string; shortLabel: string }[] = [
 
 function SectionCard({ label, content }: { label: string; content: string }) {
   return (
-    <div className="min-h-[240px] sm:min-h-[220px] flex flex-col justify-center bg-white dark:bg-gray-800 p-6 sm:p-8 ring-1 ring-rule-hi">
+    <div className="min-h-[240px] sm:min-h-[220px] flex flex-col justify-center bg-paper p-6 sm:p-8 ring-1 ring-rule-hi">
       <p className={`${monoStyles.eyebrow} mb-3 text-signal`}>Case study</p>
-      <h3 className="font-bold text-lg sm:text-xl mb-4 text-gray-900 dark:text-white">{label}</h3>
-      <p className="text-gray-700 dark:text-gray-400 text-sm sm:text-base leading-relaxed">{content}</p>
+      <h3 className="font-bold text-lg sm:text-xl mb-4 text-ink">{label}</h3>
+      <p className="text-muted text-sm sm:text-base leading-relaxed">{content}</p>
     </div>
   );
 }
@@ -99,7 +99,7 @@ export default function ProjectStoryTimeline({ project }: ProjectStoryTimelinePr
       </div>
 
       <div className="md:hidden sticky top-16 z-[2] flex justify-center pb-3">
-        <span className={`${monoStyles.label} text-signal-ink bg-signal px-3 py-1 shadow`}>
+        <span className={`${monoStyles.label} text-signal-ink bg-signal px-3 py-1`}>
           {sections[activeIndex]?.shortLabel}
         </span>
       </div>

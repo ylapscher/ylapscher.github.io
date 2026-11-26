@@ -20,12 +20,16 @@ type ImageGalleryProps = {
   images?: GalleryImage[];
   autoAdvanceMs?: number;
   showDeviceToggle?: boolean;
+  /** Fixed frame ratio (CSS aspect-ratio, e.g. "4 / 3"). Without it the
+   *  track grows to its tallest slide, leaving dead space under wide ones. */
+  aspectRatio?: string;
 };
 
 export default function ImageGallery({
   images = BARBER_IMAGES,
   autoAdvanceMs = 5000,
   showDeviceToggle = false,
+  aspectRatio,
 }: ImageGalleryProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [deviceFilter, setDeviceFilter] = useState<'all' | 'desktop' | 'mobile'>('all');
@@ -76,7 +80,7 @@ export default function ImageGallery({
   const current = displayImages[currentIndex];
 
   return (
-    <div className="relative max-w-3xl mx-auto">
+    <div className="relative w-full">
       {showDeviceToggle && (
         <div className="flex justify-center gap-2 mb-4">
           {(['all', 'desktop', 'mobile'] as const).map((mode) => (
@@ -96,19 +100,19 @@ export default function ImageGallery({
         </div>
       )}
 
-      <div className="relative ring-1 ring-rule-hi overflow-hidden bg-gray-100 dark:bg-gray-800">
+      <div className="relative ring-1 ring-rule-hi overflow-hidden bg-ink/5">
         <div
           className="flex transition-transform duration-700 ease-in-out"
-          style={{ transform: `translateX(-${currentIndex * 100}%)` }}
+          style={{ transform: `translateX(-${currentIndex * 100}%)`, aspectRatio }}
         >
           {displayImages.map((image, index) => (
-            <div key={image.src + index} className="min-w-full">
+            <div key={image.src + index} className="min-w-full flex items-center justify-center">
               <Image
                 src={image.src}
                 alt={image.alt}
                 width={800}
                 height={600}
-                className="w-full object-contain"
+                className={aspectRatio ? 'h-full w-auto max-w-full object-contain' : 'w-full object-contain'}
                 priority={index === 0}
                 loading={index === 0 ? 'eager' : 'lazy'}
               />

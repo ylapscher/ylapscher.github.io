@@ -26,7 +26,7 @@ export default function PrivacyPage() {
         delivered to {CONTACT_EMAIL}. The operator is in {NAP.addressLocality},{' '}
         {NAP.addressRegion}, {NAP.addressCountry}.
       </p>
-      <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Analytics</h2>
+      <h2 className="text-2xl font-bold text-ink">Analytics</h2>
       <p>
         Pages load Google Analytics (property G-5BJ2L5FB86) and PostHog. They collect
         typical usage data such as page path, referrer, device, and approximate
@@ -34,7 +34,7 @@ export default function PrivacyPage() {
         blocker turns them off; the pages remain readable without JavaScript for the
         main copy.
       </p>
-      <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Contact form</h2>
+      <h2 className="text-2xl font-bold text-ink">Contact form</h2>
       <p>
         The form on{' '}
         <Link href="/contact" className="text-signal underline">
@@ -44,19 +44,19 @@ export default function PrivacyPage() {
         (form id xwpkjbzj). Use that channel only if you want a reply. Do not send
         secrets, health information, or payment card numbers through the form.
       </p>
-      <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Cookies and local storage</h2>
+      <h2 className="text-2xl font-bold text-ink">Cookies and local storage</h2>
       <p>
         A theme preference (<code>light</code> or <code>dark</code>) is stored in
         localStorage so the notebook palette does not flash on repeat visits.
         Analytics cookies follow the vendors&apos; own policies.
       </p>
-      <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Third parties</h2>
+      <h2 className="text-2xl font-bold text-ink">Third parties</h2>
       <p>
         LinkedIn, Google Drive (the résumé), Cal.com, Formspree, Google Analytics,
         and PostHog each have their own privacy policies. Following those links
         leaves lapscher.com.
       </p>
-      <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Requests</h2>
+      <h2 className="text-2xl font-bold text-ink">Requests</h2>
       <p>
         Email{' '}
         <a href={`mailto:${CONTACT_EMAIL}`} className="text-signal underline">

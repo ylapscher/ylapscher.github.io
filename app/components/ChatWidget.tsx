@@ -1,6 +1,7 @@
 'use client';
 
-import { useState, FormEvent } from 'react';
+import { useEffect, useState, FormEvent } from 'react';
+import { usePathname } from 'next/navigation';
 import { ChatBubbleOvalLeftIcon, XMarkIcon } from '@heroicons/react/24/outline';
 import { FORMSPREE_ENDPOINT } from '../lib/site';
 
@@ -14,6 +15,19 @@ const FORM_ENDPOINT = FORMSPREE_ENDPOINT;
 
 export default function ChatWidget() {
   const [isOpen, setIsOpen] = useState(false);
+  // On the home page the button would sit on top of the hero portrait (on
+  // phones especially), so it waits until the visitor has scrolled past it.
+  const pathname = usePathname();
+  const deferUntilScrolled = pathname === '/';
+  const [scrolledPastHero, setScrolledPastHero] = useState(false);
+  useEffect(() => {
+    if (!deferUntilScrolled) return;
+    const onScroll = () => setScrolledPastHero(window.scrollY > window.innerHeight * 0.85);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, [deferUntilScrolled]);
+  const showButton = !isOpen && (!deferUntilScrolled || scrolledPastHero);
   const [formData, setFormData] = useState<FormData>({
     name: '',
     email: '',
@@ -82,26 +96,30 @@ export default function ChatWidget() {
       {/* Chat Button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        aria-label={isOpen ? 'Close contact form' : 'Open contact form'}
+        aria-label={isOpen ? 'Close contact form' : 'Message: open contact form'}
         aria-expanded={isOpen}
-        className={`${
-          isOpen ? 'hidden' : 'flex'
-        } items-center justify-center w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-signal text-white shadow-lg hover:brightness-110 transition-colors`}
+        tabIndex={showButton ? 0 : -1}
+        className={`${isOpen ? 'hidden' : 'flex'} ${
+          showButton ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2 pointer-events-none'
+        } items-center justify-center gap-2 h-11 sm:h-12 px-4 bg-signal text-signal-ink ring-1 ring-ink/20
+          hover:brightness-110 transition duration-300 focus-visible:outline focus-visible:outline-2
+          focus-visible:outline-offset-2 focus-visible:outline-signal`}
       >
-        <ChatBubbleOvalLeftIcon className="w-5 h-5 sm:w-6 sm:h-6" />
+        <ChatBubbleOvalLeftIcon className="w-5 h-5" aria-hidden="true" />
+        <span className="font-mono text-[11px] uppercase tracking-util font-semibold">Message</span>
       </button>
 
       {/* Chat Window */}
       <div className={`${
         isOpen ? 'flex' : 'hidden'
-      } flex-col absolute bottom-0 right-0 w-[calc(100vw-2rem)] sm:w-96 h-[calc(100vh-8rem)] sm:h-[450px] max-h-[500px] bg-white dark:bg-gray-800 rounded-lg shadow-xl border border-gray-200 dark:border-gray-700`}>
+      } flex-col absolute bottom-0 right-0 w-[calc(100vw-2rem)] sm:w-96 h-[calc(100vh-8rem)] sm:h-[450px] max-h-[500px] bg-paper border border-rule-hi shadow-[6px_6px_0_0_var(--rule)]`}>
         {/* Header */}
-        <div className="flex items-center justify-between p-3 border-b border-gray-200 dark:border-gray-700">
+        <div className="flex items-center justify-between p-3 border-b border-rule">
           <h3 className="text-lg font-semibold">Send a note</h3>
           <button
             onClick={() => setIsOpen(false)}
             aria-label="Close contact form"
-            className="p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+            className="p-1 text-muted hover:text-signal transition-colors"
           >
             <XMarkIcon className="w-6 h-6" />
           </button>
@@ -124,7 +142,7 @@ export default function ChatWidget() {
                 id="name"
                 name="name"
                 required
-                className="w-full px-3 py-2 rounded border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 focus:ring-2 focus:ring-signal outline-none transition-shadow"
+                className="w-full px-3 py-2 border border-rule-hi bg-paper focus:ring-2 focus:ring-signal outline-none transition-shadow"
                 value={formData.name}
                 onChange={(e) => setFormData({ ...formData, name: e.target.value })}
               />
@@ -140,8 +158,8 @@ export default function ChatWidget() {
                 name="_replyto"
                 required
                 className={`w-full px-3 py-2 rounded border ${
-                  emailError ? 'border-red-500' : 'border-gray-300 dark:border-gray-700'
-                } bg-white dark:bg-gray-900 focus:ring-2 focus:ring-signal outline-none transition-shadow`}
+                  emailError ? 'border-red-500' : 'border-rule-hi'
+                } bg-paper focus:ring-2 focus:ring-signal outline-none transition-shadow`}
                 value={formData.email}
                 onChange={(e) => {
                   setFormData({ ...formData, email: e.target.value });
@@ -163,7 +181,7 @@ export default function ChatWidget() {
                 name="message"
                 required
                 rows={3}
-                className="w-full px-3 py-2 rounded border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 focus:ring-2 focus:ring-signal outline-none transition-shadow resize-none"
+                className="w-full px-3 py-2 border border-rule-hi bg-paper focus:ring-2 focus:ring-signal outline-none transition-shadow resize-none"
                 value={formData.message}
                 onChange={(e) => setFormData({ ...formData, message: e.target.value })}
               />

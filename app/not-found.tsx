@@ -8,11 +8,11 @@ import { BOOKING_URL, CONTACT_EMAIL } from './lib/site';
 export default function NotFound() {
   return (
     <main className="container mx-auto px-4 sm:px-6 py-16 max-w-3xl">
-      <h1 className="text-4xl font-bold mb-4 text-gray-900 dark:text-white">Page not found</h1>
-      <p className="text-lg text-gray-700 dark:text-gray-400 mb-8">
+      <h1 className="text-4xl font-bold mb-4 text-ink">Page not found</h1>
+      <p className="text-lg text-muted mb-8">
         Filed under: money that&apos;s stuck somewhere else.
       </p>
-      <ul className="space-y-2 text-gray-700 dark:text-gray-400 mb-10">
+      <ul className="space-y-2 text-muted mb-10">
         <li>
           <Link href="/" className="text-signal underline">
             Home
@@ -44,7 +44,7 @@ export default function NotFound() {
           </a>
         </li>
       </ul>
-      <p className="text-gray-700 dark:text-gray-400 mb-8">
+      <p className="text-muted mb-8">
         Book a 15-minute intro at{' '}
         <a href={BOOKING_URL} className="text-signal underline">
           {BOOKING_URL}

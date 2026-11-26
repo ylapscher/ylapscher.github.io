@@ -21,12 +21,10 @@ export default function ProjectContent({ project, nextProject, previousProject }
     <main className="container mx-auto px-4 sm:px-6 py-12 max-w-4xl">
       <Link
         href="/portfolio"
-        className="inline-flex items-center text-signal hover:brightness-110 mb-8 transition-colors"
+        className={`${monoStyles.label} group inline-flex items-center gap-2 text-muted hover:text-signal mb-8 transition-colors`}
       >
-        <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-        </svg>
-        Back to Portfolio
+        <span aria-hidden="true" className="transition-transform group-hover:-translate-x-0.5">&larr;</span>
+        Portfolio
       </Link>
 
       <div className="mb-10">
@@ -39,9 +37,9 @@ export default function ProjectContent({ project, nextProject, previousProject }
           size="hero"
         />
 
-        <h1 className="text-4xl font-bold mt-8 mb-3 text-gray-900 dark:text-white">{project.title}</h1>
-        <p className={`${monoStyles.eyebrow} text-signal mb-4`}>{project.outcomeHook}</p>
-        <p className="text-lg text-gray-700 dark:text-gray-400 mb-6 leading-relaxed">{project.description}</p>
+        <h1 className="text-4xl sm:text-[2.6rem] font-bold tracking-claim leading-[1.06] mt-8 mb-3 text-ink">{project.title}</h1>
+        <p className={`${monoStyles.eyebrow} mb-4`}>{project.outcomeHook}</p>
+        <p className="text-lg text-muted mb-6 leading-relaxed max-w-[60ch]">{project.description}</p>
 
         <ProjectMetaChips project={project} />
 
@@ -64,7 +62,7 @@ export default function ProjectContent({ project, nextProject, previousProject }
 
       {project.beforeAfter && (
         <section className="mb-14">
-          <h2 className="text-2xl font-bold mb-2 text-gray-900 dark:text-white">Transformation</h2>
+          <h2 className="text-2xl font-bold mb-2 text-ink">Transformation</h2>
           <p className={`${monoStyles.eyebrow} mb-6`}>Before and after</p>
           <BeforeAfterSlider
             before={project.beforeAfter.before}
@@ -78,7 +76,7 @@ export default function ProjectContent({ project, nextProject, previousProject }
 
       {project.gallery && project.gallery.length > 0 && (
         <section className="mb-14">
-          <h2 className="text-2xl font-bold mb-2 text-gray-900 dark:text-white">Screens</h2>
+          <h2 className="text-2xl font-bold mb-2 text-ink">Screens</h2>
           <p className={`${monoStyles.eyebrow} mb-6`}>Desktop and mobile views</p>
           <ImageGallery images={project.gallery} showDeviceToggle autoAdvanceMs={0} />
         </section>
@@ -86,16 +84,16 @@ export default function ProjectContent({ project, nextProject, previousProject }
 
       {project.embedUrl && (
         <section className="mb-14">
-          <h2 className="text-2xl font-bold mb-2 text-gray-900 dark:text-white">Try it live</h2>
+          <h2 className="text-2xl font-bold mb-2 text-ink">Try it live</h2>
           <p className={`${monoStyles.eyebrow} mb-6`}>Interactive preview</p>
-          <div className="ring-1 ring-rule-hi overflow-hidden bg-white dark:bg-gray-900">
-            <div className="flex items-center gap-2 px-3 py-2 border-b border-rule bg-paper dark:bg-gray-800">
+          <div className="ring-1 ring-rule-hi overflow-hidden bg-paper">
+            <div className="flex items-center gap-2 px-3 py-2 border-b border-rule bg-paper">
               <span className={`${monoStyles.label} text-muted truncate`}>{project.embedUrl}</span>
             </div>
             <iframe
               src={project.embedUrl}
               title={`${project.title} live demo`}
-              className="w-full aspect-[16/10] border-0 bg-gray-100"
+              className="w-full aspect-[16/10] border-0 bg-ink/5"
               loading="lazy"
               sandbox="allow-scripts allow-same-origin allow-forms allow-popups"
             />
@@ -104,23 +102,23 @@ export default function ProjectContent({ project, nextProject, previousProject }
       )}
 
       <section className="mb-14">
-        <h2 className="text-2xl font-bold mb-2 text-gray-900 dark:text-white">Case study</h2>
+        <h2 className="text-2xl font-bold mb-2 text-ink">Case study</h2>
         <p className={`${monoStyles.eyebrow} mb-8`}>Scroll through the story</p>
         <ProjectStoryTimeline project={project} />
       </section>
 
-      <div className="border-t border-gray-200 dark:border-gray-700 pt-8">
+      <div className="border-t border-rule pt-8">
         <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
           {previousProject && (
             <Link
               href={`/portfolio/${previousProject.slug}`}
-              className="group flex items-center text-gray-600 dark:text-gray-400 hover:text-signal transition-colors w-full sm:w-auto"
+              className="group flex items-center text-ink hover:text-signal transition-colors w-full sm:w-auto"
             >
               <svg className="w-5 h-5 mr-2 group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
               </svg>
               <div className="text-left">
-                <span className="block text-xs uppercase tracking-wide text-gray-500 dark:text-gray-500">Previous</span>
+                <span className="block font-mono text-[10.5px] uppercase tracking-label text-muted mb-0.5">Previous</span>
                 <span className="block font-medium">{previousProject.title}</span>
               </div>
             </Link>
@@ -128,18 +126,18 @@ export default function ProjectContent({ project, nextProject, previousProject }
 
           <Link
             href="/portfolio"
-            className="inline-flex items-center justify-center px-4 py-2 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:border-signal hover:text-signal transition-colors"
+            className="inline-flex items-center justify-center px-4 py-2 font-mono text-[11px] uppercase tracking-util border border-rule-hi text-ink hover:border-signal hover:text-signal transition-colors"
           >
-            View All Projects
+            All projects
           </Link>
 
           {nextProject && (
             <Link
               href={`/portfolio/${nextProject.slug}`}
-              className="group flex items-center text-gray-600 dark:text-gray-400 hover:text-signal transition-colors w-full sm:w-auto justify-end"
+              className="group flex items-center text-ink hover:text-signal transition-colors w-full sm:w-auto justify-end"
             >
               <div className="text-right">
-                <span className="block text-xs uppercase tracking-wide text-gray-500 dark:text-gray-500">Next</span>
+                <span className="block font-mono text-[10.5px] uppercase tracking-label text-muted mb-0.5">Next</span>
                 <span className="block font-medium">{nextProject.title}</span>
               </div>
               <svg className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">

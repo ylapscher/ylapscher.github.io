@@ -1,141 +1,86 @@
-'use client';
-
 import Image from 'next/image';
-import { useState } from 'react';
-import { motion, useReducedMotion } from 'framer-motion';
 import type { Experience } from '../data/home-data';
 import { monoStyles } from '../lib/typography';
 
-/** Shared card markup for one experience entry, used by both the animated
- *  and reduced-motion renderings of the timeline. */
-function ExperienceCard({ experience }: { experience: Experience }) {
+/**
+ * Experience as a ledger: one ruled row per role, the dates in a mono
+ * column on the left, the role on the right. It replaced a scroll-pinned
+ * card stack that spent ~650px of scroll per role and hid cards until they
+ * animated in. Flat paper + hairline rules, the same language as the hero
+ * rail and Field Notes, so it needs no motion and renders on the server.
+ *
+ * Logos sit in greyscale so eight brand palettes don't fight the signal
+ * orange; they pick their colour back up on hover.
+ */
+function ExperienceRow({ experience, current }: { experience: Experience; current: boolean }) {
   const isClickable = Boolean(experience.link);
-  const ContentWrapper = isClickable ? 'a' : 'div';
-  const contentProps = isClickable
-    ? { href: experience.link, target: '_blank', rel: 'noopener noreferrer', className: 'block' }
+  const Wrapper = isClickable ? 'a' : 'div';
+  const wrapperProps = isClickable
+    ? { href: experience.link, target: '_blank', rel: 'noopener noreferrer' }
     : {};
 
   return (
-    <ContentWrapper {...contentProps}>
-      <div
-        className={`min-h-[280px] sm:min-h-[260px] flex flex-col justify-center bg-white dark:bg-gray-800 p-6 sm:p-8 rounded-lg shadow-xl border border-gray-200 dark:border-gray-700 transition-all duration-300 ${
-          isClickable ? 'hover:-translate-y-1 hover:shadow-2xl hover:border-signal cursor-pointer group' : ''
+    <li className="group relative border-t border-rule first:border-t-0">
+      <Wrapper
+        {...wrapperProps}
+        className={`grid grid-cols-1 sm:grid-cols-[9.5rem_1fr] gap-x-8 gap-y-3 py-7 sm:py-8 ${
+          isClickable
+            ? 'focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-signal'
+            : ''
         }`}
       >
-        <div className="flex flex-col gap-4">
-          <div className="flex items-center gap-4">
-            {experience.image && (
-              <div className="flex-shrink-0 w-12 h-12">
-                <Image
-                  src={experience.image.src}
-                  alt={experience.image.alt}
-                  width={48}
-                  height={48}
-                  className="rounded object-cover"
-                />
-              </div>
-            )}
-            <div>
-              <p className={`${monoStyles.eyebrow} mb-1`}>{experience.duration}</p>
-              <h3
-                className={`font-bold text-lg mb-1 text-gray-900 dark:text-white ${
-                  isClickable ? 'group-hover:text-signal transition-colors' : ''
-                }`}
-              >
-                {experience.role}
-              </h3>
-              <p className="text-gray-700 dark:text-gray-400 text-sm">{experience.company}</p>
+        <div className="flex sm:flex-col items-center sm:items-start gap-3 sm:gap-2">
+          <span
+            aria-hidden="true"
+            className={`hidden sm:block h-0.5 w-6 ${current ? 'bg-signal' : 'bg-tick'}`}
+          />
+          <span className={`${monoStyles.data} text-[11px] uppercase tracking-util ${current ? 'text-signal' : 'text-muted'}`}>
+            {experience.duration}
+          </span>
+        </div>
+
+        <div className="flex gap-4">
+          {experience.image && (
+            <div className="flex-shrink-0 w-10 h-10 border border-rule bg-paper p-1">
+              <Image
+                src={experience.image.src}
+                alt={experience.image.alt}
+                width={40}
+                height={40}
+                className="w-full h-full object-contain grayscale opacity-75 transition duration-300
+                           group-hover:grayscale-0 group-hover:opacity-100"
+              />
             </div>
-          </div>
-          <div className="text-gray-700 dark:text-gray-400 text-sm leading-relaxed line-clamp-4">
-            {experience.achievements[0]}
+          )}
+          <div className="min-w-0">
+            <h3
+              className={`font-bold text-lg leading-tight text-ink ${
+                isClickable ? 'group-hover:text-signal transition-colors' : ''
+              }`}
+            >
+              {experience.role}
+            </h3>
+            <p className={`${monoStyles.label} text-muted mt-1.5`}>{experience.company}</p>
+            <p className="mt-3 text-muted text-sm sm:text-[0.95rem] leading-relaxed max-w-[60ch]">
+              {experience.achievements[0]}
+            </p>
           </div>
         </div>
-      </div>
-    </ContentWrapper>
-  );
-}
-
-/** One pinned "slide" of the scroll-stack: sticks in place while its own tall
- *  wrapper scrolls past, so the next card in document order slides up and
- *  visually replaces it. Fades in once (never back out, so it can't end up
- *  transparent while pinned) and reports first entry so the year spine can
- *  track progress down the list. */
-function TimelineSlide({
-  experience,
-  index,
-  onActive,
-}: {
-  experience: Experience;
-  index: number;
-  onActive: (index: number) => void;
-}) {
-  return (
-    <div className="h-[62vh] sm:h-[68vh] md:h-[72vh] sticky top-16 sm:top-20 flex items-center">
-      <motion.div
-        initial={{ opacity: 0, y: 32 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.3 }}
-        onViewportEnter={() => onActive(index)}
-        transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
-        className="w-full"
-      >
-        <ExperienceCard experience={experience} />
-      </motion.div>
-    </div>
+      </Wrapper>
+    </li>
   );
 }
 
 export default function ExperienceTimeline({ experiences }: { experiences: Experience[] }) {
-  const [activeIndex, setActiveIndex] = useState(0);
-  const prefersReducedMotion = useReducedMotion();
-
-  // Motion/scroll-jacking off by request or preference: fall back to a
-  // plain stacked list so the section stays fully readable and navigable.
-  if (prefersReducedMotion) {
-    return (
-      <div className="space-y-6">
-        {experiences.map((experience, index) => (
-          <ExperienceCard key={index} experience={experience} />
-        ))}
-      </div>
-    );
-  }
-
   return (
-    <div className="relative md:grid md:grid-cols-[auto_1fr] md:gap-10">
-      {/* Year spine: tracks which card is currently pinned in the stack. */}
-      <div className="hidden md:flex flex-col items-center sticky top-16 self-start h-[72vh] justify-center gap-1 py-4">
-        <div className="absolute left-1/2 -translate-x-1/2 top-0 bottom-0 w-px bg-rule" aria-hidden="true" />
-        {experiences.map((experience, index) => {
-          const isActive = index === activeIndex;
-          return (
-            <span
-              key={experience.duration + experience.company}
-              className={`relative z-[1] ${monoStyles.data} block text-center px-3 py-1.5 rounded-full transition-all duration-300 ${
-                isActive
-                  ? 'text-signal-ink bg-signal text-sm font-bold scale-110'
-                  : 'text-muted bg-paper text-xs'
-              }`}
-            >
-              {experience.duration.split(' - ')[0]}
-            </span>
-          );
-        })}
-      </div>
-
-      {/* Mobile year marker for the active card, since the spine is hidden. */}
-      <div className="md:hidden sticky top-16 z-[2] flex justify-center pb-3">
-        <span className={`${monoStyles.data} text-sm font-bold text-signal-ink bg-signal px-3 py-1 rounded-full shadow`}>
-          {experiences[activeIndex]?.duration}
-        </span>
-      </div>
-
-      <div>
-        {experiences.map((experience, index) => (
-          <TimelineSlide key={index} experience={experience} index={index} onActive={setActiveIndex} />
-        ))}
-      </div>
-    </div>
+    <ol className="border-y border-rule-hi">
+      {experiences.map((experience, index) => (
+        <ExperienceRow
+          key={experience.duration + experience.company}
+          experience={experience}
+          current={index === 0 && /present/i.test(experience.duration)}
+        />
+      ))}
+    </ol>
   );
 }
