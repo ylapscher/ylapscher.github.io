@@ -11,14 +11,14 @@ Joe Lapscher (also Yoel Lapscher) is a partner at Expense Reduction Coaching in 
 
 ## Experience
 
-- **Partner, Expense Reduction Coaching** (2026 - Present): Finds savings in telecom, payments, payroll, insurance, and utilities for $10M–$100M operators. No savings, no fee.
-- **Chief Product Officer, Tienda Pago** (2025 - 2026): Owned product, growth, and marketing for a LATAM fintech lending to bodegas.
-- **Senior Product Manager, Transcard** (2024 - 2025): Led the launch of a payments platform that moves businesses off paper checks.
-- **Senior Product Manager, Raistone** (2022 - 2024): Second product hire. Shipped working-capital products from zero to customers.
-- **Product Manager, Citrix** (2020 - 2022): First PM role. Prioritization, roadmaps, stakeholders, and a lot of remote desktops.
-- **Software Engineer, General Electric** (2018 - 2020): IT Leadership Program: four rotations across NY, Maine, New Orleans, and Atlanta.
-- **Founder, Macro Excellence** (2017 - 2018): Founded, ran, and sold a consulting shop that automated business processes.
-- **Intern, Procter & Gamble** (2015 - 2017): Four internships cutting market-research costs and automating reporting in Excel VBA.
+- **Partner, Expense Reduction Coaching** (Apr 2026 – Present): Finds savings in telecom, payments, payroll, insurance, and utilities for $10M–$100M operators. No savings, no fee.
+- **Chief Product Officer, Tienda Pago** (Dec 2025 – Apr 2026): Owned product, growth, and marketing for a LATAM fintech lending to bodegas.
+- **Senior Product Manager, Transcard** (Oct 2024 – Oct 2025): Led the launch of a payments platform that moves businesses off paper checks.
+- **Senior Product Manager, Raistone** (Jan 2022 – Oct 2024): Second product hire. Shipped working-capital products from zero to customers.
+- **Product Manager, Citrix** (Oct 2020 – Dec 2021): First PM role. Prioritization, roadmaps, stakeholders, and a lot of remote desktops.
+- **Software Engineer, General Electric** (May 2016 – Oct 2020): IT Leadership Program: four rotations across NY, Maine, New Orleans, and Atlanta.
+- **Founder, Macro Excellence** (Jan 2015 – Jul 2015): Founded, ran, and sold a consulting shop that automated business processes.
+- **Intern, Procter & Gamble** (May 2013 – Dec 2015): Four internships cutting market-research costs and automating reporting in Excel VBA.
 
 ## Education
 

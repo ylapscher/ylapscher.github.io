@@ -23,7 +23,7 @@ function ExperienceRow({ experience, current }: { experience: Experience; curren
     <li className="group relative border-t border-rule first:border-t-0">
       <Wrapper
         {...wrapperProps}
-        className={`grid grid-cols-1 sm:grid-cols-[9.5rem_1fr] gap-x-8 gap-y-3 py-7 sm:py-8 ${
+        className={`grid grid-cols-1 sm:grid-cols-[11rem_1fr] gap-x-8 gap-y-3 py-7 sm:py-8 ${
           isClickable
             ? 'focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-signal'
             : ''
@@ -34,7 +34,7 @@ function ExperienceRow({ experience, current }: { experience: Experience; curren
             aria-hidden="true"
             className={`hidden sm:block h-0.5 w-6 ${current ? 'bg-signal' : 'bg-tick'}`}
           />
-          <span className={`${monoStyles.data} text-[11px] uppercase tracking-util ${current ? 'text-signal' : 'text-muted'}`}>
+          <span className={`${monoStyles.data} text-[11px] uppercase tracking-util whitespace-nowrap ${current ? 'text-signal' : 'text-muted'}`}>
             {experience.duration}
           </span>
         </div>

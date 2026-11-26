@@ -126,7 +126,7 @@ export default function Home() {
       <main className="container mx-auto px-4 sm:px-6 max-w-4xl">
         {/* Work Experience Section */}
         <section id="experience" className="mt-12 sm:mt-16 mb-12 sm:mb-16 md:mb-20 scroll-mt-24">
-          <PageHeader as="h2" eyebrow="§ 2015 — present" title="Experience" />
+          <PageHeader as="h2" eyebrow="§ 2013 — present" title="Experience" />
           <ExperienceTimeline experiences={experiences} />
         </section>
 
