@@ -55,7 +55,7 @@ export const experiences: Experience[] = [
     company: 'Expense Reduction Coaching',
     duration: '2026 - Present',
     achievements: [
-      'Partner. Finds savings in telecom, payments, payroll, insurance, and utilities for $10M–$100M operators. No savings, no fee.',
+      'Finds savings in telecom, payments, payroll, insurance, and utilities for $10M–$100M operators. No savings, no fee.',
     ],
     image: {
       src: '/images/companies/erc.png',

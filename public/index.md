@@ -11,7 +11,7 @@ Joe Lapscher (also Yoel Lapscher) is a partner at Expense Reduction Coaching in 
 
 ## Experience
 
-- **Partner, Expense Reduction Coaching** (2026 - Present): Partner. Finds savings in telecom, payments, payroll, insurance, and utilities for $10M–$100M operators. No savings, no fee.
+- **Partner, Expense Reduction Coaching** (2026 - Present): Finds savings in telecom, payments, payroll, insurance, and utilities for $10M–$100M operators. No savings, no fee.
 - **Chief Product Officer, Tienda Pago** (2025): Owned product, growth, and marketing for a LATAM fintech lending to bodegas.
 - **Senior Product Manager, Transcard** (2024 - 2025): Led the launch of a payments platform that moves businesses off paper checks.
 - **Senior Product Manager, Raistone** (2022 - 2024): Second product hire. Shipped working-capital products from zero to customers.

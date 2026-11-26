@@ -96,16 +96,17 @@ export default function ChatWidget() {
       {/* Chat Button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        aria-label={isOpen ? 'Close contact form' : 'Open contact form'}
+        aria-label={isOpen ? 'Close contact form' : 'Message: open contact form'}
         aria-expanded={isOpen}
         tabIndex={showButton ? 0 : -1}
         className={`${isOpen ? 'hidden' : 'flex'} ${
           showButton ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2 pointer-events-none'
-        } items-center justify-center w-11 h-11 sm:w-12 sm:h-12 bg-signal text-signal-ink ring-1 ring-ink/20
+        } items-center justify-center gap-2 h-11 sm:h-12 px-4 bg-signal text-signal-ink ring-1 ring-ink/20
           hover:brightness-110 transition duration-300 focus-visible:outline focus-visible:outline-2
           focus-visible:outline-offset-2 focus-visible:outline-signal`}
       >
-        <ChatBubbleOvalLeftIcon className="w-5 h-5 sm:w-6 sm:h-6" />
+        <ChatBubbleOvalLeftIcon className="w-5 h-5" aria-hidden="true" />
+        <span className="font-mono text-[11px] uppercase tracking-util font-semibold">Message</span>
       </button>
 
       {/* Chat Window */}
